@@ -1,0 +1,127 @@
+
+/* =========================================================
+   DARK MODE - EXTENDED COVERAGE (Booking Wizard, Calendar,
+   Sections, Modals, Bootcamp, Contact, Footer, Highlights)
+   ========================================================= */
+
+/* Booking Wizard */
+body.dark-mode .booking-section {
+  background-color: #1A1614;
+  border-top-color: rgba(197,168,128,0.1);
+  border-bottom-color: rgba(197,168,128,0.1);
+}
+body.dark-mode .booking-wizard-card {
+  background-color: #221C1A;
+  border-color: rgba(197,168,128,0.15);
+}
+body.dark-mode .wizard-progress {
+  background-color: #171211;
+  border-bottom-color: rgba(197,168,128,0.1);
+}
+body.dark-mode .wizard-panel { background-color: #221C1A; }
+body.dark-mode .panel-title { color: #EBE5DF; }
+body.dark-mode .panel-subtitle { color: #D5BD9C; }
+body.dark-mode .wiz-service-select-item {
+  background-color: #2E2725;
+  border-color: rgba(197,168,128,0.2);
+}
+body.dark-mode .wiz-service-select-item:hover {
+  background-color: #3A302D;
+  border-color: #C5A880;
+}
+body.dark-mode .wiz-service-select-item.selected {
+  background-color: rgba(197,168,128,0.12);
+  border-color: #C5A880;
+}
+body.dark-mode .wiz-service-name { color: #EBE5DF; }
+body.dark-mode .wiz-service-meta { color: #D5BD9C; }
+body.dark-mode .wizard-selected-list {
+  background-color: #1A1614;
+  border-color: rgba(197,168,128,0.15);
+}
+body.dark-mode .empty-selection-msg { color: #D5BD9C; }
+body.dark-mode .selected-item-row { color: #EBE5DF; }
+body.dark-mode .selected-total-row { border-top-color: rgba(197,168,128,0.2); }
+body.dark-mode .wizard-footer { border-top-color: rgba(197,168,128,0.12); }
+body.dark-mode .calendar-wrapper {
+  background-color: #2E2725;
+  border-color: rgba(197,168,128,0.2);
+}
+body.dark-mode .calendar-title { color: #EBE5DF; }
+body.dark-mode .calendar-nav-btn { color: #D5BD9C; }
+body.dark-mode .calendar-nav-btn:hover { background-color: rgba(197,168,128,0.15); color: #C5A880; }
+body.dark-mode .calendar-day-btn { color: #D5BD9C; }
+body.dark-mode .calendar-day-btn.today { border-color: #C5A880; }
+body.dark-mode .calendar-day-btn.selected-day { background-color: #C5A880 !important; color: #171211 !important; }
+body.dark-mode .time-slots-wrapper {
+  background-color: #1A1614;
+  border-color: rgba(197,168,128,0.15);
+}
+body.dark-mode .time-slots-title { color: #EBE5DF; border-bottom-color: rgba(197,168,128,0.15); }
+body.dark-mode .time-slot-btn {
+  background-color: #2E2725;
+  border-color: rgba(197,168,128,0.2);
+  color: #D5BD9C;
+}
+body.dark-mode .time-slot-btn:hover:not(:disabled),
+body.dark-mode .time-slot-btn.selected-slot { background-color: #C5A880; color: #171211; border-color: #C5A880; }
+body.dark-mode .guest-details-form label { color: #D5BD9C; }
+body.dark-mode .guest-details-form input,
+body.dark-mode .guest-details-form textarea,
+body.dark-mode .guest-details-form select {
+  background-color: #2E2725;
+  border-color: rgba(197,168,128,0.2);
+  color: #EBE5DF;
+}
+body.dark-mode .guest-details-form input::placeholder,
+body.dark-mode .guest-details-form textarea::placeholder { color: rgba(213,189,156,0.4); }
+body.dark-mode .luxury-receipt { background-color: #2E2725; border-color: rgba(197,168,128,0.2); }
+body.dark-mode .receipt-header { background-color: #171211; color: #C5A880; }
+body.dark-mode .receipt-body, body.dark-mode .receipt-row { color: #D5BD9C; }
+body.dark-mode .receipt-row strong { color: #EBE5DF; }
+body.dark-mode .receipt-divider { border-color: rgba(197,168,128,0.15); }
+body.dark-mode .receipt-footer { color: #D5BD9C; }
+body.dark-mode .summary-count, body.dark-mode .summary-total { color: #EBE5DF; }
+body.dark-mode .about-desc { color: #D5BD9C; }
+body.dark-mode .feature-item h4 { color: #EBE5DF; }
+body.dark-mode .feature-item p { color: #D5BD9C; }
+body.dark-mode .services-section {
+  background-color: #1A1614;
+  border-top-color: rgba(197,168,128,0.1);
+  border-bottom-color: rgba(197,168,128,0.1);
+}
+body.dark-mode .tab-btn { background-color: #2E2725; border-color: rgba(197,168,128,0.2); color: #D5BD9C; }
+body.dark-mode .tab-btn:hover { border-color: #C5A880; color: #C5A880; }
+body.dark-mode .tab-btn.active { background-color: #C5A880; color: #171211; border-color: #C5A880; }
+body.dark-mode .highlights-section { background-color: #171211; border-bottom-color: rgba(197,168,128,0.1); }
+body.dark-mode .bootcamp-section { background-color: #1A1614; }
+body.dark-mode .bootcamp-title { color: #EBE5DF; }
+body.dark-mode .bootcamp-desc { color: #D5BD9C; }
+body.dark-mode .b-highlight { color: #D5BD9C; }
+body.dark-mode .bootcamp-pricing .price-box { background-color: #2E2725; border-color: rgba(197,168,128,0.2); }
+body.dark-mode .price-box .tier-name { color: #D5BD9C; }
+body.dark-mode .price-box .tier-price { color: #C5A880; }
+body.dark-mode .price-box .tier-detail { color: rgba(213,189,156,0.7); }
+body.dark-mode .next-cohort-box { background-color: rgba(197,168,128,0.1); border-color: rgba(197,168,128,0.2); color: #EBE5DF; }
+body.dark-mode .contact-section { background-color: #171211; }
+body.dark-mode .contact-desc { color: #D5BD9C; }
+body.dark-mode .contact-detail-item h4 { color: #EBE5DF; }
+body.dark-mode .contact-detail-item p, body.dark-mode .contact-detail-item a { color: #D5BD9C; }
+body.dark-mode .contact-detail-item a:hover { color: #C5A880; }
+body.dark-mode .icon-box { background-color: #2E2725; border-color: rgba(197,168,128,0.15); color: #C5A880; }
+body.dark-mode .custom-modal .modal-content-card {
+  background-color: #221C1A;
+  color: #EBE5DF;
+  border: 1px solid rgba(197,168,128,0.15);
+}
+body.dark-mode .custom-modal .modal-close { color: #D5BD9C; }
+body.dark-mode .bootcamp-enroll-form label { color: #D5BD9C; }
+body.dark-mode .bootcamp-enroll-form input, body.dark-mode .bootcamp-enroll-form select {
+  background-color: #2E2725; border-color: rgba(197,168,128,0.2); color: #EBE5DF;
+}
+body.dark-mode .syllabus-timeline .week-marker { background-color: rgba(197,168,128,0.2); color: #C5A880; }
+body.dark-mode .syllabus-timeline .week-details h4 { color: #EBE5DF; }
+body.dark-mode .syllabus-timeline .week-details p { color: #D5BD9C; }
+body.dark-mode .footer-links-column h4, body.dark-mode .footer-hours-column h4 { color: #EBE5DF; }
+body.dark-mode .footer-copyright p { color: rgba(213,189,156,0.5); }
+body.dark-mode .urgent-hours-note { color: #C5A880; }

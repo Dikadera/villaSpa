@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TVS Admin Portal | The Villa Spa Management Suite</title>
+  <meta name="description"
+    content="Secure administrative panel for managing appointments, bootcamp enrollments, services, customer feedback, and business analytics.">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Chart.js for premium analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="admin.css">
+</head>
+
+<body class="admin-body">
+
+  <!-- Elegant Access Gate overlay -->
+  <div class="admin-login-overlay" id="adminLoginOverlay">
+    <div class="login-card">
+      <div class="login-logo">
+        <span class="logo-initials">TVS</span>
+        <div class="logo-divider"></div>
+        <div class="logo-text">
+          <span class="brand-name">THE VILLA SPA</span>
+          <span class="brand-tagline">ADMIN PORTAL</span>
+        </div>
+      </div>
+      <h3 class="login-title">Dashboard Access Key</h3>
+      <p class="login-subtitle">This is a secure system portal. Unauthorized entry is strictly prohibited.</p>
+
+      <form id="adminLoginForm">
+        <div class="form-group">
+          <label for="adminPasswordInput">Security Passcode</label>
+          <input type="password" id="adminPasswordInput" placeholder="Enter dashboard password..." required
+            autocomplete="current-password">
+          <div class="error-msg" id="loginErrorMsg"
+            style="display: none; color: var(--error); font-size: 0.75rem; margin-top: 4px; font-weight: 600; text-align: left;">
+            <i class="fa-solid fa-circle-exclamation"></i> Incorrect passcode. Please try again.
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary w-full" style="margin-top: 12px;">Unlock Dashboard</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="admin-wrapper">
+    <!-- Sidebar Navigation -->
+    <aside class="admin-sidebar" id="adminSidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-logo">
+          <span class="logo-initials">TVS</span>
+          <div class="logo-divider"></div>
+          <div class="logo-text">
+            <span class="brand-name">THE VILLA SPA</span>
+            <span class="brand-tagline">ADMIN PORTAL</span>
+          </div>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-tab="overview">
+          <i class="fa-solid fa-chart-line"></i>
+          <span>Overview & Analytics</span>
+        </button>
+        <button class="nav-item" data-tab="appointments">
+          <i class="fa-solid fa-calendar-check"></i>
+          <span>Appointments</span>
+        </button>
+        <button class="nav-item" data-tab="bootcamp">
+          <i class="fa-solid fa-graduation-cap"></i>
+          <span>Bootcamp Applications</span>
+        </button>
+        <button class="nav-item" data-tab="products">
+          <i class="fa-solid fa-spa"></i>
+          <span>Spa Services Menu</span>
+        </button>
+        <button class="nav-item" data-tab="skincare">
+          <i class="fa-solid fa-bottle-droplet"></i>
+          <span>Skincare Boutique</span>
+        </button>
+        <button class="nav-item" data-tab="orders">
+          <i class="fa-solid fa-credit-card"></i>
+          <span>Sales Orders</span>
+        </button>
+        <button class="nav-item" data-tab="customers">
+          <i class="fa-solid fa-users"></i>
+          <span>Customers Log</span>
+        </button>
+        <button class="nav-item" data-tab="reviews">
+          <i class="fa-solid fa-star"></i>
+          <span>Client Reviews</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="index.html" class="btn btn-outline btn-sm sidebar-back-btn">
+          <i class="fa-solid fa-arrow-left"></i> View Live Site
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="admin-main">
+      <!-- Top Utility Header -->
+      <header class="admin-header">
+        <div class="header-left">
+          <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle Sidebar">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <h1 class="header-title" id="pageHeaderTitle">Overview & Analytics</h1>
+        </div>
+
+        <div class="header-right">
+          <button class="theme-toggle-btn" id="themeToggle" title="Toggle Theme Mode">
+            <i class="fa-solid fa-moon"></i>
+          </button>
+
+          <div class="admin-profile">
+            <div class="profile-avatar">A</div>
+            <div class="profile-details">
+              <span class="profile-name">Boss Girl</span>
+              <span class="profile-role">System Admin</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dynamic Tab Content Container -->
+      <div class="admin-content-pane">
+
+        <!-- 1. OVERVIEW & ANALYTICS TAB -->
+        <section class="tab-panel active" id="overview-panel">
+          <!-- Overview Cards -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon-wrapper sales">
+                <i class="fa-solid fa-naira-sign"></i>
+              </div>
+              <div class="stat-meta">
+                <span class="stat-label">Estimated Revenue</span>
+                <strong class="stat-value" id="overviewRevenue">₦0</strong>
+                <span class="stat-change text-success"><i class="fa-solid fa-arrow-up"></i> Total Accumulated</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper bookings">
+                <i class="fa-solid fa-calendar-check"></i>
+              </div>
+              <div class="stat-meta">
+                <span class="stat-label">Total Appointments</span>
+                <strong class="stat-value" id="overviewBookings">0</strong>
+                <span class="stat-change" id="overviewPendingBookings">0 Pending Confirmation</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper students">
+                <i class="fa-solid fa-graduation-cap"></i>
+              </div>
+              <div class="stat-meta">
+                <span class="stat-label">Bootcamp Applicants</span>
+                <strong class="stat-value" id="overviewBootcamp">0</strong>
+                <span class="stat-change text-gold" id="overviewPremiumBootcamp">0 Premium Plans</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrapper reviews">
+                <i class="fa-solid fa-star"></i>
+              </div>
+              <div class="stat-meta">
+                <span class="stat-label">Average Guest Rating</span>
+                <strong class="stat-value" id="overviewRating">5.0</strong>
+                <span class="stat-change" id="overviewActiveReviews">0 Approved Reviews</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Charts Layout -->
+          <div class="charts-grid">
+            <div class="chart-container">
+              <div class="chart-header">
+                <h3>Revenue Earnings Trend</h3>
+                <span class="chart-subtitle">Calculated from client appointment values</span>
+              </div>
+              <div class="chart-canvas-wrapper">
+                <canvas id="revenueTrendChart"></canvas>
+              </div>
+            </div>
+
+            <div class="chart-container">
+              <div class="chart-header">
+                <h3>Bookings by Category</h3>
+                <span class="chart-subtitle">Distribution of popular treatments</span>
+              </div>
+              <div class="chart-canvas-wrapper pie">
+                <canvas id="categoryDistributionChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Bookings Table Panel -->
+          <div class="table-card">
+            <div class="card-header">
+              <h3>Recent Bookings Activity</h3>
+              <button class="btn btn-primary btn-xs" onclick="switchTab('appointments')">View All Bookings</button>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Receipt ID</th>
+                    <th>Customer Name</th>
+                    <th>Date & Time</th>
+                    <th>Services</th>
+                    <th>Subtotal</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="recentBookingsTableBody">
+                  <tr>
+                    <td colspan="6" class="text-center text-muted">Loading recent appointments...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. APPOINTMENTS TAB -->
+        <section class="tab-panel" id="appointments-panel">
+          <div class="table-card">
+            <div class="card-header flex-column md-flex-row gap-md">
+              <div class="header-actions-left">
+                <div class="search-box-wrapper">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                  <input type="text" id="appointmentSearch" placeholder="Search by name, phone or Receipt ID...">
+                </div>
+
+                <select id="appointmentFilterStatus" class="form-select">
+                  <option value="all">All Statuses</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Confirmed">Confirmed</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Cancelled">Cancelled</option>
+                </select>
+              </div>
+
+              <div class="header-actions-right">
+                <button class="btn btn-outline btn-sm" id="exportAppointmentsBtn">
+                  <i class="fa-solid fa-file-csv"></i> Export to CSV
+                </button>
+                <button class="btn btn-primary btn-sm" id="clearAllBookingsBtn">
+                  <i class="fa-solid fa-trash-can"></i> WIPE DATABASE
+                </button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Receipt ID</th>
+                    <th>Guest Name</th>
+                    <th>Contact Info</th>
+                    <th>Date & Time</th>
+                    <th>Selected Treatments</th>
+                    <th>Total Price</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="adminBookingsTableBody">
+                  <tr>
+                    <td colspan="8" class="text-center text-muted">No appointments recorded yet.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. BOOTCAMP APPLICATIONS TAB -->
+        <section class="tab-panel" id="bootcamp-panel">
+          <div class="table-card">
+            <div class="card-header flex-column md-flex-row gap-md">
+              <div class="header-actions-left">
+                <div class="search-box-wrapper">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                  <input type="text" id="bootcampSearch" placeholder="Search students by name or phone...">
+                </div>
+
+                <select id="bootcampFilterPlan" class="form-select">
+                  <option value="all">All Packages</option>
+                  <option value="regular">Regular Package (₦300,000)</option>
+                  <option value="premium">Premium Package with Kit (₦350,000)</option>
+                </select>
+              </div>
+
+              <div class="header-actions-right">
+                <button class="btn btn-outline btn-sm" id="exportBootcampBtn">
+                  <i class="fa-solid fa-file-csv"></i> Export Students
+                </button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Enrollment Date</th>
+                    <th>Student Name</th>
+                    <th>WhatsApp/Phone</th>
+                    <th>Chosen Package</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="adminBootcampTableBody">
+                  <tr>
+                    <td colspan="6" class="text-center text-muted">No bootcamp applications received yet.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. SPA SERVICES MENU TAB -->
+        <section class="tab-panel" id="products-panel">
+          <div class="card-header flex-space-between" style="padding-bottom: 24px;">
+            <div>
+              <h3>Service Categories Menu</h3>
+              <p class="text-muted">Manage products and services rendering dynamically on the landing page</p>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="openServiceModal()">
+              <i class="fa-solid fa-plus"></i> Add New Service
+            </button>
+          </div>
+
+          <div class="services-admin-grid" id="servicesAdminList">
+            <!-- Dynamically populated categories and services -->
+            <div class="text-center w-full text-muted">Loading services list...</div>
+          </div>
+        </section>
+
+        <!-- SKINCARE BOUTIQUE TAB -->
+        <section class="tab-panel" id="skincare-panel">
+          <div class="card-header flex-space-between" style="padding-bottom: 24px;">
+            <div>
+              <h3>Skincare Boutique Products</h3>
+              <p class="text-muted">Manage physical products and inventory available on the shop page</p>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="openSkincareModal()">
+              <i class="fa-solid fa-plus"></i> Add Product
+            </button>
+          </div>
+
+          <div class="table-card">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Inventory Status</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="adminSkincareTableBody">
+                  <tr>
+                    <td colspan="7" class="text-center text-muted">Loading skincare boutique catalog...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- SALES ORDERS TAB -->
+        <section class="tab-panel" id="orders-panel">
+          <div class="table-card">
+            <div class="card-header flex-column md-flex-row gap-md">
+              <div class="header-actions-left">
+                <div class="search-box-wrapper">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                  <input type="text" id="orderSearch" placeholder="Search orders by name or email...">
+                </div>
+                <select id="orderFilterFulfillment" class="form-select">
+                  <option value="all">All Deliveries</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Shipped">Shipped</option>
+                  <option value="Delivered">Delivered</option>
+                </select>
+              </div>
+              <div class="header-actions-right">
+                <button class="btn btn-outline btn-sm" id="exportOrdersBtn">
+                  <i class="fa-solid fa-file-csv"></i> Export Sales
+                </button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Ref Code</th>
+                    <th>Client Contact</th>
+                    <th>Ordered Items</th>
+                    <th>Total Paid</th>
+                    <th>Fulfillment</th>
+                    <th>Date & Time</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="adminOrdersTableBody">
+                  <tr>
+                    <td colspan="7" class="text-center text-muted">No sales transactions processed yet.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5. CUSTOMERS LOG TAB -->
+        <section class="tab-panel" id="customers-panel">
+          <div class="table-card">
+            <div class="card-header flex-column md-flex-row gap-md">
+              <div class="header-actions-left">
+                <div class="search-box-wrapper">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                  <input type="text" id="customerSearch" placeholder="Search customers name or phone...">
+                </div>
+              </div>
+              <div class="header-actions-right">
+                <button class="btn btn-outline btn-sm" id="exportCustomersBtn">
+                  <i class="fa-solid fa-file-csv"></i> Export Customers CSV
+                </button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Customer Name</th>
+                    <th>Phone / WhatsApp</th>
+                    <th>Email Address</th>
+                    <th>Total Visits</th>
+                    <th>Total Spent</th>
+                    <th>Therapist / Client Notes</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="adminCustomersTableBody">
+                  <tr>
+                    <td colspan="7" class="text-center text-muted">No customers registered yet.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6. CLIENT REVIEWS TAB -->
+        <section class="tab-panel" id="reviews-panel">
+          <div class="card-header flex-space-between" style="padding-bottom: 24px;">
+            <div>
+              <h3>Testimonials & Guest Feedback</h3>
+              <p class="text-muted">Approve or hide reviews rendering in the landing page testimonials slider</p>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="openReviewModal()">
+              <i class="fa-solid fa-plus"></i> Add Manual Review
+            </button>
+          </div>
+
+          <div class="table-card">
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Guest Initials</th>
+                    <th>Guest Name</th>
+                    <th>Stars</th>
+                    <th>Review Comment</th>
+                    <th>Client Status</th>
+                    <th>Publish Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="adminReviewsTableBody">
+                  <tr>
+                    <td colspan="7" class="text-center text-muted">No reviews loaded.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- SKINCARE PRODUCT MODAL -->
+  <div class="admin-modal" id="skincareModal">
+    <div class="modal-backdrop" onclick="closeSkincareModal()"></div>
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeSkincareModal()"><i class="fa-solid fa-xmark"></i></button>
+      <h3 class="modal-title" id="skincareModalTitle">Add Skincare Product</h3>
+
+      <form id="skincareForm">
+        <input type="hidden" id="skincareEditId">
+
+        <div class="form-group">
+          <label for="skincareName">Product Name *</label>
+          <input type="text" id="skincareName" required placeholder="e.g. TVS Hydrating Glow Serum">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="skincarePrice">Price (₦) *</label>
+            <input type="number" id="skincarePrice" required placeholder="e.g. 18000">
+          </div>
+          <div class="form-group">
+            <label for="skincareCategory">Category *</label>
+            <select id="skincareCategory" required>
+              <option value="cleansers">Cleansers</option>
+              <option value="serums">Serums</option>
+              <option value="toners">Toners</option>
+              <option value="body">Body Care</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="skincareStock">Stock Status *</label>
+            <select id="skincareStock" required>
+              <option value="in-stock">In Stock</option>
+              <option value="out-of-stock">Out of Stock</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="skincareImage">Image URL (Optional)</label>
+            <input type="url" id="skincareImage" placeholder="https://example.com/image.png">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="skincareDesc">Description *</label>
+          <textarea id="skincareDesc" rows="4" required placeholder="Describe product benefits and usage..."></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline btn-sm" onclick="closeSkincareModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary btn-sm" id="saveSkincareBtn">Save Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- SERVICE MODAL (Add / Edit Service) -->
+  <div class="admin-modal" id="serviceModal">
+    <div class="modal-backdrop" onclick="closeServiceModal()"></div>
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeServiceModal()"><i class="fa-solid fa-xmark"></i></button>
+      <h3 class="modal-title" id="serviceModalTitle">Add New Spa Service</h3>
+
+      <form id="serviceForm">
+        <input type="hidden" id="serviceEditId">
+
+        <div class="form-group">
+          <label for="serviceName">Service Name *</label>
+          <input type="text" id="serviceName" required placeholder="e.g. Cocoa Butter Glow Massage">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="servicePrice">Price (₦) *</label>
+            <input type="number" id="servicePrice" required placeholder="e.g. 25000">
+          </div>
+          <div class="form-group">
+            <label for="serviceDuration">Duration (Mins) *</label>
+            <input type="number" id="serviceDuration" required placeholder="e.g. 60">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="serviceCategory">Category *</label>
+          <select id="serviceCategory" required>
+            <option value="massages">Massages</option>
+            <option value="facials">Facials & Peels</option>
+            <option value="waxing">Waxing & Tinting</option>
+            <option value="body">Body Therapy</option>
+            <option value="nails">Manicure & Pedicure</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="serviceDesc">Detailed Description *</label>
+          <textarea id="serviceDesc" rows="4" required placeholder="Write a sensory description details..."></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline btn-sm" onclick="closeServiceModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary btn-sm" id="saveServiceBtn">Save Service</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- REVIEW MODAL (Add / Edit Review) -->
+  <div class="admin-modal" id="reviewModal">
+    <div class="modal-backdrop" onclick="closeReviewModal()"></div>
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeReviewModal()"><i class="fa-solid fa-xmark"></i></button>
+      <h3 class="modal-title" id="reviewModalTitle">Add Guest Testimonial</h3>
+
+      <form id="reviewForm">
+        <input type="hidden" id="reviewEditId">
+
+        <div class="form-group">
+          <label for="reviewName">Guest Name *</label>
+          <input type="text" id="reviewName" required placeholder="e.g. Chinedu Okafor">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="reviewStars">Rating Stars *</label>
+            <select id="reviewStars" required>
+              <option value="5">⭐⭐⭐⭐⭐ (5 Stars)</option>
+              <option value="4">⭐⭐⭐⭐ (4 Stars)</option>
+              <option value="3">⭐⭐⭐ (3 Stars)</option>
+              <option value="2">⭐⭐ (2 Stars)</option>
+              <option value="1">⭐ (1 Star)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="reviewStatus">Client Label *</label>
+            <input type="text" id="reviewStatus" required
+              placeholder="e.g. Regular Client, Verified Guest, Bootcamp Graduate">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="reviewText">Testimonial Comment *</label>
+          <textarea id="reviewText" rows="4" required placeholder="Write what the guest loved about TVS..."></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline btn-sm" onclick="closeReviewModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary btn-sm">Save Review</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- CUSTOMER NOTE MODAL (Edit customer notes) -->
+  <div class="admin-modal" id="customerModal">
+    <div class="modal-backdrop" onclick="closeCustomerModal()"></div>
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeCustomerModal()"><i class="fa-solid fa-xmark"></i></button>
+      <h3 class="modal-title">Edit Customer Record</h3>
+
+      <form id="customerForm">
+        <input type="hidden" id="customerPhoneId">
+
+        <div class="form-group">
+          <label for="customerNameDisplay">Customer Name</label>
+          <input type="text" id="customerNameDisplay" readonly disabled
+            style="background-color: var(--color-sand); opacity: 0.7;">
+        </div>
+
+        <div class="form-group">
+          <label for="customerNotesInput">Therapist Notes / Preferences</label>
+          <textarea id="customerNotesInput" rows="5"
+            placeholder="Record skin sensitivities, therapist matches, room preferences, or boot camp updates..."></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline btn-sm" onclick="closeCustomerModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary btn-sm">Update Notes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Script Modules -->
+  <script type="module" src="admin.js"></script>
+</body>
+
+</html>

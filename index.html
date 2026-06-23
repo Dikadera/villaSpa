@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Villa Spa | Luxury Spa, Skincare & Training in Awka</title>
+  <meta name="description" content="Welcome to Awka's premier spa destination. Indulge in luxury massages, professional facials, waxing, and join our 4-Week Intensive Spa Bootcamp training. Book your escape today.">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css?v=2026.06.23.01">
+</head>
+<body>
+
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+
+  <!-- Announcement Bar (Reflecting Instagram post) -->
+  <div class="announcement-bar">
+    <div class="announcement-content">
+      <span>✨ <strong>Important Update:</strong> Our service prices will be adjusted effective Monday, 8th June 2026. Explore our updated menu below.</span>
+    </div>
+  </div>
+
+  <!-- Header & Navigation -->
+  <header class="main-header">
+    <div class="header-container">
+      <a href="#" class="logo-area">
+        <span class="logo-initials">TVS</span>
+        <div class="logo-divider"></div>
+        <div class="logo-text">
+          <span class="brand-name">THE VILLA SPA</span>
+          <span class="brand-tagline">SALON · WELLNESS · LAUNGE</span>
+        </div>
+      </a>
+
+      <nav class="nav-menu" id="navMenu">
+        <a href="#" class="nav-link active">Home</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#services" class="nav-link">Services</a>
+        <a href="#bootcamp" class="nav-link">Training</a>
+        <a href="#reviews" class="nav-link">Reviews</a>
+        <a href="#contact" class="nav-link">Contact</a>
+        <a href="#booking-section" class="btn btn-primary nav-cta">Book Experience</a>
+      </nav>
+
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="theme-toggle-btn" id="siteThemeToggle" title="Toggle Light / Dark Mode" aria-label="Toggle theme">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+        <button class="mobile-menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+  <section class="hero-section" id="hero">
+      <div class="hero-bg" style="background-image: linear-gradient(rgba(30, 26, 25, 0.6), rgba(30, 26, 25, 0.8)), url('assets/spa_hero_bg.png');"></div>
+      <div class="hero-particles"></div>
+      <div class="hero-container">
+        <div class="hero-content">
+          <span class="hero-subtitle fade-in">Awka's Premier Spa &amp; Wellness Destination</span>
+          <h1 class="hero-title fade-in">Reclaim Your Balance, <br><span id="heroTypingText" class="hero-typing-accent">Restore Your Glow</span><span class="typing-cursor">|</span></h1>
+          <p class="hero-description fade-in">Step into a sanctuary of ultimate tranquility. Experience premium massages, rejuvenating facials, precise waxing, and expert skin investment therapies tailored to your body's unique needs.</p>
+          <div class="hero-actions fade-in">
+            <a href="#booking-section" class="btn btn-primary btn-lg">Book An Appointment</a>
+            <a href="#services" class="btn btn-outline btn-lg">Explore Service Menu</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Floating Social Badges -->
+      <div class="hero-social-badges">
+        <a href="https://instagram.com/thevillaspa_" target="_blank" class="social-badge-item">
+          <i class="fab fa-instagram"></i>
+          <span>@thevillaspa_</span>
+        </a>
+        <a href="tel:08147409153" class="social-badge-item">
+          <i class="fas fa-phone"></i>
+          <span>0814 740 9153</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Instagram-Inspired Highlights Grid -->
+    <section class="highlights-section">
+      <div class="section-container">
+        <div class="highlights-wrapper">
+          <div class="highlight-circle-item" onclick="openHighlightModal('before-after')">
+            <div class="circle-outer">
+              <div class="circle-inner">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+              </div>
+            </div>
+            <span>Before | After</span>
+          </div>
+
+          <div class="highlight-circle-item" onclick="openHighlightModal('experience')">
+            <div class="circle-outer">
+              <div class="circle-inner">
+                <i class="fa-solid fa-spa"></i>
+              </div>
+            </div>
+            <span>The Experience</span>
+          </div>
+
+          <div class="highlight-circle-item" onclick="scrollToSection('reviews')">
+            <div class="circle-outer">
+              <div class="circle-inner">
+                <i class="fa-solid fa-star-half-stroke"></i>
+              </div>
+            </div>
+            <span>Reviews</span>
+          </div>
+
+          <div class="highlight-circle-item" onclick="scrollToSection('services')">
+            <div class="circle-outer">
+              <div class="circle-inner">
+                <i class="fa-solid fa-list-check"></i>
+              </div>
+            </div>
+            <span>Price List</span>
+          </div>
+
+          <div class="highlight-circle-item" onclick="scrollToSection('bootcamp')">
+            <div class="circle-outer">
+              <div class="circle-inner">
+                <i class="fa-solid fa-graduation-cap"></i>
+              </div>
+            </div>
+            <span>Training</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats / Achievements Section -->
+    <section class="stats-section" id="stats">
+      <div class="section-container" style="padding-top: 60px; padding-bottom: 60px;">
+        <div class="stats-grid-wrapper">
+
+          <div class="stat-achievement animate-on-scroll" data-stagger="0">
+            <div class="stat-icon-circle"><i class="fa-solid fa-users"></i></div>
+            <div class="stat-info">
+              <span class="stat-number" data-target="500" data-suffix="+">0</span>
+              <span class="stat-label-text">Happy Clients</span>
+            </div>
+          </div>
+
+          <div class="stat-achievement animate-on-scroll" data-stagger="1">
+            <div class="stat-icon-circle"><i class="fa-solid fa-spa"></i></div>
+            <div class="stat-info">
+              <span class="stat-number" data-target="20" data-suffix="+">0</span>
+              <span class="stat-label-text">Premium Services</span>
+            </div>
+          </div>
+
+          <div class="stat-achievement animate-on-scroll" data-stagger="2">
+            <div class="stat-icon-circle"><i class="fa-solid fa-calendar-days"></i></div>
+            <div class="stat-info">
+              <span class="stat-number" data-target="4" data-suffix="+ Yrs">0</span>
+              <span class="stat-label-text">Years of Excellence</span>
+            </div>
+          </div>
+
+          <div class="stat-achievement animate-on-scroll" data-stagger="3">
+            <div class="stat-icon-circle"><i class="fa-solid fa-star"></i></div>
+            <div class="stat-info">
+              <span class="stat-number" data-target="98" data-suffix="%">0</span>
+              <span class="stat-label-text">Guest Satisfaction</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section / Welcome -->
+    <section class="about-section" id="about">
+      <div class="section-container">
+        <div class="about-grid">
+          <div class="about-img-wrapper">
+            <img src="assets/spa_facial.png" alt="Facial treatment at The Villa Spa" class="about-img animate-on-scroll">
+            <div class="about-tag">
+              <span class="tag-title">Skinvestment</span>
+              <p>"If it makes your skin glow, it is not an expense. It is an investment."</p>
+            </div>
+          </div>
+          <div class="about-text-content">
+            <span class="section-subtitle">Welcome to The Villa Spa</span>
+            <h2 class="section-title">Your Sanctuary for Luxury & Rejuvenation</h2>
+            <p class="about-desc">At The Villa Spa, we believe wellness is a lifestyle, not a luxury. Nestled in the heart of Awka, Anambra, our premier salon and wellness lounge is designed to offer a peaceful escape from the everyday hustle.</p>
+            <p class="about-desc">From soothing hot stone therapies and Swedish massages to professional dermal care, chemical peels, and waxing, we use premium products and cutting-edge techniques to ensure you walk out revitalized. We also host a prestigious training academy where aspiring estheticians learn state-of-the-art beauty and wellness crafts.</p>
+            
+            <div class="about-features">
+              <div class="feature-item">
+                <i class="fa-solid fa-medal"></i>
+                <div>
+                  <h4>Certified Therapists</h4>
+                  <p>Highly trained estheticians and spa practitioners.</p>
+                </div>
+              </div>
+              <div class="feature-item">
+                <i class="fa-solid fa-leaf"></i>
+                <div>
+                  <h4>Premium Organic Products</h4>
+                  <p>Only top-tier skin-friendly serums and essential oils.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services / Price List Section (Tabbed & Dynamic) -->
+    <section class="services-section" id="services">
+      <div class="section-container">
+        <div class="text-center-wrapper">
+          <span class="section-subtitle">Luxury Service Menu</span>
+          <h2 class="section-title">Indulge in Our Curated Experiences</h2>
+          <p class="section-desc">Each treatment is customizable to your wellness goals. Select services below to add them to your booking cart.</p>
+        </div>
+
+        <!-- Service Category Tabs -->
+        <div class="services-tabs">
+          <button class="tab-btn active" data-category="massages">Massages</button>
+          <button class="tab-btn" data-category="facials">Facials & Peels</button>
+          <button class="tab-btn" data-category="waxing">Waxing & Tinting</button>
+          <button class="tab-btn" data-category="body">Body Therapy</button>
+          <button class="tab-btn" data-category="nails">Manicure & Pedicure</button>
+        </div>
+
+        <!-- Service Grid Container -->
+        <div class="services-grid" id="servicesGrid">
+          <!-- Massages (Active by default) -->
+          <!-- Generated dynamically via JS, but hardcoded fallback for SEO -->
+          <div class="service-card" data-cat="massages">
+            <div class="service-header">
+              <h3 class="service-name">Swedish Massage</h3>
+              <span class="service-price">₦15,000</span>
+            </div>
+            <p class="service-detail">A gentle, full-body massage using long strokes, kneading, and circular movements to ease tension and improve circulation.</p>
+            <div class="service-footer">
+              <span class="service-duration"><i class="fa-regular fa-clock"></i> 60 Mins</span>
+              <button class="btn btn-sm btn-outline select-service-btn" data-id="massage-swedish" data-name="Swedish Massage" data-price="15000">Add to booking</button>
+            </div>
+          </div>
+          <!-- More items rendered by JS -->
+        </div>
+
+        <div class="booking-summary-banner" id="bookingSummaryBanner">
+          <div class="summary-details">
+            <span class="summary-count"><span id="selectedCount">0</span> Service(s) Selected</span>
+            <span class="summary-total">Total: <strong id="selectedTotal">₦0</strong></span>
+          </div>
+          <a href="#booking-section" class="btn btn-primary">Proceed to Booking Wizard</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4-Week Spa Bootcamp Section -->
+    <section class="bootcamp-section" id="bootcamp">
+      <div class="section-container">
+        <div class="bootcamp-grid">
+          <div class="bootcamp-text-content">
+            <div class="bootcamp-tag-promo">4-WEEK INTENSIVE</div>
+            <h2 class="bootcamp-title">Beginner-Friendly Spa & Esthetics Bootcamp</h2>
+            <p class="bootcamp-desc">Launch your luxury wellness business with hand-on professional training directly at Awka’s Premier Spa Academy. Gain the theoretical and practical skills required to stand out in the beauty industry.</p>
+            
+            <div class="bootcamp-highlights">
+              <div class="b-highlight"><i class="fa-solid fa-circle-check"></i> Hands-on Practical Sessions</div>
+              <div class="b-highlight"><i class="fa-solid fa-circle-check"></i> Standard Starter Kit Included (Premium Plan)</div>
+              <div class="b-highlight"><i class="fa-solid fa-circle-check"></i> Certificate of Completion</div>
+              <div class="b-highlight"><i class="fa-solid fa-circle-check"></i> Spa Business Startup & Marketing Guide</div>
+              <div class="b-highlight"><i class="fa-solid fa-circle-check"></i> Lifetime Mentorship Support</div>
+            </div>
+
+            <div class="bootcamp-pricing">
+              <div class="price-box">
+                <span class="tier-name">Regular Package</span>
+                <span class="tier-price">₦300,000</span>
+                <span class="tier-detail">Full training & certification</span>
+              </div>
+              <div class="price-box premium">
+                <span class="tier-name">Premium Plan (With Kit)</span>
+                <span class="tier-price">₦350,000</span>
+                <span class="tier-detail">Full training, certificate & esthetics kit</span>
+              </div>
+            </div>
+
+            <div class="bootcamp-cta-group">
+              <button class="btn btn-primary" onclick="openBootcampEnrollModal()">Enroll in Bootcamp</button>
+              <button class="btn btn-outline" id="viewSyllabusBtn">View Syllabus Details</button>
+            </div>
+          </div>
+
+          <div class="bootcamp-media-wrapper">
+            <img src="assets/spa_training.png" alt="Spa Academy Bootcamp Training at The Villa Spa" class="bootcamp-img animate-on-scroll">
+            <div class="next-cohort-box">
+              <i class="fa-solid fa-calendar-days"></i>
+              <div>
+                <h5>Next Cohort Starts:</h5>
+                <p>June 22, 2026</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Multi-Step Interactive Booking Wizard -->
+    <section class="booking-section" id="booking-section">
+      <div class="section-container">
+        <div class="text-center-wrapper">
+          <span class="section-subtitle">Online Reservations</span>
+          <h2 class="section-title">Schedule Your Wellness Escape</h2>
+          <p class="section-desc">Secure your preferred treatment and timeslot. Complete your details and receive instant confirmation.</p>
+        </div>
+
+        <div class="booking-wizard-card">
+          <!-- Wizard Progress Bar -->
+          <div class="wizard-progress">
+            <div class="progress-step active" data-step="1">
+              <span class="step-num">1</span>
+              <span class="step-label">Select Services</span>
+            </div>
+            <div class="progress-line"></div>
+            <div class="progress-step" data-step="2">
+              <span class="step-num">2</span>
+              <span class="step-label">Choose Date & Time</span>
+            </div>
+            <div class="progress-line"></div>
+            <div class="progress-step" data-step="3">
+              <span class="step-num">3</span>
+              <span class="step-label">Guest Information</span>
+            </div>
+            <div class="progress-line"></div>
+            <div class="progress-step" data-step="4">
+              <span class="step-num">4</span>
+              <span class="step-label">Confirmation</span>
+            </div>
+          </div>
+
+          <!-- Step Panels -->
+          <form id="bookingForm">
+            <!-- STEP 1: SERVICE CHOICE -->
+            <div class="wizard-panel active" id="step1Panel">
+              <h3 class="panel-title">Choose your luxurious treats</h3>
+              <p class="panel-subtitle">Select one or more services. You can always change these later.</p>
+              
+              <div class="wizard-services-selector" id="wizardServicesList">
+                <!-- Loaded dynamically by JavaScript to reflect exact category choices -->
+              </div>
+              
+              <div class="wizard-selected-list" id="wizardSelectedList">
+                <!-- Selected summary will appear here -->
+                <p class="empty-selection-msg">No treatments selected yet. Add services above to begin.</p>
+              </div>
+
+              <div class="wizard-footer">
+                <span></span>
+                <button type="button" class="btn btn-primary" id="step1Next" disabled>Choose Date & Time <i class="fa-solid fa-arrow-right"></i></button>
+              </div>
+            </div>
+
+            <!-- STEP 2: DATE & TIME -->
+            <div class="wizard-panel" id="step2Panel">
+              <h3 class="panel-title">Select Date & Time</h3>
+              <p class="panel-subtitle">Note: We operate Mon-Sat 9am–7pm and Sun 1pm–7pm.</p>
+
+              <div class="datetime-grid">
+                <div class="calendar-wrapper">
+                  <div class="calendar-header">
+                    <button type="button" id="prevMonthBtn" class="calendar-nav-btn"><i class="fa-solid fa-chevron-left"></i></button>
+                    <span id="calendarMonthYear" class="calendar-title">June 2026</span>
+                    <button type="button" id="nextMonthBtn" class="calendar-nav-btn"><i class="fa-solid fa-chevron-right"></i></button>
+                  </div>
+                  <div class="calendar-weekdays">
+                    <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+                  </div>
+                  <div class="calendar-days" id="calendarDaysGrid">
+                    <!-- Calendar days loaded dynamically -->
+                  </div>
+                </div>
+
+                <div class="time-slots-wrapper">
+                  <h4 class="time-slots-title">Available Slots for <span id="selectedDateDisplay">Select a date</span></h4>
+                  <div class="time-slots-grid" id="timeSlotsGrid">
+                    <p class="select-date-prompt">Please select a date to view available time slots.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wizard-footer">
+                <button type="button" class="btn btn-outline" id="step2Prev"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                <button type="button" class="btn btn-primary" id="step2Next" disabled>Personal Information <i class="fa-solid fa-arrow-right"></i></button>
+              </div>
+            </div>
+
+            <!-- STEP 3: USER DETAILS -->
+            <div class="wizard-panel" id="step3Panel">
+              <h3 class="panel-title">Guest Details</h3>
+              <p class="panel-subtitle">Provide your contact info. We will send booking reminders via SMS/WhatsApp.</p>
+
+              <div class="guest-details-form">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="guestName">Full Name <span class="required">*</span></label>
+                    <input type="text" id="guestName" name="guestName" placeholder="e.g. Chinedu Okafor" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="guestPhone">WhatsApp / Phone Number <span class="required">*</span></label>
+                    <input type="tel" id="guestPhone" name="guestPhone" placeholder="e.g. 08147409153" required>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="guestEmail">Email Address (Optional)</label>
+                  <input type="email" id="guestEmail" name="guestEmail" placeholder="e.g. chinedu@example.com">
+                </div>
+
+                <div class="form-group">
+                  <label for="guestNotes">Special Instructions / Therapist Preferences (Optional)</label>
+                  <textarea id="guestNotes" name="guestNotes" rows="3" placeholder="Tell us about skin sensitivities, preferred room temperature, or any specific therapist requests..."></textarea>
+                </div>
+              </div>
+
+              <div class="wizard-footer">
+                <button type="button" class="btn btn-outline" id="step3Prev"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                <button type="submit" class="btn btn-primary" id="step3Submit">Confirm & Secure Booking <i class="fa-solid fa-check"></i></button>
+              </div>
+            </div>
+
+            <!-- STEP 4: SUCCESS/CONFIRMATION -->
+            <div class="wizard-panel" id="step4Panel">
+              <div class="booking-success-wrapper">
+                <div class="success-animation-circle">
+                  <i class="fa-solid fa-check-double"></i>
+                </div>
+                <h3 class="success-title">Your Escape is Scheduled!</h3>
+                <p class="success-message">Thank you for choosing The Villa Spa. A confirmation receipt has been simulated and saved. We look forward to pampering you!</p>
+                
+                <!-- Ticket Receipt -->
+                <div class="luxury-receipt">
+                  <div class="receipt-header">
+                    <span>THE VILLA SPA</span>
+                    <span class="receipt-id" id="receiptId">TVS-483920</span>
+                  </div>
+                  <div class="receipt-body">
+                    <div class="receipt-row">
+                      <span class="row-label">Guest:</span>
+                      <strong id="receiptGuest">Chinedu Okafor</strong>
+                    </div>
+                    <div class="receipt-row">
+                      <span class="row-label">Date & Time:</span>
+                      <strong id="receiptDateTime">Mon, June 8, 2026 @ 10:00 AM</strong>
+                    </div>
+                    <div class="receipt-divider"></div>
+                    <div class="receipt-row-services">
+                      <span class="row-label">Treatments:</span>
+                      <ul id="receiptServicesList">
+                        <!-- Loaded dynamically -->
+                      </ul>
+                    </div>
+                    <div class="receipt-divider"></div>
+                    <div class="receipt-row total">
+                      <span class="row-label">Estimated Total:</span>
+                      <strong class="price-highlight" id="receiptTotal">₦15,000</strong>
+                    </div>
+                  </div>
+                  <div class="receipt-footer">
+                    <p>Opp Don Ritz Hotel, Udoka Housing Estate, Awka</p>
+                    <p>Please arrive 10 minutes prior to your slot time.</p>
+                  </div>
+                </div>
+
+                <div class="success-actions">
+                  <button type="button" class="btn btn-primary" onclick="restartBookingWizard()">Schedule Another Experience</button>
+                  <a href="https://wa.me/2348147409153" target="_blank" class="btn btn-outline"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skincare Products Boutique Teaser Section -->
+    <section class="products-teaser-section" id="products-teaser" style="background-color: var(--color-white); border-bottom: 1px solid var(--color-sand); padding: 80px 0;">
+      <div class="section-container" style="padding-top: 0; padding-bottom: 0;">
+        <div class="text-center-wrapper" style="margin-bottom: 40px;">
+          <span class="section-subtitle">Skincare Boutique</span>
+          <h2 class="section-title">Premium Skinvestments</h2>
+          <p class="section-desc">Take the spa experience home. Explore our range of dermatological cleansers, serums, and organic whipped creams to maintain your glow.</p>
+        </div>
+
+        <div class="products-teaser-grid" id="homepageProductsTeaserGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; margin-bottom: 40px;">
+          <!-- Loaded dynamically from Firestore -->
+          <div class="text-center w-full text-muted" style="grid-column: 1 / -1;"><i class="fa-solid fa-spinner fa-spin"></i> Loading skincare selection...</div>
+        </div>
+
+        <div class="text-center">
+          <a href="products.html" class="btn btn-primary">Explore Skincare Boutique <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="reviews-section" id="reviews">
+      <div class="section-container">
+        <div class="text-center-wrapper">
+          <span class="section-subtitle">Guest Testimonials</span>
+          <h2 class="section-title">What Our Clients Say</h2>
+          <p class="section-desc">Real reviews from guests who experienced absolute wellness at our Awka lounge.</p>
+        </div>
+
+        <div class="carousel-container">
+          <div class="carousel-track" id="testimonialCarousel">
+            <!-- Slide 1 -->
+            <div class="testimonial-card">
+              <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+              <p class="testimonial-text">"Best facial in Awka! The estheticians are extremely professional and knowledgeable. My skin is literally glowing. A perfect skincare investment."</p>
+              <div class="reviewer-info">
+                <div class="reviewer-avatar">UO</div>
+                <div>
+                  <h4 class="reviewer-name">Ugochi O.</h4>
+                  <p class="reviewer-status">Verified Guest</p>
+                </div>
+              </div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="testimonial-card">
+              <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+              <p class="testimonial-text">"The Deep Tissue massage was exactly what I needed after a stressful week. The environment is extremely clean, soothing, and smells amazing."</p>
+              <div class="reviewer-info">
+                <div class="reviewer-avatar">EA</div>
+                <div>
+                  <h4 class="reviewer-name">Emeka A.</h4>
+                  <p class="reviewer-status">Regular Client</p>
+                </div>
+              </div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="testimonial-card">
+              <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+              <p class="testimonial-text">"I registered for the 4-week spa bootcamp. The hands-on training was thorough. I got my certificate, started my home spa, and I'm loving it!"</p>
+              <div class="reviewer-info">
+                <div class="reviewer-avatar">CO</div>
+                <div>
+                  <h4 class="reviewer-name">Chioma O.</h4>
+                  <p class="reviewer-status">Bootcamp Graduate</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="carousel-indicators" id="carouselIndicators">
+            <span class="dot active" data-slide="0"></span>
+            <span class="dot" data-slide="1"></span>
+            <span class="dot" data-slide="2"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Location & Contact Section -->
+    <section class="contact-section" id="contact">
+      <div class="section-container">
+        <div class="contact-grid">
+          <!-- Information details -->
+          <div class="contact-info-block">
+            <span class="section-subtitle">Find Us & Reach Out</span>
+            <h2 class="section-title">Let Us Welcome You</h2>
+            <p class="contact-desc">We are conveniently located in Udoka Housing Estate. Drop in or reach out to pre-book services or ask details about our certification training.</p>
+
+            <div class="contact-info-details">
+              <div class="contact-detail-item">
+                <div class="icon-box"><i class="fa-solid fa-map-location-dot"></i></div>
+                <div>
+                  <h4>Our Address</h4>
+                  <p>No 2 Don Ritz Street Off Udoka Housing Estate, Awka</p>
+                  <span class="direction-sub text-muted">(Opposite Don Ritz Hotel)</span>
+                </div>
+              </div>
+
+              <div class="contact-detail-item">
+                <div class="icon-box"><i class="fa-solid fa-business-time"></i></div>
+                <div>
+                  <h4>Hours of Operation</h4>
+                  <p>Monday – Saturday: 9:00 AM – 7:00 PM</p>
+                  <p>Sunday: 1:00 PM – 7:00 PM</p>
+                </div>
+              </div>
+
+              <div class="contact-detail-item">
+                <div class="icon-box"><i class="fa-solid fa-phone-volume"></i></div>
+                <div>
+                  <h4>Call & WhatsApp</h4>
+                  <p>Mobile: <a href="tel:08147409153">0814 740 9153</a></p>
+                  <p>Hotline: <a href="tel:08068711472">0806 871 1472</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stylized Interactive Map Layout -->
+          <div class="map-card-wrapper animate-on-scroll">
+            <div class="map-placeholder">
+              <div class="map-overlay">
+                <div class="map-tag">
+                  <span class="tag-title">THE VILLA SPA</span>
+                  <p>No. 2 Don Ritz Street, Awka</p>
+                  <a href="https://maps.google.com/?q=No+2+Don+Ritz+Street+Off+Udoka+Housing+Estate+Awka" target="_blank" class="btn btn-xs btn-primary"><i class="fa-solid fa-directions"></i> Get Directions</a>
+                </div>
+              </div>
+              <!-- Mock Map Visual Design with SVG Grid -->
+              <svg class="mock-map-graphics" viewBox="0 0 400 300" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                <!-- Background ground -->
+                <rect width="400" height="300" fill="#E6DFD9" />
+                <!-- Grid Roads -->
+                <path d="M 0,100 L 400,100" stroke="#F7F5F2" stroke-width="24" fill="none" />
+                <path d="M 150,0 L 150,300" stroke="#F7F5F2" stroke-width="20" fill="none" />
+                <path d="M 0,220 L 400,220" stroke="#F7F5F2" stroke-width="16" fill="none" />
+                
+                <!-- Surrounding Buildings -->
+                <rect x="20" y="20" width="100" height="60" rx="4" fill="#DFD3C3" opacity="0.8"/>
+                <text x="70" y="55" font-family="'Plus Jakarta Sans'" font-size="10" fill="#2B2321" text-anchor="middle" opacity="0.6">Udoka Estate</text>
+                
+                <rect x="200" y="20" width="160" height="60" rx="4" fill="#DFD3C3" opacity="0.8"/>
+                <text x="280" y="55" font-family="'Plus Jakarta Sans'" font-size="10" fill="#2B2321" text-anchor="middle" opacity="0.6">Don Ritz Hotel</text>
+                
+                <rect x="20" y="130" width="100" height="70" rx="4" fill="#DFD3C3" opacity="0.8"/>
+                
+                <!-- The Villa Spa Building Location (Highlighted) -->
+                <rect x="200" y="130" width="160" height="70" rx="4" fill="#2B2321" />
+                <circle cx="280" cy="165" r="18" fill="#C8B195" />
+                <text x="280" y="169" font-family="'Playfair Display'" font-size="12" fill="#F7F5F2" text-anchor="middle" font-weight="bold">TVS</text>
+                <text x="280" y="190" font-family="'Plus Jakarta Sans'" font-size="8" fill="#C8B195" text-anchor="middle">The Villa Spa</text>
+                
+                <!-- Landmark Line marker -->
+                <line x1="280" y1="80" x2="280" y2="130" stroke="#C8B195" stroke-dasharray="4" stroke-width="2"/>
+                <text x="280" y="115" font-family="'Plus Jakarta Sans'" font-size="7" fill="#C8B195" text-anchor="middle" font-weight="bold">Opposite Street</text>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Admin dashboard portal (rendered conditionally if ?admin=true is active) -->
+    <section class="admin-dashboard-section" id="adminDashboard" style="display: none;">
+      <div class="section-container">
+        <div class="admin-header-row">
+          <div>
+            <span class="badge badge-admin">Secure System Portal</span>
+            <h2 class="admin-title">Client Bookings Dashboard</h2>
+          </div>
+          <div>
+            <button class="btn btn-outline" onclick="clearAllReservations()">Reset Database</button>
+            <button class="btn btn-primary" onclick="closeAdminPortal()">Close Portal</button>
+          </div>
+        </div>
+
+        <div class="admin-stats-row">
+          <div class="stat-card">
+            <span class="stat-label">Total Bookings</span>
+            <strong class="stat-value" id="adminTotalBookings">0</strong>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Potential Revenue</span>
+            <strong class="stat-value price-highlight" id="adminTotalRevenue">₦0</strong>
+          </div>
+        </div>
+
+        <div class="bookings-table-wrapper">
+          <table class="bookings-table">
+            <thead>
+              <tr>
+                <th>Receipt ID</th>
+                <th>Guest Name</th>
+                <th>Phone Number</th>
+                <th>Appointment Date/Time</th>
+                <th>Selected Treatments</th>
+                <th>Total Price</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="bookingsTableBody">
+              <!-- Dynamically populated -->
+              <tr>
+                <td colspan="7" class="text-center text-muted">No reservations saved yet. Run the booking wizard on the frontend to populate bookings!</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-brand-column">
+        <a href="#" class="footer-logo">
+          <span class="logo-initials">TVS</span>
+          <span class="logo-title">THE VILLA SPA</span>
+        </a>
+        <p class="footer-about">Awka's Premier Salon and Wellness Lounge. Dedicated to luxury treatments, holistic rejuvenation, and premium industry training.</p>
+        <div class="footer-socials">
+          <a href="https://instagram.com/thevillaspa_" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/2348147409153" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          <a href="tel:08147409153"><i class="fas fa-phone"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-links-column">
+        <h4>Navigation</h4>
+        <a href="#">Home</a>
+        <a href="#about">About Sanctuary</a>
+        <a href="#services">Wellness Menu</a>
+        <a href="#bootcamp">Intensive Training</a>
+        <a href="#booking-section">Book Slots</a>
+        <a href="admin.html"><i class="fa-solid fa-lock"></i> Admin Portal</a>
+      </div>
+
+      <div class="footer-hours-column">
+        <h4>Wellness Hours</h4>
+        <p><strong>Monday – Saturday</strong><br>9:00 AM – 7:00 PM</p>
+        <p><strong>Sunday Session</strong><br>1:00 PM – 7:00 PM</p>
+        <p class="urgent-hours-note"><i class="fa-solid fa-bell"></i> Bookings required for Sunday slots.</p>
+      </div>
+    </div>
+    
+    <div class="footer-copyright">
+      <p>&copy; 2026 The Villa Spa. All Rights Reserved. Created with premium excellence.</p>
+    </div>
+  </footer>
+
+  <!-- Highlight Media Modals -->
+  <div class="custom-modal" id="highlightModal">
+    <div class="modal-backdrop" onclick="closeHighlightModal()"></div>
+    <div class="modal-content-card">
+      <button class="modal-close" onclick="closeHighlightModal()"><i class="fa-solid fa-xmark"></i></button>
+      <div class="modal-body" id="modalBodyContent">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootcamp Registration Modal -->
+  <div class="custom-modal" id="bootcampModal">
+    <div class="modal-backdrop" onclick="closeBootcampModal()"></div>
+    <div class="modal-content-card max-w-sm">
+      <button class="modal-close" onclick="closeBootcampModal()"><i class="fa-solid fa-xmark"></i></button>
+      <div class="modal-body">
+        <h3 class="modal-headline">Enroll in TVS Bootcamp</h3>
+        <p class="modal-subline">Submit your details to reserve a slot in our next 4-Week Intensive Cohort.</p>
+        
+        <form id="bootcampEnrollForm" class="bootcamp-enroll-form">
+          <div class="form-group">
+            <label for="enrollName">Full Name <span class="required">*</span></label>
+            <input type="text" id="enrollName" placeholder="e.g. Amaechi Ndu" required>
+          </div>
+          <div class="form-group">
+            <label for="enrollPhone">Phone / WhatsApp Number <span class="required">*</span></label>
+            <input type="tel" id="enrollPhone" placeholder="e.g. 08068711472" required>
+          </div>
+          <div class="form-group">
+            <label for="enrollPlan">Select Package <span class="required">*</span></label>
+            <select id="enrollPlan" required>
+              <option value="regular">Regular Package (₦300,000)</option>
+              <option value="premium">Premium Package with Kit (₦350,000)</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary w-full">Submit Application</button>
+        </form>
+        <div class="enroll-success-message" id="enrollSuccessMsg" style="display: none;">
+          <i class="fa-solid fa-circle-check"></i>
+          <h4>Application Received!</h4>
+          <p>We will contact you via WhatsApp shortly to finalize your registration and kit arrangements.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Syllabus Modal Drawer -->
+  <div class="custom-modal" id="syllabusModal">
+    <div class="modal-backdrop" onclick="closeSyllabusModal()"></div>
+    <div class="modal-content-card max-w-md">
+      <button class="modal-close" onclick="closeSyllabusModal()"><i class="fa-solid fa-xmark"></i></button>
+      <div class="modal-body">
+        <h3 class="modal-headline">4-Week Intensive Course Syllabus</h3>
+        <p class="modal-subline font-serif">Comprehensive training outline for The Villa Spa Academy</p>
+        
+        <div class="syllabus-timeline">
+          <div class="timeline-week">
+            <div class="week-marker">Week 1</div>
+            <div class="week-details">
+              <h4>Foundations of Esthetics</h4>
+              <p>Introduction to skin anatomy, skin analysis techniques, customer consultations, hygiene standards, and salon sanitization processes.</p>
+            </div>
+          </div>
+
+          <div class="timeline-week">
+            <div class="week-marker">Week 2</div>
+            <div class="week-details">
+              <h4>Manual Facial Treatments</h4>
+              <p>Deep cleansing facials, manual extraction techniques, product knowledge (serums, toners, masks), and specialized massage techniques for skincare.</p>
+            </div>
+          </div>
+
+          <div class="timeline-week">
+            <div class="week-marker">Week 3</div>
+            <div class="week-details">
+              <h4>Advanced therapies & Waxing</h4>
+              <p>Full-body and facial waxing procedures, brow shaping, body scrubs, polish formulations, skin glow therapies, and sauna hygiene.</p>
+            </div>
+          </div>
+
+          <div class="timeline-week">
+            <div class="week-marker">Week 4</div>
+            <div class="week-details">
+              <h4>Cosmetic Enhancements & Business Setup</h4>
+              <p>Teeth whitening techniques, teeth gemming/polishing, client management, spa business startup guide, and social media branding strategies.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating WhatsApp Button -->
+  <a href="https://wa.me/2348147409153" target="_blank" rel="noopener" class="floating-wa-btn" id="floatingWaBtn" title="Chat with us on WhatsApp" aria-label="WhatsApp Chat">
+    <span class="wa-pulse-ring"></span>
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top-btn" id="backToTopBtn" title="Scroll to top" aria-label="Back to top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <!-- Promo Toast Notification -->
+  <div class="promo-toast" id="promoToast" role="alert">
+    <div class="toast-icon"><i class="fa-solid fa-gift"></i></div>
+    <div class="toast-content">
+      <strong>Welcome to The Villa Spa ✨</strong>
+      <p>Book today &amp; mention <em>"GLOW2026"</em> for a complimentary skin consultation!</p>
+    </div>
+    <button class="toast-close" id="toastCloseBtn" aria-label="Dismiss notification"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+
+  <!-- Script loading -->
+  <script type="module" src="app.js?v=2026.06.23.01"></script>
+</body>
+</html>
