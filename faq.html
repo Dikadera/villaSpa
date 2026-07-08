@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frequently Asked Questions | The Villa Spa</title>
+  <meta name="description" content="Get answers to frequently asked questions about booking, appointment preparations, cancel/refund terms, and skincare treatment aftercare at The Villa Spa.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css?v=2026.07.08.99">
+  <style>
+    .faq-accordion-container {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .faq-item-subpage {
+      background-color: var(--color-cream);
+      border: 1.5px solid var(--color-sand);
+      border-radius: var(--border-radius-md);
+      overflow: hidden;
+      transition: var(--transition-smooth);
+    }
+    .faq-question-btn {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--color-espresso);
+      text-align: left;
+      transition: var(--transition-fast);
+    }
+    .faq-question-btn:hover {
+      color: var(--color-champagne-dark);
+    }
+    .faq-answer-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+      padding: 0 24px;
+      font-size: 0.95rem;
+      color: var(--color-espresso-light);
+      line-height: 1.6;
+    }
+    .faq-item-subpage.active {
+      border-color: var(--color-champagne-dark);
+    }
+    .faq-item-subpage.active .faq-answer-panel {
+      padding-bottom: 24px;
+    }
+    .faq-icon-arrow {
+      transition: transform 0.3s ease;
+      color: var(--color-champagne-dark);
+    }
+    .faq-item-subpage.active .faq-icon-arrow {
+      transform: rotate(180deg);
+    }
+  </style>
+</head>
+<body class="faq-body">
+
+  <!-- Global Ambient Snow Effect -->
+  <div id="globalSnowContainer"></div>
+
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+
+  <!-- Announcement Bar -->
+  <div class="announcement-bar">
+    <div class="announcement-content">
+      <span>✨ <strong>Help Center:</strong> Learn about appointment bookings, consultations, cancellation, and aftercare rules.</span>
+    </div>
+  </div>
+
+  <!-- Header & Navigation -->
+  <header class="main-header">
+    <div class="header-container">
+      <a href="index.html" class="logo-area">
+        <span class="logo-initials">TVS</span>
+        <div class="logo-divider"></div>
+        <div class="logo-text">
+          <span class="brand-name">THE VILLA SPA</span>
+          <span class="brand-tagline">SALON · WELLNESS · LAUNGE</span>
+        </div>
+      </a>
+
+      <nav class="nav-menu" id="navMenu">
+        <a href="about.html" class="nav-link">About Us</a>
+  <!-- Services Mega Dropdown -->
+      <div class="nav-item nav-has-mega">
+        <a href="services.html" class="nav-link nav-dropdown-toggle ">Services <i class="fa-solid fa-chevron-down nav-chevron"></i></a>
+        <div class="nav-mega-panel">
+          <div class="mega-panel-inner">
+            <div class="mega-col">
+              <div class="mega-col-header"><i class="fa-solid fa-spa"></i> Spa Treatments</div>
+              <a href="services.html#spa-treatments" class="mega-item">Massages</a>
+              <a href="services.html#spa-treatments" class="mega-item">Facials</a>
+              <a href="services.html#spa-treatments" class="mega-item">Body Scrubs</a>
+              <a href="services.html#spa-treatments" class="mega-item">Moroccan Hammam</a>
+              <a href="services.html#spa-treatments" class="mega-item">Waxing &amp; Tinting</a>
+              <a href="services.html#spa-treatments" class="mega-item">Pedicures &amp; Manicures</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-header"><i class="fa-solid fa-user-doctor"></i> Medical Aesthetics</div>
+              <a href="services.html#medical-aesthetics" class="mega-item">Botox Injections</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Dermal Fillers</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">PRP &amp; PRF</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Microneedling</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Chemical Peels</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Skin Boosters</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Mesotherapy</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">IV Drip Therapies</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-header"><i class="fa-solid fa-gift"></i> Luxury Packages</div>
+              <a href="services.html#packages" class="mega-item">Bride-to-Be Package</a>
+              <a href="services.html#packages" class="mega-item">Couple's Sanctuary</a>
+              <div class="mega-col-cta">
+                <a href="index.html#booking-section" class="btn btn-primary" style="display:block;text-align:center;font-size:0.78rem;padding:10px 16px;">Book a Treatment</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        <a href="products.html" class="nav-link">Skincare Boutique</a>
+        <a href="academy.html" class="nav-link">Academy</a>
+  <!-- Blog / Content Dropdown -->
+      <div class="nav-item nav-has-dropdown">
+        <a href="blog.html" class="nav-link nav-dropdown-toggle active">Blog <i class="fa-solid fa-chevron-down nav-chevron"></i></a>
+        <div class="nav-dropdown-panel">
+          <a href="blog.html" class="dropdown-item">
+            <span class="di-icon"><i class="fa-solid fa-newspaper"></i></span>
+            <div><strong>Articles</strong><span>Expert skincare &amp; wellness guides</span></div>
+          </a>
+          <a href="testimonials.html" class="dropdown-item">
+            <span class="di-icon"><i class="fa-solid fa-star"></i></span>
+            <div><strong>Testimonials</strong><span>Verified client success stories</span></div>
+          </a>
+          <a href="faq.html" class="dropdown-item">
+            <span class="di-icon"><i class="fa-solid fa-circle-question"></i></span>
+            <div><strong>FAQ</strong><span>Booking &amp; aftercare help</span></div>
+          </a>
+        </div>
+      </div>
+        <a href="index.html#booking-section" class="btn btn-primary nav-cta">Book Experience</a>
+      </nav>
+
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="theme-toggle-btn" id="siteThemeToggle" title="Toggle Light / Dark Mode" aria-label="Toggle theme">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+        <button class="mobile-menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Subpage Hero -->
+    <section class="shop-hero">
+      <div class="shop-hero-bg" style="background-image: linear-gradient(rgba(20, 15, 13, 0.72), rgba(20, 15, 13, 0.88)), url('assets/spa_hero_bg.jpeg');"></div>
+      <div class="shop-hero-container">
+        <span class="shop-subtitle">Help Centre</span>
+        <h1 class="shop-title">Frequently Asked Questions</h1>
+        <p class="shop-description">Find answers about bookings, appointment preparation, cancellations, refunds, and treatment aftercare.</p>
+      </div>
+    </section>
+
+    <!-- FAQ Accordions -->
+    <section style="padding: 80px 24px;">
+      <div class="section-container" style="max-width: 1000px; margin: 0 auto;">
+        
+        <div class="faq-accordion-container">
+          
+          <!-- FAQ 1: Do I need a consultation? -->
+          <div class="faq-item-subpage">
+            <button class="faq-question-btn" onclick="toggleFaqItem(this)">
+              <span>Do I need a consultation before booking?</span>
+              <i class="fa-solid fa-chevron-down faq-icon-arrow"></i>
+            </button>
+            <div class="faq-answer-panel">
+              <p>Yes, consultations are highly recommended (and sometimes mandatory) for advanced clinical procedures such as Botox, Dermal Fillers, Chemical Peels, and Weight Management programs. This allows our clinical estheticians or guest physicians to analyze your skin histology, discuss safety protocols, and outline healthy expectations.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 2: How do I prepare? -->
+          <div class="faq-item-subpage">
+            <button class="faq-question-btn" onclick="toggleFaqItem(this)">
+              <span>How do I prepare for my appointment?</span>
+              <i class="fa-solid fa-chevron-down faq-icon-arrow"></i>
+            </button>
+            <div class="faq-answer-panel">
+              <p>To prepare for facial treatments or advanced peeling procedures:<br>
+              - Avoid active chemical products (such as Retinoids, Salicylic Acid, or Glycolic scrubs) 3 days prior.<br>
+              - Avoid tanning or heavy sunburn directly before booking.<br>
+              - Arrive with a clean face (minimal makeup) and stay hydrated.<br>
+              - Inform your therapist about any medication history or sensitive skin triggers during sign-in.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 3: Cancellation policy -->
+          <div class="faq-item-subpage">
+            <button class="faq-question-btn" onclick="toggleFaqItem(this)">
+              <span>What is your cancellation policy?</span>
+              <i class="fa-solid fa-chevron-down faq-icon-arrow"></i>
+            </button>
+            <div class="faq-answer-panel">
+              <p>We value our therapists' time. You may cancel or reschedule your slot up to 24 hours prior to your scheduled time without penalty. Cancellations made under 24 hours may result in the forfeiture of your booking deposit. Late arrivals beyond 15 minutes may have their session length shortened or rescheduled to accommodate subsequent clients.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 4: Refund policy -->
+          <div class="faq-item-subpage">
+            <button class="faq-question-btn" onclick="toggleFaqItem(this)">
+              <span>What is your refund policy?</span>
+              <i class="fa-solid fa-chevron-down faq-icon-arrow"></i>
+            </button>
+            <div class="faq-answer-panel">
+              <p>We do not issue cash refunds on completed services or aesthetic procedures. If you are unsatisfied with a treatment outcome, please contact management within 48 hours to discuss adjustments. Skincare products purchased from our boutique may be exchanged or returned for store credit within 7 days of purchase, provided the product remains completely sealed and in its original retail package.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 5: Aftercare -->
+          <div class="faq-item-subpage">
+            <button class="faq-question-btn" onclick="toggleFaqItem(this)">
+              <span>What general treatment aftercare is required?</span>
+              <i class="fa-solid fa-chevron-down faq-icon-arrow"></i>
+            </button>
+            <div class="faq-answer-panel">
+              <p>General post-treatment recommendations include:<br>
+              - Avoid high-heat environments (like saunas, hot showers, or heavy gym training) for 24-48 hours.<br>
+              - Apply SPF 50 sunscreen daily to prevent pigmentation damage.<br>
+              - Do not pick or scratch at shedding skin post-peel.<br>
+              - Focus on hydration by drinking water and using mild, non-active moisturizers.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-brand-column">
+        <a href="index.html" class="footer-logo">
+          <span class="logo-initials">TVS</span>
+          <span class="logo-title">THE VILLA SPA</span>
+        </a>
+        <p class="footer-about">Awka's Premier Salon and Wellness Lounge. Dedicated to luxury treatments, holistic rejuvenation, and premium industry training.</p>
+        <div class="footer-socials">
+          <a href="https://instagram.com/thevillaspa_" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/2348147409153" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          <a href="tel:08147409153"><i class="fas fa-phone"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-links-column">
+        <h4>Navigation</h4>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Sanctuary</a>
+        <a href="services.html">Wellness Menu</a>
+        <a href="products.html">Skincare Boutique</a>
+        <a href="index.html#booking-section">Book Slots</a>
+      </div>
+
+      <div class="footer-hours-column">
+        <h4>Wellness Hours</h4>
+        <p><strong>Monday – Saturday</strong><br>9:00 AM – 7:00 PM</p>
+        <p><strong>Sunday Session</strong><br>1:00 PM – 7:00 PM</p>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <p>&copy; 2026 The Villa Spa. All Rights Reserved. Created with premium excellence.</p>
+    </div>
+  </footer>
+
+  <script type="module" src="app.js?v=2026.07.08.99"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
+
+  <script>
+    function toggleFaqItem(button) {
+      const item = button.parentElement;
+      const isActive = item.classList.contains("active");
+      
+      // Close all other items
+      document.querySelectorAll(".faq-item-subpage").forEach(faq => {
+        faq.classList.remove("active");
+        faq.querySelector(".faq-answer-panel").style.maxHeight = null;
+      });
+      
+      if (!isActive) {
+        item.classList.add("active");
+        const panel = item.querySelector(".faq-answer-panel");
+        panel.style.maxHeight = panel.scrollHeight + "px";
+      }
+    }
+  </script>
+</body>
+</html>

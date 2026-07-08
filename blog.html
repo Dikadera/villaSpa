@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TVS Skincare Blog | The Villa Spa</title>
+  <meta name="description" content="Informative skincare articles from TVS specialists. Read Botox 101, Chemical Peels Explained, PRP vs PRF, Stretch marks, Acne solutions, and Skincare tips.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css?v=2026.07.08.99">
+  <style>
+    .blog-card {
+      background-color: var(--color-cream);
+      border: 1px solid var(--color-sand);
+      border-radius: var(--border-radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition-smooth);
+      cursor: pointer;
+    }
+    .blog-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-subtle);
+      border-color: var(--color-champagne-dark);
+    }
+    .blog-info {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+    .blog-meta {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: bold;
+      color: var(--color-champagne-dark);
+      letter-spacing: 1px;
+    }
+    .blog-title-card {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      color: var(--color-espresso);
+      line-height: 1.3;
+    }
+    .blog-summary {
+      font-size: 0.88rem;
+      color: var(--color-espresso-light);
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body class="blog-body">
+
+  <!-- Global Ambient Snow Effect -->
+  <div id="globalSnowContainer"></div>
+
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+
+  <!-- Announcement Bar -->
+  <div class="announcement-bar">
+    <div class="announcement-content">
+      <span>✨ <strong>TVS Insights:</strong> Professional skincare guidelines and medical aesthetic education.</span>
+    </div>
+  </div>
+
+  <!-- Header & Navigation -->
+  <header class="main-header">
+    <div class="header-container">
+      <a href="index.html" class="logo-area">
+        <span class="logo-initials">TVS</span>
+        <div class="logo-divider"></div>
+        <div class="logo-text">
+          <span class="brand-name">THE VILLA SPA</span>
+          <span class="brand-tagline">SALON · WELLNESS · LAUNGE</span>
+        </div>
+      </a>
+
+      <nav class="nav-menu" id="navMenu">
+        <a href="about.html" class="nav-link">About Us</a>
+  <!-- Services Mega Dropdown -->
+      <div class="nav-item nav-has-mega">
+        <a href="services.html" class="nav-link nav-dropdown-toggle ">Services <i class="fa-solid fa-chevron-down nav-chevron"></i></a>
+        <div class="nav-mega-panel">
+          <div class="mega-panel-inner">
+            <div class="mega-col">
+              <div class="mega-col-header"><i class="fa-solid fa-spa"></i> Spa Treatments</div>
+              <a href="services.html#spa-treatments" class="mega-item">Massages</a>
+              <a href="services.html#spa-treatments" class="mega-item">Facials</a>
+              <a href="services.html#spa-treatments" class="mega-item">Body Scrubs</a>
+              <a href="services.html#spa-treatments" class="mega-item">Moroccan Hammam</a>
+              <a href="services.html#spa-treatments" class="mega-item">Waxing &amp; Tinting</a>
+              <a href="services.html#spa-treatments" class="mega-item">Pedicures &amp; Manicures</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-header"><i class="fa-solid fa-user-doctor"></i> Medical Aesthetics</div>
+              <a href="services.html#medical-aesthetics" class="mega-item">Botox Injections</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Dermal Fillers</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">PRP &amp; PRF</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Microneedling</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Chemical Peels</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Skin Boosters</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Mesotherapy</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">IV Drip Therapies</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-header"><i class="fa-solid fa-gift"></i> Luxury Packages</div>
+              <a href="services.html#packages" class="mega-item">Bride-to-Be Package</a>
+              <a href="services.html#packages" class="mega-item">Couple's Sanctuary</a>
+              <div class="mega-col-cta">
+                <a href="index.html#booking-section" class="btn btn-primary" style="display:block;text-align:center;font-size:0.78rem;padding:10px 16px;">Book a Treatment</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        <a href="products.html" class="nav-link">Skincare Boutique</a>
+        <a href="academy.html" class="nav-link">Academy</a>
+  <!-- Blog / Content Dropdown -->
+      <div class="nav-item nav-has-dropdown">
+        <a href="blog.html" class="nav-link nav-dropdown-toggle active">Blog <i class="fa-solid fa-chevron-down nav-chevron"></i></a>
+        <div class="nav-dropdown-panel">
+          <a href="blog.html" class="dropdown-item">
+            <span class="di-icon"><i class="fa-solid fa-newspaper"></i></span>
+            <div><strong>Articles</strong><span>Expert skincare &amp; wellness guides</span></div>
+          </a>
+          <a href="testimonials.html" class="dropdown-item">
+            <span class="di-icon"><i class="fa-solid fa-star"></i></span>
+            <div><strong>Testimonials</strong><span>Verified client success stories</span></div>
+          </a>
+          <a href="faq.html" class="dropdown-item">
+            <span class="di-icon"><i class="fa-solid fa-circle-question"></i></span>
+            <div><strong>FAQ</strong><span>Booking &amp; aftercare help</span></div>
+          </a>
+        </div>
+      </div>
+        <a href="index.html#booking-section" class="btn btn-primary nav-cta">Book Experience</a>
+      </nav>
+
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="theme-toggle-btn" id="siteThemeToggle" title="Toggle Light / Dark Mode" aria-label="Toggle theme">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+        <button class="mobile-menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Subpage Hero -->
+    <section class="shop-hero">
+      <div class="shop-hero-bg" style="background-image: linear-gradient(rgba(20, 15, 13, 0.72), rgba(20, 15, 13, 0.88)), url('assets/spa_hero_bg.jpeg');"></div>
+      <div class="shop-hero-container">
+        <span class="shop-subtitle">Esthetics Journal</span>
+        <h1 class="shop-title">Skincare &amp; Wellness Blog</h1>
+        <p class="shop-description">Science-backed articles to help you make informed choices about your skin. Written by TVS practitioners.</p>
+      </div>
+    </section>
+
+    <!-- Blog Grid -->
+    <section style="padding: 80px 24px;">
+      <div class="section-container" style="max-width: 1000px; margin: 0 auto;">
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 24px;" id="blogArticlesGrid">
+          
+          <!-- Article 1: Botox 101 -->
+          <div class="blog-card" onclick="openArticleModal('botox')">
+            <div class="blog-info">
+              <div>
+                <span class="blog-meta">Medical Aesthetics</span>
+                <h3 class="blog-title-card" style="margin: 8px 0;">Botox 101: Wrinkle Reduction</h3>
+                <p class="blog-summary">Everything you need to know about Botox. How it stops muscle contractions to prevent wrinkles, duration, and target areas.</p>
+              </div>
+              <span style="font-size: 0.8rem; font-weight: bold; color: var(--color-espresso); text-transform: uppercase;">Read Article <i class="fa-solid fa-arrow-right" style="font-size: 0.7rem;"></i></span>
+            </div>
+          </div>
+
+          <!-- Article 2: Chemical Peels -->
+          <div class="blog-card" onclick="openArticleModal('peels')">
+            <div class="blog-info">
+              <div>
+                <span class="blog-meta">Esthetics Science</span>
+                <h3 class="blog-title-card" style="margin: 8px 0;">Chemical Peels Explained</h3>
+                <p class="blog-summary">Understanding superficial vs medium glycolic, salicylic, and TCA peels. Choosing the right acid concentration for pigmentation.</p>
+              </div>
+              <span style="font-size: 0.8rem; font-weight: bold; color: var(--color-espresso); text-transform: uppercase;">Read Article <i class="fa-solid fa-arrow-right" style="font-size: 0.7rem;"></i></span>
+            </div>
+          </div>
+
+          <!-- Article 3: PRP vs PRF -->
+          <div class="blog-card" onclick="openArticleModal('prp-prf')">
+            <div class="blog-info">
+              <div>
+                <span class="blog-meta">Regenerative Care</span>
+                <h3 class="blog-title-card" style="margin: 8px 0;">PRP vs PRF: Vampire Facial</h3>
+                <p class="blog-summary">Comparing Platelet-Rich Plasma and Platelet-Rich Fibrin. Fibrin's slower growth factor release leads to better scar tissue repair.</p>
+              </div>
+              <span style="font-size: 0.8rem; font-weight: bold; color: var(--color-espresso); text-transform: uppercase;">Read Article <i class="fa-solid fa-arrow-right" style="font-size: 0.7rem;"></i></span>
+            </div>
+          </div>
+
+          <!-- Article 4: Stretch Marks -->
+          <div class="blog-card" onclick="openArticleModal('stretch-marks')">
+            <div class="blog-info">
+              <div>
+                <span class="blog-meta">Body Therapy</span>
+                <h3 class="blog-title-card" style="margin: 8px 0;">Stretch Marks Treatments</h3>
+                <p class="blog-summary">Can stretch marks truly fade? We examine body scrubs exfoliation, microneedling collagen synthesis, and intensive hydration routines.</p>
+              </div>
+              <span style="font-size: 0.8rem; font-weight: bold; color: var(--color-espresso); text-transform: uppercase;">Read Article <i class="fa-solid fa-arrow-right" style="font-size: 0.7rem;"></i></span>
+            </div>
+          </div>
+
+          <!-- Article 5: Acne -->
+          <div class="blog-card" onclick="openArticleModal('acne')">
+            <div class="blog-info">
+              <div>
+                <span class="blog-meta">Dermal Pathology</span>
+                <h3 class="blog-title-card" style="margin: 8px 0;">Acne &amp; Pores Management</h3>
+                <p class="blog-summary">Solve active cystic acne and deep blackheads. The combination of salicylic acid peel formulas with sterile medical extractions.</p>
+              </div>
+              <span style="font-size: 0.8rem; font-weight: bold; color: var(--color-espresso); text-transform: uppercase;">Read Article <i class="fa-solid fa-arrow-right" style="font-size: 0.7rem;"></i></span>
+            </div>
+          </div>
+
+          <!-- Article 6: Weight Loss Medications -->
+          <div class="blog-card" onclick="openArticleModal('weight-loss')">
+            <div class="blog-info">
+              <div>
+                <span class="blog-meta">Weight Management</span>
+                <h3 class="blog-title-card" style="margin: 8px 0;">Weight Loss Injections</h3>
+                <p class="blog-summary">Analyzing safety, mechanism, and healthy expectations when utilizing lipolysis fat-dissolvers and medical weight counseling.</p>
+              </div>
+              <span style="font-size: 0.8rem; font-weight: bold; color: var(--color-espresso); text-transform: uppercase;">Read Article <i class="fa-solid fa-arrow-right" style="font-size: 0.7rem;"></i></span>
+            </div>
+          </div>
+
+          <!-- Article 7: Skincare Tips -->
+          <div class="blog-card" onclick="openArticleModal('tips')">
+            <div class="blog-info">
+              <div>
+                <span class="blog-meta">Daily Routine</span>
+                <h3 class="blog-title-card" style="margin: 8px 0;">Skincare Tips: Routine 101</h3>
+                <p class="blog-summary">Double cleansing, using direct sunscreen protection, and applying hyaluronic acids on damp skin. Maximizing boutique products.</p>
+              </div>
+              <span style="font-size: 0.8rem; font-weight: bold; color: var(--color-espresso); text-transform: uppercase;">Read Article <i class="fa-solid fa-arrow-right" style="font-size: 0.7rem;"></i></span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Interactive Article Modal -->
+  <div class="custom-modal" id="blogArticleModal">
+    <div class="modal-backdrop" onclick="closeArticleModal()"></div>
+    <div class="modal-content-card" style="max-width: 650px;">
+      <button class="modal-close" onclick="closeArticleModal()"><i class="fa-solid fa-xmark"></i></button>
+      
+      <div style="margin-bottom: 20px; border-bottom: 1px solid var(--color-sand); padding-bottom: 16px;">
+        <span class="blog-meta" id="modalArticleMeta" style="font-size: 0.75rem; text-transform: uppercase; font-weight: bold; color: var(--color-champagne-dark); letter-spacing: 1px; display: block; margin-bottom: 4px;">Category</span>
+        <h3 class="modal-title" id="modalArticleTitle" style="font-family: var(--font-serif); font-size: 1.65rem; color: var(--color-espresso); line-height: 1.3;">Article Title</h3>
+      </div>
+      
+      <div class="modal-body" id="modalArticleBody" style="line-height: 1.7; color: var(--color-espresso-light); font-size: 0.98rem; margin-bottom: 24px; max-height: 55vh; overflow-y: auto; padding-right: 8px;">
+        <!-- Loaded dynamically -->
+      </div>
+      
+      <div style="display:flex; justify-content: flex-end;">
+        <button class="btn btn-primary" onclick="closeArticleModal()" style="padding: 10px 24px; font-size: 0.8rem;">Close Article</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-brand-column">
+        <a href="index.html" class="footer-logo">
+          <span class="logo-initials">TVS</span>
+          <span class="logo-title">THE VILLA SPA</span>
+        </a>
+        <p class="footer-about">Awka's Premier Salon and Wellness Lounge. Dedicated to luxury treatments, holistic rejuvenation, and premium industry training.</p>
+        <div class="footer-socials">
+          <a href="https://instagram.com/thevillaspa_" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/2348147409153" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          <a href="tel:08147409153"><i class="fas fa-phone"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-links-column">
+        <h4>Navigation</h4>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Sanctuary</a>
+        <a href="services.html">Wellness Menu</a>
+        <a href="products.html">Skincare Boutique</a>
+        <a href="index.html#booking-section">Book Slots</a>
+      </div>
+
+      <div class="footer-hours-column">
+        <h4>Wellness Hours</h4>
+        <p><strong>Monday – Saturday</strong><br>9:00 AM – 7:00 PM</p>
+        <p><strong>Sunday Session</strong><br>1:00 PM – 7:00 PM</p>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <p>&copy; 2026 The Villa Spa. All Rights Reserved. Created with premium excellence.</p>
+    </div>
+  </footer>
+
+  <script type="module" src="app.js?v=2026.07.08.99"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
+
+  <script>
+    const articlesDatabase = {
+      botox: {
+        meta: "Medical Aesthetics",
+        title: "Botox 101: Complete Wrinkle Reduction Guide",
+        content: `
+          <p><strong>What is Botox?</strong><br>Botulinum Toxin Type A (commonly referred to as Botox) is a highly purified FDA-approved protein injected in tiny doses to temporarily relax facial muscles responsible for expressions. Relaxing these muscles smooths the overlaying skin and helps erase facial expression folds.</p>
+          <br>
+          <div style="text-align: center; margin: 20px 0;">
+            <svg viewBox="0 0 200 200" width="100%" height="200" style="max-width: 250px; background-color: var(--color-cream); border-radius: var(--border-radius-md); border: 1px solid var(--color-sand); padding: 10px; margin: 0 auto;">
+              <circle cx="100" cy="100" r="80" fill="rgba(197, 168, 128, 0.15)"/>
+              <path d="M40 140 C 40 100, 80 80, 100 100 C 80 120, 60 140, 40 140" fill="var(--color-champagne)" opacity="0.6"/>
+              <path d="M90 60 C 105 60, 115 70, 115 85 C 115 95, 112 105, 115 110 C 118 112, 122 112, 125 115 C 128 118, 128 122, 120 125 C 118 127, 118 135, 115 140 C 110 150, 95 155, 85 150 C 75 145, 70 130, 70 115 C 70 90, 80 60, 90 60 Z" fill="#8d5b4c"/>
+              <path d="M80 60 C 90 40, 110 45, 115 62 C 105 65, 95 62, 80 60" fill="var(--color-champagne-dark)"/>
+              <path d="M125 90 L130 95 L125 100 L120 95 Z" fill="#FFD700"/>
+              <path d="M140 105 L143 108 L140 111 L137 108 Z" fill="#FFD700"/>
+              <line x1="160" y1="50" x2="135" y2="85" stroke="var(--color-espresso)" stroke-width="2" stroke-linecap="round"/>
+              <line x1="135" y1="85" x2="130" y2="92" stroke="var(--color-espresso)" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <p><strong>Target Injection Zones:</strong><br>
+          - <em>Frown Lines (Glabellar):</em> Folds between the eyebrows.<br>
+          - <em>Crow's Feet:</em> Fine lines at the corners of the eyes.<br>
+          - <em>Forehead Folds:</em> Horizontal forehead stress creases.<br>
+          - <em>Masseter Botox:</em> Injected in jaw muscles to narrow jaw outline and prevent teeth grinding.</p>
+          <br>
+          <p><strong>Strict Pre &amp; Post-Care Rules:</strong><br>
+          - Do not lay down flat for 4 hours post-procedure to prevent toxin migration.<br>
+          - Avoid high heat (saunas, hot showers) or strenuous workouts for 24 hours.<br>
+          - Do not massage, rub, or apply pressure to the treated areas for 24 hours.</p>
+          <br>
+          <p><strong>Safety &amp; Duration:</strong><br>Results show within 4 to 7 days and typically persist for 3 to 5 months. The procedure takes under 15 minutes, with no downtime. Redness at the injection site settles within minutes.</p>
+        `
+      },
+      peels: {
+        meta: "Esthetics Science",
+        title: "Chemical Peels Explained: Superficial vs Medium TCA",
+        content: `
+          <p><strong>How Chemical Peels Work:</strong><br>Chemical peels involve applying a safe acid solution to the face, lifting dead cellular layers. This signals your body to accelerate skin cell renewal, bringing healthy, evenly pigmented skin to the surface.</p>
+          <br>
+          <div style="text-align: center; margin: 20px 0;">
+            <svg viewBox="0 0 200 200" width="100%" height="200" style="max-width: 250px; background-color: var(--color-cream); border-radius: var(--border-radius-md); border: 1px solid var(--color-sand); padding: 10px; margin: 0 auto;">
+              <circle cx="100" cy="100" r="80" fill="rgba(197, 168, 128, 0.15)"/>
+              <path d="M150 60 C 170 80, 170 110, 150 130 C 130 110, 130 80, 150 60" fill="rgba(110, 138, 117, 0.2)"/>
+              <path d="M90 60 C 105 60, 115 70, 115 85 C 115 95, 112 105, 115 110 C 118 112, 122 112, 125 115 C 128 118, 128 122, 120 125 C 118 127, 118 135, 115 140 C 110 150, 95 155, 85 150 C 75 145, 70 130, 70 115 C 70 90, 80 60, 90 60 Z" fill="#70443c"/>
+              <path d="M92 75 C 105 75, 112 85, 112 95 C 112 108, 102 118, 92 118 C 82 118, 80 108, 80 95 C 80 85, 82 75, 92 75 Z" fill="var(--color-champagne)" opacity="0.8"/>
+              <path d="M130 120 C 130 130, 140 130, 140 120 C 140 110, 130 100, 130 100 Q 130 100, 120 110, 130 120 Z" fill="var(--color-champagne-dark)" opacity="0.9"/>
+            </svg>
+          </div>
+          <p><strong>Depth Classifications:</strong><br>
+          - <em>Superficial Peels:</em> Formulated with Salicylic or Glycolic acids. Great for clearing blackheads, shrinking active acne, and giving a quick glow. Little to no peeling.<br>
+          - <em>Medium Peels (TCA):</em> Trichloroacetic acid formulation. Reaches deeper epidermal layers to break down severe melasma, post-inflammatory hyperpigmentation, and acne scars. Peels actively for 4 to 6 days.</p>
+          <br>
+          <p><strong>Post-Peel Care Guidelines:</strong><br>
+          - **Do not pick, peel, or scratch** loose skin flakes. Doing so can cause scarring or secondary hyperpigmentation.<br>
+          - Protect the skin using broad-spectrum SPF 50 every single day, and avoid direct sun exposure for 7 days.<br>
+          - Wash only with a gentle, non-active cleanser and apply bland, soothing moisturizers.</p>
+        `
+      },
+      "prp-prf": {
+        meta: "Regenerative Care",
+        title: "PRP vs PRF: Platelet-Rich Fibrin Explained",
+        content: `
+          <p><strong>The Vampire Facial Science:</strong><br>Platelet-Rich Plasma (PRP) involves spinning your blood in a centrifuge to isolate concentrated platelets rich in growth factors, which are micro-needled back into the face to repair scarring.</p>
+          <br>
+          <p><strong>Why PRF is Superior:</strong><br>Platelet-Rich Fibrin (PRF) is spun at a lower speed without anticoagulants, creating a natural fibrin mesh. While PRP releases growth factors in a quick surge, PRF releases them slowly over 10 to 14 days, leading to far superior collagen regeneration, scar repair, and under-eye hollow filling.</p>
+          <br>
+          <p><strong>Clinical Applications:</strong><br>
+          - **Skin Rejuvenation:** Deep wrinkle correction and texture smoothing.<br>
+          - **Under-Eye Treatment:** Fading dark circles and filling tear-trough hollows.<br>
+          - **Hair Restoration:** Triggering follicle growth on thinning hairlines.</p>
+        `
+      },
+      "stretch-marks": {
+        meta: "Body Therapy",
+        title: "Treating Stretch Marks Effectively",
+        content: `
+          <p><strong>Understanding Stretch Marks:</strong><br>Stretch marks (striae) are tears in the dermal layer caused by rapid stretching of the skin. They start red or purple and fade to white (striae alba).</p>
+          <br>
+          <p><strong>TVS Treatment Protocol:</strong><br>
+          - <em>Exfoliating Body Scrubs:</em> Smooths surface texture and improves circulation.<br>
+          - <em>Microneedling:</em> Breaks down scar tissue and triggers collagen synthesis to fill indentations.<br>
+          - <em>Intensive Hydration:</em> Retinoids and rich botanicals improve skin elasticity.</p>
+          <br>
+          <p>Early pink/red stretch marks are much easier to treat than old white ones, so starting early is key. We recommend a cohort of 3 to 6 microneedling sessions spaced 4 weeks apart for optimal results.</p>
+        `
+      },
+      acne: {
+        meta: "Dermal Pathology",
+        title: "Active Acne &amp; Pore Management Guidelines",
+        content: `
+          <p><strong>The Root Cause:</strong><br>Acne is caused by a combination of excess sebum production, dead cell buildup, and bacterial growth. Simply applying topical creams is not enough if pores remain deeply blocked.</p>
+          <br>
+          <div style="text-align: center; margin: 20px 0;">
+            <svg viewBox="0 0 200 200" width="100%" height="200" style="max-width: 250px; background-color: var(--color-cream); border-radius: var(--border-radius-md); border: 1px solid var(--color-sand); padding: 10px; margin: 0 auto;">
+              <circle cx="100" cy="100" r="80" fill="rgba(197, 168, 128, 0.15)"/>
+              <path d="M50 160 Q 60 140 50 120 T 50 80" fill="none" stroke="var(--color-sand)" stroke-width="3" opacity="0.5" stroke-linecap="round"/>
+              <path d="M65 170 Q 75 150 65 130 T 65 90" fill="none" stroke="var(--color-sand)" stroke-width="3" opacity="0.3" stroke-linecap="round"/>
+              <path d="M110 60 C 125 60, 135 70, 135 85 C 135 95, 132 105, 135 110 C 138 112, 142 112, 145 115 C 148 118, 148 122, 140 125 C 138 127, 138 135, 135 140 C 130 150, 115 155, 105 150 C 95 145, 90 130, 90 115 C 90 90, 100 60, 110 60 Z" fill="#9c6d53"/>
+              <path d="M100 65 C 110 50, 130 55, 135 68 L 105 82 Z" fill="#ffffff" opacity="0.9"/>
+              <circle cx="75" cy="80" r="8" fill="none" stroke="var(--color-champagne-dark)" stroke-width="2" opacity="0.7"/>
+              <circle cx="85" cy="65" r="5" fill="none" stroke="var(--color-champagne-dark)" stroke-width="1.5" opacity="0.7"/>
+              <circle cx="65" cy="95" r="4" fill="none" stroke="var(--color-champagne-dark)" stroke-width="1" opacity="0.5"/>
+            </svg>
+          </div>
+          <p><strong>TVS Acne Protocol:</strong><br>
+          - <em>Deep Steaming:</em> Softens pores and liquefies trapped sebum.<br>
+          - <em>Clinical Extractions:</em> Safe, sterile removal of blackheads and milia using specialized medical tools.<br>
+          - <em>Salicylic Peels:</em> Salicylic acid is oil-soluble, penetrating deep into pores to dry out cystic acne and prevent future breakouts.</p>
+          <br>
+          <p><strong>Homecare Tips:</strong> Cleanse twice daily, do not squeeze active pustules at home, and incorporate a gentle salicylic acid toner into your night routine.</p>
+        `
+      },
+      "weight-loss": {
+        meta: "Weight Management",
+        title: "Weight Loss Injections &amp; Safety Guidelines",
+        content: `
+          <p><strong>Lipolysis Injections:</strong><br>Targeted fat-dissolving injections (like Deoxycholic Acid) break down localized fat cells (e.g. double chin, love handles), which are then naturally metabolized by the body.</p>
+          <br>
+          <div style="text-align: center; margin: 20px 0;">
+            <svg viewBox="0 0 200 200" width="100%" height="200" style="max-width: 250px; background-color: var(--color-cream); border-radius: var(--border-radius-md); border: 1px solid var(--color-sand); padding: 10px; margin: 0 auto;">
+              <circle cx="100" cy="100" r="80" fill="rgba(197, 168, 128, 0.15)"/>
+              <path d="M40 140 L 160 140 C 170 140, 170 145, 160 145 L 40 145 C 30 145, 30 140, 40 140 Z" fill="var(--color-champagne-dark)"/>
+              <rect x="70" y="80" width="22" height="50" rx="3" fill="#8d5b4c" opacity="0.9"/>
+              <rect x="75" y="72" width="12" height="8" fill="var(--color-champagne)"/>
+              <line x1="70" y1="95" x2="92" y2="95" stroke="var(--color-champagne)" stroke-width="2"/>
+              <rect x="105" y="65" width="26" height="65" rx="4" fill="var(--color-espresso)" opacity="0.8"/>
+              <rect x="112" y="55" width="12" height="10" fill="var(--color-champagne-dark)"/>
+              <path d="M118 45 L 118 55" stroke="var(--color-champagne-dark)" stroke-width="3"/>
+              <path d="M118 142 C 118 147, 123 147, 123 142 C 123 138, 118 132, 118 132 Q 118 138, 118 142 Z" fill="var(--color-champagne)"/>
+            </svg>
+          </div>
+          <p><strong>Healthy Expectations:</strong><br>Lipolysis is designed for spot-reduction, not overall weight loss. Our program combines these procedures with professional weight management counseling and diet tracking to ensure long-term success.</p>
+          <br>
+          <p><strong>Pre-treatment Checklist:</strong> Avoid alcohol and blood-thinning supplements 4 days prior to prevent bruising. Drink plenty of water post-treatment to aid the metabolic clearance of fat cells.</p>
+        `
+      },
+      tips: {
+        meta: "Daily Routine",
+        title: "Skincare Tips: Core Daily Routine 101",
+        content: `
+          <p><strong>1. Double Cleansing:</strong><br>Use an oil-based cleanser first to break down makeup and sebum, followed by a gentle foaming cleanser to wash away impurities.</p>
+          <br>
+          <p><strong>2. Hyaluronic Acid on Damp Skin:</strong><br>Hyaluronic acid binds to water. Applying it to dry skin can actually dehydrate you; always apply it to damp skin and lock it in with a moisturizer.</p>
+          <br>
+          <p><strong>3. Sunscreen Every Single Day:</strong><br>UV rays break down collagen and darken pigmentation. Apply a broad-spectrum SPF 50 daily to protect your skin investment.</p>
+          <br>
+          <p><strong>4. Active Ingredient Layering:</strong> Apply water-based serums first, followed by heavier creams. Do not mix Vitamin C and Retinol in the same routine step (use Vitamin C in the morning, Retinol at night).</p>
+        `
+      }
+    };
+
+    function openArticleModal(id) {
+      const art = articlesDatabase[id];
+      if (!art) return;
+      document.getElementById("modalArticleMeta").textContent = art.meta;
+      document.getElementById("modalArticleTitle").textContent = art.title;
+      document.getElementById("modalArticleBody").innerHTML = art.content;
+      document.getElementById("blogArticleModal").classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeArticleModal() {
+      document.getElementById("blogArticleModal").classList.remove("active");
+      document.body.style.overflow = "";
+    }
+  </script>
+</body>
+</html>

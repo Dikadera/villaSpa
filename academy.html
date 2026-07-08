@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TVS Training Academy | The Villa Spa</title>
+  <meta name="description" content="Enroll in Awka's premier Spa &amp; Esthetics Bootcamp. Hands-on curriculum, national certification, student cohorts, and transparent tuition options.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css?v=2026.07.08.99">
+  <style>
+    .curriculum-module-card {
+      background-color: var(--color-cream);
+      border: 1px solid var(--color-sand);
+      border-radius: var(--border-radius-md);
+      padding: 24px;
+      transition: var(--transition-smooth);
+    }
+    .curriculum-module-card:hover {
+      border-color: var(--color-champagne);
+      box-shadow: var(--shadow-subtle);
+    }
+    .enrol-form-container {
+      background-color: var(--color-cream);
+      border: 1px solid var(--color-sand);
+      border-radius: var(--border-radius-lg);
+      padding: 40px;
+      max-width: 600px;
+      margin: 0 auto;
+      box-shadow: var(--shadow-premium);
+    }
+    .enrol-input-group {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .enrol-input-group label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--color-espresso);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .enrol-input-group input, .enrol-input-group select, .enrol-input-group textarea {
+      padding: 12px;
+      border: 1.5px solid var(--color-sand);
+      border-radius: var(--border-radius-sm);
+      background-color: var(--color-white);
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: var(--color-espresso);
+      transition: var(--transition-fast);
+    }
+    .enrol-input-group input:focus, .enrol-input-group select:focus, .enrol-input-group textarea:focus {
+      outline: none;
+      border-color: var(--color-champagne-dark);
+      background-color: var(--color-white);
+    }
+  </style>
+</head>
+<body class="academy-body">
+
+  <!-- Global Ambient Snow Effect -->
+  <div id="globalSnowContainer"></div>
+
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+
+  <!-- Announcement Bar -->
+  <div class="announcement-bar">
+    <div class="announcement-content">
+      <span>✨ <strong>Academy Enrollment:</strong> Registration is now open for our upcoming cohort. Limited slots.</span>
+    </div>
+  </div>
+
+  <!-- Header & Navigation -->
+  <header class="main-header">
+    <div class="header-container">
+      <a href="index.html" class="logo-area">
+        <span class="logo-initials">TVS</span>
+        <div class="logo-divider"></div>
+        <div class="logo-text">
+          <span class="brand-name">THE VILLA SPA</span>
+          <span class="brand-tagline">SALON · WELLNESS · LAUNGE</span>
+        </div>
+      </a>
+
+      <nav class="nav-menu" id="navMenu">
+        <a href="about.html" class="nav-link">About Us</a>
+  <!-- Services Mega Dropdown -->
+      <div class="nav-item nav-has-mega">
+        <a href="services.html" class="nav-link nav-dropdown-toggle ">Services <i class="fa-solid fa-chevron-down nav-chevron"></i></a>
+        <div class="nav-mega-panel">
+          <div class="mega-panel-inner">
+            <div class="mega-col">
+              <div class="mega-col-header"><i class="fa-solid fa-spa"></i> Spa Treatments</div>
+              <a href="services.html#spa-treatments" class="mega-item">Massages</a>
+              <a href="services.html#spa-treatments" class="mega-item">Facials</a>
+              <a href="services.html#spa-treatments" class="mega-item">Body Scrubs</a>
+              <a href="services.html#spa-treatments" class="mega-item">Moroccan Hammam</a>
+              <a href="services.html#spa-treatments" class="mega-item">Waxing &amp; Tinting</a>
+              <a href="services.html#spa-treatments" class="mega-item">Pedicures &amp; Manicures</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-header"><i class="fa-solid fa-user-doctor"></i> Medical Aesthetics</div>
+              <a href="services.html#medical-aesthetics" class="mega-item">Botox Injections</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Dermal Fillers</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">PRP &amp; PRF</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Microneedling</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Chemical Peels</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Skin Boosters</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Mesotherapy</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">IV Drip Therapies</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-header"><i class="fa-solid fa-gift"></i> Luxury Packages</div>
+              <a href="services.html#packages" class="mega-item">Bride-to-Be Package</a>
+              <a href="services.html#packages" class="mega-item">Couple's Sanctuary</a>
+              <div class="mega-col-cta">
+                <a href="index.html#booking-section" class="btn btn-primary" style="display:block;text-align:center;font-size:0.78rem;padding:10px 16px;">Book a Treatment</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        <a href="products.html" class="nav-link">Skincare Boutique</a>
+        <a href="academy.html" class="nav-link active">Academy</a>
+  <!-- Blog / Content Dropdown -->
+      <div class="nav-item nav-has-dropdown">
+        <a href="blog.html" class="nav-link nav-dropdown-toggle ">Blog <i class="fa-solid fa-chevron-down nav-chevron"></i></a>
+        <div class="nav-dropdown-panel">
+          <a href="blog.html" class="dropdown-item">
+            <span class="di-icon"><i class="fa-solid fa-newspaper"></i></span>
+            <div><strong>Articles</strong><span>Expert skincare &amp; wellness guides</span></div>
+          </a>
+          <a href="testimonials.html" class="dropdown-item">
+            <span class="di-icon"><i class="fa-solid fa-star"></i></span>
+            <div><strong>Testimonials</strong><span>Verified client success stories</span></div>
+          </a>
+          <a href="faq.html" class="dropdown-item">
+            <span class="di-icon"><i class="fa-solid fa-circle-question"></i></span>
+            <div><strong>FAQ</strong><span>Booking &amp; aftercare help</span></div>
+          </a>
+        </div>
+      </div>
+        <a href="index.html#booking-section" class="btn btn-primary nav-cta">Book Experience</a>
+      </nav>
+
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="theme-toggle-btn" id="siteThemeToggle" title="Toggle Light / Dark Mode" aria-label="Toggle theme">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+        <button class="mobile-menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Subpage Hero -->
+    <section class="shop-hero">
+      <div class="shop-hero-bg" style="background-image: linear-gradient(rgba(20, 15, 13, 0.72), rgba(20, 15, 13, 0.88)), url('assets/spa_training.png');"></div>
+      <div class="shop-hero-container">
+        <span class="shop-subtitle">TVS Education</span>
+        <h1 class="shop-title">TVS Training Academy</h1>
+        <p class="shop-description">Launch your high-end esthetics career under Nigeria's elite practitioners. Certified, hands-on, and industry-ready.</p>
+      </div>
+    </section>
+
+    <!-- Professional Training Details -->
+    <section style="padding: 80px 24px;">
+      <div class="section-container" style="max-width: 1000px; margin: 0 auto;">
+        
+        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; margin-bottom: 80px; align-items: center;">
+          <div>
+            <span class="section-subtitle">Career Path</span>
+            <h2 class="section-title" style="font-size: 2.2rem; margin-bottom: 16px;">Professional Spa Training</h2>
+            <p style="margin-bottom: 16px; color: var(--color-espresso-light);">Our **4-Week Intensive Spa &amp; Esthetics Bootcamp** is a rigorous program designed to turn passionate students into certified, independent wellness therapists. We combine high-yield dermal theories with extensive, daily hands-on practice in our fully simulated spa ward.</p>
+            <p style="color: var(--color-espresso-light);">Taught directly by CEO Stephanie Jefia and Guest Physicians, this curriculum covers both luxury spa treatments and complex medical esthetic processes. Graduating students acquire standard licensing support, access to starter supply packages, and placement recommendations.</p>
+          </div>
+          <div>
+            <img src="assets/spa_training.png" alt="Students training in esthetics class" style="width:100%; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-premium);">
+          </div>
+        </div>
+
+        <!-- Curriculum -->
+        <div style="border-top: 1px solid var(--color-sand); padding-top: 80px; margin-bottom: 80px;">
+          <div style="text-align: center; margin-bottom: 48px;">
+            <span class="section-subtitle">High-Yield Program</span>
+            <h2 class="section-title">Course Curriculum</h2>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+            <div class="curriculum-module-card">
+              <span style="font-weight:bold; color: var(--color-champagne-dark); font-size: 0.85rem; text-transform: uppercase;">Module 01</span>
+              <h3 style="font-family: var(--font-serif); font-size: 1.2rem; margin: 8px 0 12px; color: var(--color-espresso);">Dermal Science &amp; Analysis</h3>
+              <p style="font-size: 0.9rem; color: var(--color-espresso-light);">Melanin-rich skin histology, skin typing, diagnostic extractions, sanitation, and chemical formulation guidelines.</p>
+            </div>
+            <div class="curriculum-module-card">
+              <span style="font-weight:bold; color: var(--color-champagne-dark); font-size: 0.85rem; text-transform: uppercase;">Module 02</span>
+              <h3 style="font-family: var(--font-serif); font-size: 1.2rem; margin: 8px 0 12px; color: var(--color-espresso);">Spa Body Therapies</h3>
+              <p style="font-size: 0.9rem; color: var(--color-espresso-light);">Anatomy fundamentals, Swedish massage techniques, aromatherapy, body scrub compounding, and Hammam scrubbing procedures.</p>
+            </div>
+            <div class="curriculum-module-card">
+              <span style="font-weight:bold; color: var(--color-champagne-dark); font-size: 0.85rem; text-transform: uppercase;">Module 03</span>
+              <h3 style="font-family: var(--font-serif); font-size: 1.2rem; margin: 8px 0 12px; color: var(--color-espresso);">Clinical Esthetics</h3>
+              <p style="font-size: 0.9rem; color: var(--color-espresso-light);">Advanced chemical peels application, microneedling handling, hygiene control, and client preparation guidelines.</p>
+            </div>
+            <div class="curriculum-module-card">
+              <span style="font-weight:bold; color: var(--color-champagne-dark); font-size: 0.85rem; text-transform: uppercase;">Module 04</span>
+              <h3 style="font-family: var(--font-serif); font-size: 1.2rem; margin: 8px 0 12px; color: var(--color-espresso);">Spa Business Setup</h3>
+              <p style="font-size: 0.9rem; color: var(--color-espresso-light);">Client acquisition methods, service pricing strategies, social media branding, safety compliance, and business registration.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tuition & Certification -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; border-top: 1px solid var(--color-sand); padding-top: 80px; margin-bottom: 80px;">
+          <div>
+            <span class="section-subtitle">Transparent Terms</span>
+            <h2 class="section-title" style="font-size: 2.2rem; margin-bottom: 20px;">Tuition &amp; Fees</h2>
+            <div style="background: var(--color-cream); border: 1.5px solid var(--color-sand); padding: 32px; border-radius: var(--border-radius-md);">
+              <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-espresso); margin-bottom: 8px;">Intensive 4-Week Program</h3>
+              <span style="font-size: 1.85rem; font-weight: bold; color: var(--color-champagne-dark); display:block; margin-bottom: 16px;">₦350,000</span>
+              <ul style="list-style: none; display:flex; flex-direction:column; gap:10px; color: var(--color-espresso-light); font-size: 0.95rem; padding: 0;">
+                <li><i class="fa-solid fa-check" style="color: var(--color-success); margin-right: 8px;"></i> Complete hands-on training kit and textbooks</li>
+                <li><i class="fa-solid fa-check" style="color: var(--color-success); margin-right: 8px;"></i> Access to all clinical equipment and machines</li>
+                <li><i class="fa-solid fa-check" style="color: var(--color-success); margin-right: 8px;"></i> Professional branding photo session</li>
+                <li><i class="fa-solid fa-check" style="color: var(--color-success); margin-right: 8px;"></i> Post-graduation internship options</li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <span class="section-subtitle">TVS Credential</span>
+            <h2 class="section-title" style="font-size: 2.2rem; margin-bottom: 20px;">Certification</h2>
+            <p style="margin-bottom: 16px; color: var(--color-espresso-light);">Upon graduation, students receive a formal **Certificate of Completion in Advanced Spa &amp; Esthetics** from The Villa Spa Academy. This certificate validates your practical expertise in chemical peels, dermal therapies, hygiene compliance, and body anatomy.</p>
+            <p style="color: var(--color-espresso-light);">Our certificate carries national prestige and is highly respected by luxury spas and beauty salons across Nigeria, giving you a competitive edge from day one.</p>
+          </div>
+        </div>
+
+        <!-- Student Gallery (Mock Cohorts representation) -->
+        <div style="border-top: 1px solid var(--color-sand); padding-top: 80px; margin-bottom: 80px;">
+          <div style="text-align: center; margin-bottom: 48px;">
+            <span class="section-subtitle">Cohort Memories</span>
+            <h2 class="section-title">Student Gallery</h2>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+            <div style="background: var(--color-cream); border: 1px solid var(--color-sand); border-radius: var(--border-radius-md); padding: 20px;">
+              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--color-espresso); margin-bottom: 6px;">Practical Massage Session</h4>
+              <p style="font-size: 0.85rem; color: var(--color-espresso-light);">Students mastering muscle alignment and pressure adjustments in a live class environment.</p>
+            </div>
+            <div style="background: var(--color-cream); border: 1px solid var(--color-sand); border-radius: var(--border-radius-md); padding: 20px;">
+              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--color-espresso); margin-bottom: 6px;">Facial Extraction Training</h4>
+              <p style="font-size: 0.85rem; color: var(--color-espresso-light);">Hands-on laboratory training using sterilized extractor sets and skin steaming equipment.</p>
+            </div>
+            <div style="background: var(--color-cream); border: 1px solid var(--color-sand); border-radius: var(--border-radius-md); padding: 20px;">
+              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--color-espresso); margin-bottom: 6px;">Graduation Celebration</h4>
+              <p style="font-size: 0.85rem; color: var(--color-espresso-light);">Proud graduates holding their TVS Academy certificates and beauty starter tool kits.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Academy FAQ -->
+        <div style="border-top: 1px solid var(--color-sand); padding-top: 80px; margin-bottom: 80px;">
+          <div style="text-align: center; margin-bottom: 48px;">
+            <span class="section-subtitle">Got Questions?</span>
+            <h2 class="section-title">Academy FAQ</h2>
+          </div>
+          <div style="max-width: 800px; margin: 0 auto; display:flex; flex-direction:column; gap:20px;">
+            <div>
+              <h4 style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--color-espresso); margin-bottom: 4px;">Do I need prior medical experience?</h4>
+              <p style="font-size: 0.9rem; color: var(--color-espresso-light);">No, our curriculum starts from the absolute basics of skin biology and progresses into advanced esthetics, making it suitable for beginners.</p>
+            </div>
+            <div style="border-top: 1px solid var(--color-sand); padding-top: 16px;">
+              <h4 style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--color-espresso); margin-bottom: 4px;">Are installment payment plans available?</h4>
+              <p style="font-size: 0.9rem; color: var(--color-espresso-light);">Yes, we accept up to 2 installment payments. A 60% deposit is required to secure your seat, and the remaining 40% is due by the second week.</p>
+            </div>
+            <div style="border-top: 1px solid var(--color-sand); padding-top: 16px;">
+              <h4 style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--color-espresso); margin-bottom: 4px;">Do you provide placement support?</h4>
+              <p style="font-size: 0.9rem; color: var(--color-espresso-light);">We offer top-performing students immediate internships at The Villa Spa, as well as recommendations to partner salons across Anambra state.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Enrol Now Interactive Form -->
+        <div class="enrol-form-container" id="enroll-form">
+          <div style="text-align:center; margin-bottom: 32px;">
+            <span class="section-subtitle" style="color: var(--color-champagne-dark);">Secure Your Spot</span>
+            <h2 class="section-title" style="font-size: 1.85rem; margin-bottom: 8px;">Academy Enrollment</h2>
+            <p style="font-size: 0.9rem; color: var(--color-espresso-light);">Fill out the form below, and our program coordinator will call you to schedule a consultation.</p>
+          </div>
+          
+          <form id="academyEnrolForm" onsubmit="handleEnrolSubmit(event)">
+            <div class="enrol-input-group">
+              <label for="studentName">Full Name</label>
+              <input type="text" id="studentName" placeholder="Enter your full name" required>
+            </div>
+            <div class="enrol-input-group">
+              <label for="studentPhone">Phone / WhatsApp Number</label>
+              <input type="tel" id="studentPhone" placeholder="e.g. +234..." required>
+            </div>
+            <div class="enrol-input-group">
+              <label for="studentEmail">Email Address</label>
+              <input type="email" id="studentEmail" placeholder="Enter your email" required>
+            </div>
+            <div class="enrol-input-group">
+              <label for="cohortChoice">Select Cohort</label>
+              <select id="cohortChoice" required>
+                <option value="" disabled selected>Choose a starting month</option>
+                <option value="july2026">July 2026 Cohort</option>
+                <option value="august2026">August 2026 Cohort</option>
+                <option value="september2026">September 2026 Cohort</option>
+              </select>
+            </div>
+            <div class="enrol-input-group">
+              <label for="studentNote">Why do you want to join our academy?</label>
+              <textarea id="studentNote" rows="4" placeholder="Briefly describe your interest or goals..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 14px; font-weight: bold;">Submit Application <i class="fa-solid fa-arrow-right"></i></button>
+          </form>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-brand-column">
+        <a href="index.html" class="footer-logo">
+          <span class="logo-initials">TVS</span>
+          <span class="logo-title">THE VILLA SPA</span>
+        </a>
+        <p class="footer-about">Awka's Premier Salon and Wellness Lounge. Dedicated to luxury treatments, holistic rejuvenation, and premium industry training.</p>
+        <div class="footer-socials">
+          <a href="https://instagram.com/thevillaspa_" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/2348147409153" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          <a href="tel:08147409153"><i class="fas fa-phone"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-links-column">
+        <h4>Navigation</h4>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Sanctuary</a>
+        <a href="services.html">Wellness Menu</a>
+        <a href="products.html">Skincare Boutique</a>
+        <a href="index.html#booking-section">Book Slots</a>
+      </div>
+
+      <div class="footer-hours-column">
+        <h4>Wellness Hours</h4>
+        <p><strong>Monday – Saturday</strong><br>9:00 AM – 7:00 PM</p>
+        <p><strong>Sunday Session</strong><br>1:00 PM – 7:00 PM</p>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <p>&copy; 2026 The Villa Spa. All Rights Reserved. Created with premium excellence.</p>
+    </div>
+  </footer>
+
+  <script type="module" src="app.js?v=2026.07.08.99"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
+  
+  <script>
+    function handleEnrolSubmit(event) {
+      event.preventDefault();
+      const name = document.getElementById("studentName").value;
+      const cohort = document.getElementById("cohortChoice").value;
+      alert("Congratulations, " + name + "! Your enrollment interest for the " + cohort.toUpperCase() + " has been recorded. Our coordinator will contact you shortly.");
+      document.getElementById("academyEnrolForm").reset();
+    }
+  </script>
+</body>
+</html>

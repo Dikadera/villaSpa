@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Testimonials | The Villa Spa</title>
+  <meta name="description" content="Read reviews and testimonials from our clients. Discover why The Villa Spa is Awka's top-rated sanctuary for luxury massages, skinvestments, and training.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css?v=2026.07.08.99">
+  <style>
+    .testimonial-card-subpage {
+      background-color: var(--color-cream);
+      border: 1.5px solid var(--color-sand);
+      border-radius: var(--border-radius-md);
+      padding: 32px;
+      transition: var(--transition-smooth);
+      position: relative;
+    }
+    .testimonial-card-subpage:hover {
+      border-color: var(--color-champagne-dark);
+      box-shadow: var(--shadow-subtle);
+    }
+    .quote-icon-bg {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      font-size: 2.5rem;
+      color: rgba(197, 168, 128, 0.15);
+      font-family: serif;
+    }
+  </style>
+</head>
+<body class="testimonials-body">
+
+  <!-- Global Ambient Snow Effect -->
+  <div id="globalSnowContainer"></div>
+
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+
+  <!-- Announcement Bar -->
+  <div class="announcement-bar">
+    <div class="announcement-content">
+      <span>✨ <strong>Client Stories:</strong> Verified reviews and ratings directly from our wellness guests.</span>
+    </div>
+  </div>
+
+  <!-- Header & Navigation -->
+  <header class="main-header">
+    <div class="header-container">
+      <a href="index.html" class="logo-area">
+        <span class="logo-initials">TVS</span>
+        <div class="logo-divider"></div>
+        <div class="logo-text">
+          <span class="brand-name">THE VILLA SPA</span>
+          <span class="brand-tagline">SALON · WELLNESS · LAUNGE</span>
+        </div>
+      </a>
+
+      <nav class="nav-menu" id="navMenu">
+        <a href="about.html" class="nav-link">About Us</a>
+  <!-- Services Mega Dropdown -->
+      <div class="nav-item nav-has-mega">
+        <a href="services.html" class="nav-link nav-dropdown-toggle ">Services <i class="fa-solid fa-chevron-down nav-chevron"></i></a>
+        <div class="nav-mega-panel">
+          <div class="mega-panel-inner">
+            <div class="mega-col">
+              <div class="mega-col-header"><i class="fa-solid fa-spa"></i> Spa Treatments</div>
+              <a href="services.html#spa-treatments" class="mega-item">Massages</a>
+              <a href="services.html#spa-treatments" class="mega-item">Facials</a>
+              <a href="services.html#spa-treatments" class="mega-item">Body Scrubs</a>
+              <a href="services.html#spa-treatments" class="mega-item">Moroccan Hammam</a>
+              <a href="services.html#spa-treatments" class="mega-item">Waxing &amp; Tinting</a>
+              <a href="services.html#spa-treatments" class="mega-item">Pedicures &amp; Manicures</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-header"><i class="fa-solid fa-user-doctor"></i> Medical Aesthetics</div>
+              <a href="services.html#medical-aesthetics" class="mega-item">Botox Injections</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Dermal Fillers</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">PRP &amp; PRF</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Microneedling</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Chemical Peels</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Skin Boosters</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Mesotherapy</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">IV Drip Therapies</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-header"><i class="fa-solid fa-gift"></i> Luxury Packages</div>
+              <a href="services.html#packages" class="mega-item">Bride-to-Be Package</a>
+              <a href="services.html#packages" class="mega-item">Couple's Sanctuary</a>
+              <div class="mega-col-cta">
+                <a href="index.html#booking-section" class="btn btn-primary" style="display:block;text-align:center;font-size:0.78rem;padding:10px 16px;">Book a Treatment</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        <a href="products.html" class="nav-link">Skincare Boutique</a>
+        <a href="academy.html" class="nav-link">Academy</a>
+  <!-- Blog / Content Dropdown -->
+      <div class="nav-item nav-has-dropdown">
+        <a href="blog.html" class="nav-link nav-dropdown-toggle active">Blog <i class="fa-solid fa-chevron-down nav-chevron"></i></a>
+        <div class="nav-dropdown-panel">
+          <a href="blog.html" class="dropdown-item">
+            <span class="di-icon"><i class="fa-solid fa-newspaper"></i></span>
+            <div><strong>Articles</strong><span>Expert skincare &amp; wellness guides</span></div>
+          </a>
+          <a href="testimonials.html" class="dropdown-item">
+            <span class="di-icon"><i class="fa-solid fa-star"></i></span>
+            <div><strong>Testimonials</strong><span>Verified client success stories</span></div>
+          </a>
+          <a href="faq.html" class="dropdown-item">
+            <span class="di-icon"><i class="fa-solid fa-circle-question"></i></span>
+            <div><strong>FAQ</strong><span>Booking &amp; aftercare help</span></div>
+          </a>
+        </div>
+      </div>
+        <a href="index.html#booking-section" class="btn btn-primary nav-cta">Book Experience</a>
+      </nav>
+
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="theme-toggle-btn" id="siteThemeToggle" title="Toggle Light / Dark Mode" aria-label="Toggle theme">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+        <button class="mobile-menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Subpage Hero -->
+    <section class="shop-hero">
+      <div class="shop-hero-bg" style="background-image: linear-gradient(rgba(20, 15, 13, 0.72), rgba(20, 15, 13, 0.88)), url('assets/spa_facial.png');"></div>
+      <div class="shop-hero-container">
+        <span class="shop-subtitle">Client Stories</span>
+        <h1 class="shop-title">Client Testimonials</h1>
+        <p class="shop-description">Read real experiences from our wellness guests — verified reviews on luxury treatments, glowing results, and life-changing training.</p>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section style="padding: 80px 24px;">
+      <div class="section-container" style="max-width: 1000px; margin: 0 auto;">
+
+        <!-- Rating Summary Box -->
+        <div style="display: flex; gap: 40px; align-items: center; justify-content: center; background: var(--color-cream); padding: 40px; border-radius: var(--border-radius-lg); border: 1px solid var(--color-sand); margin-bottom: 60px; text-align: center; flex-wrap: wrap;">
+          <div>
+            <span style="font-size: 3.5rem; font-family: var(--font-serif); font-weight: bold; color: var(--color-espresso); display:block; line-height: 1;">4.9</span>
+            <div style="color: #FFD700; margin: 8px 0; font-size: 1.15rem;">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <span style="font-size: 0.85rem; text-transform: uppercase; color: var(--color-champagne-dark); font-weight: bold; letter-spacing: 0.5px;">Average Guest Rating</span>
+          </div>
+          <div style="width: 1px; height: 80px; background-color: var(--color-sand); display: none; md:block;"></div>
+          <div style="max-width: 450px; text-align: left;">
+            <h3 style="font-family: var(--font-serif); color: var(--color-espresso); font-size: 1.35rem; margin-bottom: 6px;">Unmatched Luxury Experience</h3>
+            <p style="font-size: 0.9rem; color: var(--color-espresso-light);">"Our rating is a reflection of our core values: strict sanitation, premium dermatological formulations, and deeply tranquil soundproofed treatment suites."</p>
+          </div>
+        </div>
+
+        <!-- Grid of reviews -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+          <!-- Review 1 -->
+          <div class="testimonial-card-subpage">
+            <span class="quote-icon-bg">“</span>
+            <div style="color: #FFD700; margin-bottom: 12px; font-size: 0.9rem;">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <p style="font-style: italic; color: var(--color-espresso-light); margin-bottom: 20px; font-size: 0.95rem; line-height: 1.6;">"The Moroccan Hammam bath here is authentic and extremely thorough! I walked out feeling like my skin had been completely renewed. Easily the best wellness destination in Awka."</p>
+            <div style="display:flex; align-items:center; gap:12px;">
+              <div style="width:40px; height:40px; border-radius:50%; background:var(--color-sand); display:flex; align-items:center; justify-content:center; font-weight:bold; color:var(--color-espresso); font-family:var(--font-serif);">CN</div>
+              <div>
+                <strong style="display:block; font-size:0.95rem; color:var(--color-espresso);">Chidinma N.</strong>
+                <span style="font-size:0.8rem; color:var(--color-champagne-dark);">Verified Client</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review 2 -->
+          <div class="testimonial-card-subpage">
+            <span class="quote-icon-bg">“</span>
+            <div style="color: #FFD700; margin-bottom: 12px; font-size: 0.9rem;">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <p style="font-style: italic; color: var(--color-espresso-light); margin-bottom: 20px; font-size: 0.95rem; line-height: 1.6;">"As a graduate of the TVS Esthetics Bootcamp, I can confidently say this training changed my life. Stephanie is an exceptional teacher who takes time to ensure you master every procedure."</p>
+            <div style="display:flex; align-items:center; gap:12px;">
+              <div style="width:40px; height:40px; border-radius:50%; background:var(--color-sand); display:flex; align-items:center; justify-content:center; font-weight:bold; color:var(--color-espresso); font-family:var(--font-serif);">AO</div>
+              <div>
+                <strong style="display:block; font-size:0.95rem; color:var(--color-espresso);">Amaka O.</strong>
+                <span style="font-size:0.8rem; color:var(--color-champagne-dark);">TVS Academy Graduate</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review 3 -->
+          <div class="testimonial-card-subpage">
+            <span class="quote-icon-bg">“</span>
+            <div style="color: #FFD700; margin-bottom: 12px; font-size: 0.9rem;">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <p style="font-style: italic; color: var(--color-espresso-light); margin-bottom: 20px; font-size: 0.95rem; line-height: 1.6;">"I had my first Botox session with their guest physician. The staff was incredibly warm, explained the aftercare rules, and the clinic is hospital-grade clean. High level of safety."</p>
+            <div style="display:flex; align-items:center; gap:12px;">
+              <div style="width:40px; height:40px; border-radius:50%; background:var(--color-sand); display:flex; align-items:center; justify-content:center; font-weight:bold; color:var(--color-espresso); font-family:var(--font-serif);">TO</div>
+              <div>
+                <strong style="display:block; font-size:0.95rem; color:var(--color-espresso);">Tobi O.</strong>
+                <span style="font-size:0.8rem; color:var(--color-champagne-dark);">Aesthetics Client</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-brand-column">
+        <a href="index.html" class="footer-logo">
+          <span class="logo-initials">TVS</span>
+          <span class="logo-title">THE VILLA SPA</span>
+        </a>
+        <p class="footer-about">Awka's Premier Salon and Wellness Lounge. Dedicated to luxury treatments, holistic rejuvenation, and premium industry training.</p>
+        <div class="footer-socials">
+          <a href="https://instagram.com/thevillaspa_" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/2348147409153" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          <a href="tel:08147409153"><i class="fas fa-phone"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-links-column">
+        <h4>Navigation</h4>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Sanctuary</a>
+        <a href="services.html">Wellness Menu</a>
+        <a href="products.html">Skincare Boutique</a>
+        <a href="index.html#booking-section">Book Slots</a>
+      </div>
+
+      <div class="footer-hours-column">
+        <h4>Wellness Hours</h4>
+        <p><strong>Monday – Saturday</strong><br>9:00 AM – 7:00 PM</p>
+        <p><strong>Sunday Session</strong><br>1:00 PM – 7:00 PM</p>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <p>&copy; 2026 The Villa Spa. All Rights Reserved. Created with premium excellence.</p>
+    </div>
+  </footer>
+
+  <script type="module" src="app.js?v=2026.07.08.99"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
+</body>
+</html>

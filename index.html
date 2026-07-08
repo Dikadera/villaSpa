@@ -111,7 +111,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- Paystack Inline SDK -->
   <script src="https://js.paystack.co/v1/inline.js"></script>
-  <link rel="stylesheet" href="style.css?v=2026.07.08.51">
+  <link rel="stylesheet" href="style.css?v=2026.07.08.99">
 </head>
 
 <body>
@@ -142,13 +142,67 @@
       </a>
 
       <nav class="nav-menu" id="navMenu">
-        <a href="#" class="nav-link active">Home</a>
-        <a href="#about" class="nav-link">About</a>
-        <a href="#services" class="nav-link">Services</a>
-        <a href="#bootcamp" class="nav-link">Training</a>
-        <a href="#reviews" class="nav-link">Reviews</a>
-        <a href="#contact" class="nav-link">Contact</a>
-        <a href="#booking-section" class="btn btn-primary nav-cta">Book Experience</a>
+        <a href="about.html" class="nav-link">About Us</a>
+        <!-- Services Mega Dropdown -->
+        <div class="nav-item nav-has-mega">
+          <a href="services.html" class="nav-link nav-dropdown-toggle ">Services <i
+              class="fa-solid fa-chevron-down nav-chevron"></i></a>
+          <div class="nav-mega-panel">
+            <div class="mega-panel-inner">
+              <div class="mega-col">
+                <div class="mega-col-header"><i class="fa-solid fa-spa"></i> Spa Treatments</div>
+                <a href="services.html#spa-treatments" class="mega-item">Massages</a>
+                <a href="services.html#spa-treatments" class="mega-item">Facials</a>
+                <a href="services.html#spa-treatments" class="mega-item">Body Scrubs</a>
+                <a href="services.html#spa-treatments" class="mega-item">Moroccan Hammam</a>
+                <a href="services.html#spa-treatments" class="mega-item">Waxing &amp; Tinting</a>
+                <a href="services.html#spa-treatments" class="mega-item">Pedicures &amp; Manicures</a>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-header"><i class="fa-solid fa-user-doctor"></i> Medical Aesthetics</div>
+                <a href="services.html#medical-aesthetics" class="mega-item">Botox Injections</a>
+                <a href="services.html#medical-aesthetics" class="mega-item">Dermal Fillers</a>
+                <a href="services.html#medical-aesthetics" class="mega-item">PRP &amp; PRF</a>
+                <a href="services.html#medical-aesthetics" class="mega-item">Microneedling</a>
+                <a href="services.html#medical-aesthetics" class="mega-item">Chemical Peels</a>
+                <a href="services.html#medical-aesthetics" class="mega-item">Skin Boosters</a>
+                <a href="services.html#medical-aesthetics" class="mega-item">Mesotherapy</a>
+                <a href="services.html#medical-aesthetics" class="mega-item">IV Drip Therapies</a>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-header"><i class="fa-solid fa-gift"></i> Luxury Packages</div>
+                <a href="services.html#packages" class="mega-item">Bride-to-Be Package</a>
+                <a href="services.html#packages" class="mega-item">Couple's Sanctuary</a>
+                <div class="mega-col-cta">
+                  <a href="index.html#booking-section" class="btn btn-primary"
+                    style="display:block;text-align:center;font-size:0.78rem;padding:10px 16px;">Book a Treatment</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a href="products.html" class="nav-link">Skincare Boutique</a>
+        <a href="academy.html" class="nav-link">Academy</a>
+        <!-- Blog / Content Dropdown -->
+        <div class="nav-item nav-has-dropdown">
+          <a href="blog.html" class="nav-link nav-dropdown-toggle ">Blog <i
+              class="fa-solid fa-chevron-down nav-chevron"></i></a>
+          <div class="nav-dropdown-panel">
+            <a href="blog.html" class="dropdown-item">
+              <span class="di-icon"><i class="fa-solid fa-newspaper"></i></span>
+              <div><strong>Articles</strong><span>Expert skincare &amp; wellness guides</span></div>
+            </a>
+            <a href="testimonials.html" class="dropdown-item">
+              <span class="di-icon"><i class="fa-solid fa-star"></i></span>
+              <div><strong>Testimonials</strong><span>Verified client success stories</span></div>
+            </a>
+            <a href="faq.html" class="dropdown-item">
+              <span class="di-icon"><i class="fa-solid fa-circle-question"></i></span>
+              <div><strong>FAQ</strong><span>Booking &amp; aftercare help</span></div>
+            </a>
+          </div>
+        </div>
+        <a href="index.html#booking-section" class="btn btn-primary nav-cta">Book Experience</a>
       </nav>
 
       <div style="display:flex;align-items:center;gap:12px;">
@@ -177,12 +231,11 @@
           <span class="hero-subtitle fade-in">Awka's Premier Spa &amp; Wellness Destination</span>
           <h1 class="hero-title fade-in">Reclaim Your Balance, <br><span id="heroTypingText"
               class="hero-typing-accent">Restore Your Glow</span><span class="typing-cursor">|</span></h1>
-          <p class="hero-description fade-in">Step into a sanctuary of ultimate tranquility. Experience premium
-            massages, rejuvenating facials, precise waxing, and expert skin investment therapies tailored to your body's
-            unique needs.</p>
+          <p class="hero-description fade-in"></p>
           <div class="hero-actions fade-in">
-            <a href="#booking-section" class="btn btn-primary btn-lg">Book An Appointment</a>
-            <a href="#services" class="btn btn-outline btn-lg">Explore Service Menu</a>
+            <a href="#booking-section" class="btn btn-primary btn-lg hero-btn-standout">Book Appointment</a>
+            <a href="services.html#medical-aesthetics" class="btn btn-outline btn-lg hero-btn-dynamic">Medical Aesthetics <i class="fa-solid fa-chevron-right dynamic-arrow"></i></a>
+            <a href="academy.html" class="btn btn-outline btn-lg hero-btn-dynamic">Academy <i class="fa-solid fa-chevron-right dynamic-arrow"></i></a>
           </div>
         </div>
       </div>
@@ -1151,7 +1204,7 @@
   </script>
 
   <!-- Script loading -->
-  <script type="module" src="app.js?v=2026.07.08.51"></script>
+  <script type="module" src="app.js?v=2026.07.08.99"></script>
   <script src="https://www.youtube.com/iframe_api"></script>
 
   <script type="application/ld+json">

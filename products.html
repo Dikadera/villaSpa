@@ -65,8 +65,8 @@
   <script src="https://js.paystack.co/v1/inline.js"></script>
   
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="style.css?v=2026.07.08.51">
-  <link rel="stylesheet" href="products.css?v=2026.07.08.51">
+  <link rel="stylesheet" href="style.css?v=2026.07.08.99">
+  <link rel="stylesheet" href="products.css?v=2026.07.08.99">
 </head>
 <body class="shop-body">
 
@@ -96,14 +96,64 @@
       </a>
 
       <nav class="nav-menu" id="navMenu">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="index.html#services" class="nav-link">Wellness Menu</a>
-        <a href="index.html#bootcamp" class="nav-link">Training</a>
-        <a href="#" class="nav-link active">Skincare Boutique</a>
-        <button class="cart-trigger-btn" id="cartToggleBtn">
-          <i class="fa-solid fa-bag-shopping"></i>
-          <span class="cart-badge-count" id="cartCountBadge">0</span>
-        </button>
+        <a href="about.html" class="nav-link">About Us</a>
+  <!-- Services Mega Dropdown -->
+      <div class="nav-item nav-has-mega">
+        <a href="services.html" class="nav-link nav-dropdown-toggle ">Services <i class="fa-solid fa-chevron-down nav-chevron"></i></a>
+        <div class="nav-mega-panel">
+          <div class="mega-panel-inner">
+            <div class="mega-col">
+              <div class="mega-col-header"><i class="fa-solid fa-spa"></i> Spa Treatments</div>
+              <a href="services.html#spa-treatments" class="mega-item">Massages</a>
+              <a href="services.html#spa-treatments" class="mega-item">Facials</a>
+              <a href="services.html#spa-treatments" class="mega-item">Body Scrubs</a>
+              <a href="services.html#spa-treatments" class="mega-item">Moroccan Hammam</a>
+              <a href="services.html#spa-treatments" class="mega-item">Waxing &amp; Tinting</a>
+              <a href="services.html#spa-treatments" class="mega-item">Pedicures &amp; Manicures</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-header"><i class="fa-solid fa-user-doctor"></i> Medical Aesthetics</div>
+              <a href="services.html#medical-aesthetics" class="mega-item">Botox Injections</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Dermal Fillers</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">PRP &amp; PRF</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Microneedling</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Chemical Peels</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Skin Boosters</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Mesotherapy</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">IV Drip Therapies</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-header"><i class="fa-solid fa-gift"></i> Luxury Packages</div>
+              <a href="services.html#packages" class="mega-item">Bride-to-Be Package</a>
+              <a href="services.html#packages" class="mega-item">Couple's Sanctuary</a>
+              <div class="mega-col-cta">
+                <a href="index.html#booking-section" class="btn btn-primary" style="display:block;text-align:center;font-size:0.78rem;padding:10px 16px;">Book a Treatment</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        <a href="products.html" class="nav-link active">Skincare Boutique</a>
+        <a href="academy.html" class="nav-link">Academy</a>
+  <!-- Blog / Content Dropdown -->
+      <div class="nav-item nav-has-dropdown">
+        <a href="blog.html" class="nav-link nav-dropdown-toggle ">Blog <i class="fa-solid fa-chevron-down nav-chevron"></i></a>
+        <div class="nav-dropdown-panel">
+          <a href="blog.html" class="dropdown-item">
+            <span class="di-icon"><i class="fa-solid fa-newspaper"></i></span>
+            <div><strong>Articles</strong><span>Expert skincare &amp; wellness guides</span></div>
+          </a>
+          <a href="testimonials.html" class="dropdown-item">
+            <span class="di-icon"><i class="fa-solid fa-star"></i></span>
+            <div><strong>Testimonials</strong><span>Verified client success stories</span></div>
+          </a>
+          <a href="faq.html" class="dropdown-item">
+            <span class="di-icon"><i class="fa-solid fa-circle-question"></i></span>
+            <div><strong>FAQ</strong><span>Booking &amp; aftercare help</span></div>
+          </a>
+        </div>
+      </div>
+        <a href="index.html#booking-section" class="btn btn-primary nav-cta">Book Experience</a>
       </nav>
 
       <div style="display:flex;align-items:center;gap:12px;">
@@ -371,7 +421,7 @@
   </script>
 
   <!-- Script Modules -->
-  <script type="module" src="products.js?v=2026.07.08.51"></script>
+  <script type="module" src="products.js?v=2026.07.08.99"></script>
   <script src="https://www.youtube.com/iframe_api"></script>
 </body>
 </html>

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services &amp; Treatments Menu | The Villa Spa</title>
+  <meta name="description" content="Explore Awka's premium spa treatments and advanced medical aesthetics menu. Massages, Hammam, Botox, fillers, chemical peels, and custom wellness packages.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css?v=2026.07.08.99">
+  <style>
+    .category-section-title {
+      font-family: var(--font-serif);
+      font-size: 1.85rem;
+      color: var(--color-espresso);
+      border-bottom: 2px solid var(--color-champagne);
+      padding-bottom: 8px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .services-grid-subpage {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+    .service-card-subpage {
+      background-color: var(--color-cream);
+      border: 1px solid var(--color-sand);
+      border-radius: var(--border-radius-md);
+      padding: 24px;
+      transition: var(--transition-smooth);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .service-card-subpage:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-subtle);
+      border-color: var(--color-champagne);
+    }
+  </style>
+</head>
+<body class="services-body">
+
+  <!-- Global Ambient Snow Effect -->
+  <div id="globalSnowContainer"></div>
+
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+
+  <!-- Announcement Bar -->
+  <div class="announcement-bar">
+    <div class="announcement-content">
+      <span>✨ <strong>Wellness Menu:</strong> Explore our holistic spa therapies and advanced clinical procedures.</span>
+    </div>
+  </div>
+
+  <!-- Header & Navigation -->
+  <header class="main-header">
+    <div class="header-container">
+      <a href="index.html" class="logo-area">
+        <span class="logo-initials">TVS</span>
+        <div class="logo-divider"></div>
+        <div class="logo-text">
+          <span class="brand-name">THE VILLA SPA</span>
+          <span class="brand-tagline">SALON · WELLNESS · LAUNGE</span>
+        </div>
+      </a>
+
+      <nav class="nav-menu" id="navMenu">
+        <a href="about.html" class="nav-link">About Us</a>
+  <!-- Services Mega Dropdown -->
+      <div class="nav-item nav-has-mega">
+        <a href="services.html" class="nav-link nav-dropdown-toggle active">Services <i class="fa-solid fa-chevron-down nav-chevron"></i></a>
+        <div class="nav-mega-panel">
+          <div class="mega-panel-inner">
+            <div class="mega-col">
+              <div class="mega-col-header"><i class="fa-solid fa-spa"></i> Spa Treatments</div>
+              <a href="services.html#spa-treatments" class="mega-item">Massages</a>
+              <a href="services.html#spa-treatments" class="mega-item">Facials</a>
+              <a href="services.html#spa-treatments" class="mega-item">Body Scrubs</a>
+              <a href="services.html#spa-treatments" class="mega-item">Moroccan Hammam</a>
+              <a href="services.html#spa-treatments" class="mega-item">Waxing &amp; Tinting</a>
+              <a href="services.html#spa-treatments" class="mega-item">Pedicures &amp; Manicures</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-header"><i class="fa-solid fa-user-doctor"></i> Medical Aesthetics</div>
+              <a href="services.html#medical-aesthetics" class="mega-item">Botox Injections</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Dermal Fillers</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">PRP &amp; PRF</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Microneedling</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Chemical Peels</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Skin Boosters</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Mesotherapy</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">IV Drip Therapies</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-header"><i class="fa-solid fa-gift"></i> Luxury Packages</div>
+              <a href="services.html#packages" class="mega-item">Bride-to-Be Package</a>
+              <a href="services.html#packages" class="mega-item">Couple's Sanctuary</a>
+              <div class="mega-col-cta">
+                <a href="index.html#booking-section" class="btn btn-primary" style="display:block;text-align:center;font-size:0.78rem;padding:10px 16px;">Book a Treatment</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        <a href="products.html" class="nav-link">Skincare Boutique</a>
+        <a href="academy.html" class="nav-link">Academy</a>
+  <!-- Blog / Content Dropdown -->
+      <div class="nav-item nav-has-dropdown">
+        <a href="blog.html" class="nav-link nav-dropdown-toggle ">Blog <i class="fa-solid fa-chevron-down nav-chevron"></i></a>
+        <div class="nav-dropdown-panel">
+          <a href="blog.html" class="dropdown-item">
+            <span class="di-icon"><i class="fa-solid fa-newspaper"></i></span>
+            <div><strong>Articles</strong><span>Expert skincare &amp; wellness guides</span></div>
+          </a>
+          <a href="testimonials.html" class="dropdown-item">
+            <span class="di-icon"><i class="fa-solid fa-star"></i></span>
+            <div><strong>Testimonials</strong><span>Verified client success stories</span></div>
+          </a>
+          <a href="faq.html" class="dropdown-item">
+            <span class="di-icon"><i class="fa-solid fa-circle-question"></i></span>
+            <div><strong>FAQ</strong><span>Booking &amp; aftercare help</span></div>
+          </a>
+        </div>
+      </div>
+        <a href="index.html#booking-section" class="btn btn-primary nav-cta">Book Experience</a>
+      </nav>
+
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="theme-toggle-btn" id="siteThemeToggle" title="Toggle Light / Dark Mode" aria-label="Toggle theme">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+        <button class="mobile-menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Subpage Hero -->
+    <section class="shop-hero">
+      <div class="shop-hero-bg" style="background-image: linear-gradient(rgba(20, 15, 13, 0.72), rgba(20, 15, 13, 0.88)), url('assets/spa_hero_bg.jpeg');"></div>
+      <div class="shop-hero-container">
+        <span class="shop-subtitle">TVS Treatments</span>
+        <h1 class="shop-title">Services Menu</h1>
+        <p class="shop-description">Explore raw pampering spa therapies alongside state-of-the-art medical aesthetic procedures.</p>
+      </div>
+    </section>
+
+    <!-- Services Grid Layout -->
+    <section style="padding: 80px 24px;">
+      <div class="section-container" style="max-width: 1100px; margin: 0 auto;">
+
+        <!-- SPA TREATMENTS -->
+        <h2 class="category-section-title" id="spa-treatments"><i class="fa-solid fa-spa" style="color: var(--color-champagne-dark);"></i> Spa Treatments</h2>
+        <div class="services-grid-subpage">
+          <!-- Massages -->
+          <div class="service-card-subpage">
+            <div>
+              <h3 style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-espresso); margin-bottom: 8px;">Holistic Massages</h3>
+              <p style="font-size: 0.9rem; color: var(--color-espresso-light); margin-bottom: 12px;">Choose between Swedish, Deep Tissue, and Hot Stone therapies designed to drain toxins, relieve muscle soreness, and soothe target stress areas.</p>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; border-top: 1.5px solid var(--color-sand); padding-top: 12px; margin-top: 12px;">
+              <span style="font-weight:bold; color: var(--color-champagne-dark);">From ₦15,000</span>
+              <a href="index.html#booking-section" class="btn btn-xs btn-outline">Book Slots</a>
+            </div>
+          </div>
+
+          <!-- Facials -->
+          <div class="service-card-subpage">
+            <div>
+              <h3 style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-espresso); margin-bottom: 8px;">Rejuvenating Facials</h3>
+              <p style="font-size: 0.9rem; color: var(--color-espresso-light); margin-bottom: 12px;">Featuring Gold Radiance, Hydro-dermabrasion, and Anti-Acne deeply purifying extractions. Tailored to enhance skin radiance and remove clogged pores.</p>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; border-top: 1.5px solid var(--color-sand); padding-top: 12px; margin-top: 12px;">
+              <span style="font-weight:bold; color: var(--color-champagne-dark);">From ₦20,000</span>
+              <a href="index.html#booking-section" class="btn btn-xs btn-outline">Book Slots</a>
+            </div>
+          </div>
+
+          <!-- Body Scrubs -->
+          <div class="service-card-subpage">
+            <div>
+              <h3 style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-espresso); margin-bottom: 8px;">Exfoliating Body Scrubs</h3>
+              <p style="font-size: 0.9rem; color: var(--color-espresso-light); margin-bottom: 12px;">A complete sugar or sea-salt exfoliation containing sweet almond and organic coconut oils to polished dead cells and uncover velvet-like soft skin texture.</p>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; border-top: 1.5px solid var(--color-sand); padding-top: 12px; margin-top: 12px;">
+              <span style="font-weight:bold; color: var(--color-champagne-dark);">₦25,000</span>
+              <a href="index.html#booking-section" class="btn btn-xs btn-outline">Book Slots</a>
+            </div>
+          </div>
+
+          <!-- Hammam -->
+          <div class="service-card-subpage">
+            <div>
+              <h3 style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-espresso); margin-bottom: 8px;">Moroccan Hammam Bath</h3>
+              <p style="font-size: 0.9rem; color: var(--color-espresso-light); margin-bottom: 12px;">Traditional thermal steam chamber exfoliation utilizing authentic black soap, Kessa scrub glove, and botanical rose-water clay wrapping.</p>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; border-top: 1.5px solid var(--color-sand); padding-top: 12px; margin-top: 12px;">
+              <span style="font-weight:bold; color: var(--color-champagne-dark);">₦35,000</span>
+              <a href="index.html#booking-section" class="btn btn-xs btn-outline">Book Slots</a>
+            </div>
+          </div>
+
+          <!-- Waxing -->
+          <div class="service-card-subpage">
+            <div>
+              <h3 style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-espresso); margin-bottom: 8px;">Waxing &amp; Tinting</h3>
+              <p style="font-size: 0.9rem; color: var(--color-espresso-light); margin-bottom: 12px;">Gentle hair removal sessions covering Brazilian, legs, and face utilizing high-quality hard and strip waxes, followed by precise eyebrow mapping tinting.</p>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; border-top: 1.5px solid var(--color-sand); padding-top: 12px; margin-top: 12px;">
+              <span style="font-weight:bold; color: var(--color-champagne-dark);">From ₦5,000</span>
+              <a href="index.html#booking-section" class="btn btn-xs btn-outline">Book Slots</a>
+            </div>
+          </div>
+
+          <!-- Mani Pedi -->
+          <div class="service-card-subpage">
+            <div>
+              <h3 style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-espresso); margin-bottom: 8px;">Manicures &amp; Pedicures</h3>
+              <p style="font-size: 0.9rem; color: var(--color-espresso-light); margin-bottom: 12px;">Professional hand and feet therapy. Features luxury cuticle treatments, custom scrub exfoliation, hot towel wrap, massage, and premium gel/acrylic polish.</p>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; border-top: 1.5px solid var(--color-sand); padding-top: 12px; margin-top: 12px;">
+              <span style="font-weight:bold; color: var(--color-champagne-dark);">From ₦10,000</span>
+              <a href="index.html#booking-section" class="btn btn-xs btn-outline">Book Slots</a>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- MEDICAL AESTHETICS -->
+        <h2 class="category-section-title" id="medical-aesthetics"><i class="fa-solid fa-user-doctor" style="color: var(--color-champagne-dark);"></i> Medical Aesthetics</h2>
+        <div class="services-grid-subpage">
+          <!-- Botox -->
+          <div class="service-card-subpage">
+            <div>
+              <h3 style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-espresso); margin-bottom: 8px;">Botox Injections</h3>
+              <p style="font-size: 0.9rem; color: var(--color-espresso-light); margin-bottom: 12px;">Professional cosmetic muscle relaxation targeting crow’s feet, frown creases, forehead lines, and jaw narrowing (masseter botox).</p>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; border-top: 1.5px solid var(--color-sand); padding-top: 12px; margin-top: 12px;">
+              <span style="font-weight:bold; color: var(--color-champagne-dark);">₦80,000 / Area</span>
+              <a href="https://wa.me/2348147409153" target="_blank" class="btn btn-xs btn-outline">Consult Now</a>
+            </div>
+          </div>
+
+          <!-- Dermal Fillers -->
+          <div class="service-card-subpage">
+            <div>
+              <h3 style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-espresso); margin-bottom: 8px;">Dermal Fillers</h3>
+              <p style="font-size: 0.9rem; color: var(--color-espresso-light); margin-bottom: 12px;">Hyaluronic acid filler placements targeting nasolabial folds, lip plumping, and jawline/cheek augmentation for beautiful facial contours.</p>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; border-top: 1.5px solid var(--color-sand); padding-top: 12px; margin-top: 12px;">
+              <span style="font-weight:bold; color: var(--color-champagne-dark);">₦120,000 / Syringe</span>
+              <a href="https://wa.me/2348147409153" target="_blank" class="btn btn-xs btn-outline">Consult Now</a>
+            </div>
+          </div>
+
+          <!-- PRP & PRF -->
+          <div class="service-card-subpage">
+            <div>
+              <h3 style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-espresso); margin-bottom: 8px;">PRP &amp; PRF Therapies</h3>
+              <p style="font-size: 0.9rem; color: var(--color-espresso-light); margin-bottom: 12px;">Platelet-Rich Plasma (Vampire Facial) and Platelet-Rich Fibrin treatments to repair scarring, restore receding hair lines, and brighten under-eye shadows.</p>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; border-top: 1.5px solid var(--color-sand); padding-top: 12px; margin-top: 12px;">
+              <span style="font-weight:bold; color: var(--color-champagne-dark);">₦50,000 / Session</span>
+              <a href="https://wa.me/2348147409153" target="_blank" class="btn btn-xs btn-outline">Consult Now</a>
+            </div>
+          </div>
+
+          <!-- Microneedling -->
+          <div class="service-card-subpage">
+            <div>
+              <h3 style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-espresso); margin-bottom: 8px;">Microneedling</h3>
+              <p style="font-size: 0.9rem; color: var(--color-espresso-light); margin-bottom: 12px;">Collagen Induction Therapy using automated micro-needles paired with vitamin serums to treat deep acne scarring, wrinkles, and uneven texture.</p>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; border-top: 1.5px solid var(--color-sand); padding-top: 12px; margin-top: 12px;">
+              <span style="font-weight:bold; color: var(--color-champagne-dark);">₦35,000 / Session</span>
+              <a href="index.html#booking-section" class="btn btn-xs btn-outline">Book Slots</a>
+            </div>
+          </div>
+
+          <!-- Chemical Peels -->
+          <div class="service-card-subpage">
+            <div>
+              <h3 style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-espresso); margin-bottom: 8px;">Advanced Chemical Peels</h3>
+              <p style="font-size: 0.9rem; color: var(--color-espresso-light); margin-bottom: 12px;">Targeted Glycolic, TCA, and Jessner peels formulated specifically to solve stubborn hyperpigmentation, active cystic acne, and age spots.</p>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; border-top: 1.5px solid var(--color-sand); padding-top: 12px; margin-top: 12px;">
+              <span style="font-weight:bold; color: var(--color-champagne-dark);">From ₦30,000</span>
+              <a href="index.html#booking-section" class="btn btn-xs btn-outline">Book Slots</a>
+            </div>
+          </div>
+
+          <!-- Skin Boosters -->
+          <div class="service-card-subpage">
+            <div>
+              <h3 style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-espresso); margin-bottom: 8px;">Skin Boosters (Profhilo)</h3>
+              <p style="font-size: 0.9rem; color: var(--color-espresso-light); margin-bottom: 12px;">Injections of high-concentration pure hyaluronic acid directly underneath the skin layers to trigger deep moisturization and natural remodeling.</p>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; border-top: 1.5px solid var(--color-sand); padding-top: 12px; margin-top: 12px;">
+              <span style="font-weight:bold; color: var(--color-champagne-dark);">₦95,000 / Session</span>
+              <a href="https://wa.me/2348147409153" target="_blank" class="btn btn-xs btn-outline">Consult Now</a>
+            </div>
+          </div>
+
+          <!-- Mesotherapy -->
+          <div class="service-card-subpage">
+            <div>
+              <h3 style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-espresso); margin-bottom: 8px;">Mesotherapy &amp; Lipolysis</h3>
+              <p style="font-size: 0.9rem; color: var(--color-espresso-light); margin-bottom: 12px;">Targeted fat-dissolving microinjections to melt double chin, stomach pouch fat, alongside facial mesotherapy for a natural glass-skin glow.</p>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; border-top: 1.5px solid var(--color-sand); padding-top: 12px; margin-top: 12px;">
+              <span style="font-weight:bold; color: var(--color-champagne-dark);">From ₦45,000</span>
+              <a href="https://wa.me/2348147409153" target="_blank" class="btn btn-xs btn-outline">Consult Now</a>
+            </div>
+          </div>
+
+          <!-- IV Drips -->
+          <div class="service-card-subpage">
+            <div>
+              <h3 style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-espresso); margin-bottom: 8px;">IV Drip Therapies</h3>
+              <p style="font-size: 0.9rem; color: var(--color-espresso-light); margin-bottom: 12px;">High-potency cocktails of Vitamin C, Glutathione, Collagen, and electrolytes to immediately boost skin brightness, clarify tone, and detoxify organs.</p>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; border-top: 1.5px solid var(--color-sand); padding-top: 12px; margin-top: 12px;">
+              <span style="font-weight:bold; color: var(--color-champagne-dark);">₦40,000 / Drip</span>
+              <a href="index.html#booking-section" class="btn btn-xs btn-outline">Book Slots</a>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- CUSTOM PACKAGES -->
+        <h2 class="category-section-title" id="packages"><i class="fa-solid fa-gift" style="color: var(--color-champagne-dark);"></i> Luxury Packages</h2>
+        <div class="services-grid-subpage" style="margin-bottom: 0;">
+          <!-- Bride -->
+          <div class="service-card-subpage">
+            <div>
+              <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--color-champagne-dark); font-weight: bold; letter-spacing: 1px; display: block; margin-bottom: 6px;">Total bridal glow</span>
+              <h3 style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-espresso); margin-bottom: 8px;">Bride-to-Be Luxury Package</h3>
+              <p style="font-size: 0.9rem; color: var(--color-espresso-light); margin-bottom: 12px;">Features Moroccan Hammam, Gold Radiance facial, luxury pedicures, and a full body Swedish relaxation massage. Perfect prep for your special day.</p>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; border-top: 1.5px solid var(--color-sand); padding-top: 12px; margin-top: 12px;">
+              <span style="font-weight:bold; color: var(--color-champagne-dark);">₦75,000</span>
+              <a href="index.html#booking-section" class="btn btn-xs btn-outline">Book Slots</a>
+            </div>
+          </div>
+
+          <!-- Couple -->
+          <div class="service-card-subpage">
+            <div>
+              <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--color-champagne-dark); font-weight: bold; letter-spacing: 1px; display: block; margin-bottom: 6px;">Relaxation for two</span>
+              <h3 style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--color-espresso); margin-bottom: 8px;">Couple's Premium Sanctuary</h3>
+              <p style="font-size: 0.9rem; color: var(--color-espresso-light); margin-bottom: 12px;">Simultaneous Swedish deep-tissue massages in our soundproofed suite, hot stone treatment, hydrating collagen facial masks, and glass of champagne.</p>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; border-top: 1.5px solid var(--color-sand); padding-top: 12px; margin-top: 12px;">
+              <span style="font-weight:bold; color: var(--color-champagne-dark);">₦60,000</span>
+              <a href="index.html#booking-section" class="btn btn-xs btn-outline">Book Slots</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-brand-column">
+        <a href="index.html" class="footer-logo">
+          <span class="logo-initials">TVS</span>
+          <span class="logo-title">THE VILLA SPA</span>
+        </a>
+        <p class="footer-about">Awka's Premier Salon and Wellness Lounge. Dedicated to luxury treatments, holistic rejuvenation, and premium industry training.</p>
+        <div class="footer-socials">
+          <a href="https://instagram.com/thevillaspa_" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/2348147409153" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          <a href="tel:08147409153"><i class="fas fa-phone"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-links-column">
+        <h4>Navigation</h4>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Sanctuary</a>
+        <a href="services.html">Wellness Menu</a>
+        <a href="products.html">Skincare Boutique</a>
+        <a href="index.html#booking-section">Book Slots</a>
+      </div>
+
+      <div class="footer-hours-column">
+        <h4>Wellness Hours</h4>
+        <p><strong>Monday – Saturday</strong><br>9:00 AM – 7:00 PM</p>
+        <p><strong>Sunday Session</strong><br>1:00 PM – 7:00 PM</p>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <p>&copy; 2026 The Villa Spa. All Rights Reserved. Created with premium excellence.</p>
+    </div>
+  </footer>
+
+  <script type="module" src="app.js?v=2026.07.08.99"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
+</body>
+</html>

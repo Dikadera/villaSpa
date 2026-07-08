@@ -235,7 +235,7 @@ const defaultCategories = [
 ];
 let categoriesDatabase = [];
 let bookingCart = [];
-let selectedCategory = null;
+let selectedCategories = [];
 let currentWizardStep = 1;
 let selectedDateObj = null;
 let selectedTimeSlot = null;
@@ -484,36 +484,75 @@ if (document.readyState === "loading") {
 function initNavigation() {
   const menuToggle = document.getElementById("menuToggle");
   const navMenu = document.getElementById("navMenu");
-  const navLinks = document.querySelectorAll(".nav-link");
+  const navLinks = document.querySelectorAll(".nav-link:not(.nav-dropdown-toggle)");
+
+  function closeMobileMenu() {
+    navMenu.classList.remove("active");
+    menuToggle.classList.remove("open");
+    const bars = menuToggle.querySelectorAll(".bar");
+    bars[0].style.transform = "none";
+    bars[1].style.opacity = "1";
+    bars[2].style.transform = "none";
+    // Also close all dropdowns
+    document.querySelectorAll(".nav-item.open").forEach(item => item.classList.remove("open"));
+  }
 
   menuToggle.addEventListener("click", () => {
     navMenu.classList.toggle("active");
     menuToggle.classList.toggle("open");
-    // Animation for hamburger bars
     const bars = menuToggle.querySelectorAll(".bar");
     if (menuToggle.classList.contains("open")) {
       bars[0].style.transform = "rotate(45deg) translate(5px, 5px)";
       bars[1].style.opacity = "0";
       bars[2].style.transform = "rotate(-45deg) translate(5px, -6px)";
     } else {
-      bars[0].style.transform = "none";
-      bars[1].style.opacity = "1";
-      bars[2].style.transform = "none";
+      closeMobileMenu();
     }
   });
 
-  // Smooth Navigation Links Scroll Activation
-  navLinks.forEach(link => {
-    link.addEventListener("click", (e) => {
-      // Close mobile menu
-      navMenu.classList.remove("active");
-      menuToggle.classList.remove("open");
-      const bars = menuToggle.querySelectorAll(".bar");
-      bars.forEach(b => b.style.transform = "none");
-      bars[1].style.opacity = "1";
+  // ── Dropdown toggle (click — works on mobile; hover via CSS on desktop) ──
+  document.querySelectorAll(".nav-dropdown-toggle").forEach(trigger => {
+    trigger.addEventListener("click", (e) => {
+      const isMobile = window.innerWidth <= 1150;
+      if (isMobile) {
+        // On mobile: prevent navigation, toggle accordion
+        e.preventDefault();
+        const item = trigger.closest(".nav-item");
+        const isOpen = item.classList.contains("open");
+        // Close siblings
+        document.querySelectorAll(".nav-item.open").forEach(i => i.classList.remove("open"));
+        if (!isOpen) item.classList.add("open");
+      }
+      // On desktop: let the href navigate normally
+    });
+  });
 
-      navLinks.forEach(l => l.classList.remove("active"));
-      link.classList.add("active");
+  // Close dropdowns when clicking outside
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".nav-item") && !e.target.closest(".nav-mega-panel")) {
+      document.querySelectorAll(".nav-item.open").forEach(item => item.classList.remove("open"));
+    }
+  });
+
+  // Escape key closes everything
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      document.querySelectorAll(".nav-item.open").forEach(item => item.classList.remove("open"));
+      closeMobileMenu();
+    }
+  });
+
+  // Close mobile menu on regular nav link click
+  navLinks.forEach(link => {
+    link.addEventListener("click", () => {
+      closeMobileMenu();
+    });
+  });
+
+  // Also close mega panel links
+  document.querySelectorAll(".mega-item, .dropdown-item").forEach(item => {
+    item.addEventListener("click", () => {
+      closeMobileMenu();
     });
   });
 
@@ -546,6 +585,7 @@ function initNavigation() {
     }
   });
 }
+
 
 // Helper scroll function
 function scrollToSection(id) {
@@ -784,6 +824,7 @@ function initTestimonialCarousel() {
 function initSyllabusDrawer() {
   const viewSyllabusBtn = document.getElementById("viewSyllabusBtn");
   const syllabusModal = document.getElementById("syllabusModal");
+  if (!viewSyllabusBtn || !syllabusModal) return;
   
   viewSyllabusBtn.addEventListener("click", () => {
     syllabusModal.classList.add("active");
@@ -864,11 +905,16 @@ function initBookingWizard() {
   const step4Prev = document.getElementById("step4Prev");
   const bookingForm = document.getElementById("bookingForm");
   
+  if (!step1Next || !bookingForm) {
+    console.log("[TVS] Booking wizard not found on this page, skipping wizard initialization.");
+    return;
+  }
+  
   // Sync category choices
   syncCategoriesToWizard();
   
   step1Next.addEventListener("click", () => {
-    if (selectedCategory) {
+    if (selectedCategories.length > 0) {
       changeStep(2);
       syncCartToWizard();
     }
@@ -899,7 +945,7 @@ function initBookingWizard() {
 
 function changeStep(stepNumber) {
   // Validate steps if progressing forward
-  if (stepNumber === 2 && !selectedCategory) return;
+  if (stepNumber === 2 && selectedCategories.length === 0) return;
   if (stepNumber === 3 && bookingCart.length === 0) return;
   if (stepNumber === 4 && (!selectedDateObj || !selectedTimeSlot)) return;
   
@@ -942,7 +988,7 @@ function syncCategoriesToWizard() {
     card.className = "category-option-card";
     
     // Toggle active state styling
-    if (selectedCategory === cat.id) {
+    if (selectedCategories.includes(cat.id)) {
       card.style.borderColor = "var(--color-champagne-dark)";
       card.style.backgroundColor = "rgba(197, 168, 128, 0.08)";
     }
@@ -953,22 +999,34 @@ function syncCategoriesToWizard() {
     `;
     
     card.addEventListener("click", () => {
-      selectedCategory = cat.id;
-      bookingCart = [];
+      const idx = selectedCategories.indexOf(cat.id);
+      if (idx > -1) {
+        // Deselect
+        selectedCategories.splice(idx, 1);
+        card.style.borderColor = "";
+        card.style.backgroundColor = "";
+      } else {
+        // Select
+        selectedCategories.push(cat.id);
+        card.style.borderColor = "var(--color-champagne-dark)";
+        card.style.backgroundColor = "rgba(197, 168, 128, 0.08)";
+      }
+      
+      // Auto-remove any items in cart that aren't in selected categories anymore
+      bookingCart = bookingCart.filter(item => selectedCategories.includes(item.category));
       updateBookingSummaryBanner();
       
-      document.querySelectorAll(".category-option-card").forEach(c => {
-        c.style.borderColor = "";
-        c.style.backgroundColor = "";
-      });
-      card.style.borderColor = "var(--color-champagne-dark)";
-      card.style.backgroundColor = "rgba(197, 168, 128, 0.08)";
-      
-      step1Next.disabled = false;
+      if (step1Next) {
+        step1Next.disabled = (selectedCategories.length === 0);
+      }
     });
     
     container.appendChild(card);
   });
+
+  if (step1Next) {
+    step1Next.disabled = (selectedCategories.length === 0);
+  }
 }
 
 // STEP 2 WIZARD: Cart synchronization (Service Choice)
@@ -980,59 +1038,67 @@ function syncCartToWizard() {
   if (!wizardServicesList) return;
   wizardServicesList.innerHTML = "";
   
-  const cat = categoriesDatabase.find(c => c.id === selectedCategory);
-  if (cat) {
-    const items = servicesDatabase.filter(s => s.category === cat.id);
-    if (items.length > 0) {
-      const divider = document.createElement("div");
-      divider.className = "category-divider-title";
-      divider.style.gridColumn = "1 / -1";
-      divider.style.marginTop = "12px";
-      divider.style.fontFamily = "var(--font-serif)";
-      divider.style.fontSize = "0.95rem";
-      divider.style.fontWeight = "bold";
-      divider.style.borderBottom = "1.5px solid var(--color-sand)";
-      divider.style.paddingBottom = "4px";
-      divider.style.color = "var(--color-champagne-dark)";
-      divider.textContent = cat.name;
-      wizardServicesList.appendChild(divider);
-      
-      items.forEach(item => {
-        const isSelected = bookingCart.some(c => c.id === item.id);
-        const itemCard = document.createElement("div");
-        itemCard.className = isSelected ? "wiz-service-select-item selected" : "wiz-service-select-item";
-        itemCard.innerHTML = `
-          <div class="wiz-service-info">
-            <span class="wiz-service-name">${item.name}</span>
-            <span class="wiz-service-meta">${item.duration} Mins · ₦${item.price.toLocaleString()}</span>
-          </div>
-          <div class="wiz-checkbox">
-            <i class="fa-solid fa-check"></i>
-          </div>
-        `;
-        
-        itemCard.addEventListener("click", () => {
-          const index = bookingCart.findIndex(c => c.id === item.id);
-          if (index === -1) {
-            bookingCart.push(item);
-          } else {
-            bookingCart.splice(index, 1);
-          }
-          updateBookingSummaryBanner();
-          syncCartToWizard();
-          
-          // Re-render service tab lists to sync checkmarks
-          const activeTabBtn = document.querySelector(".tab-btn.active");
-          if (activeTabBtn) {
-            const gridContainer = document.getElementById("servicesGrid");
-            renderServices(activeTabBtn.getAttribute("data-category"), gridContainer);
-          }
-        });
-        
-        wizardServicesList.appendChild(itemCard);
-      });
-    }
+  if (selectedCategories.length === 0) {
+    wizardServicesList.innerHTML = `<p class="empty-selection-msg">Please go back and select at least one category.</p>`;
+    return;
   }
+  
+  // Render services grouped under each selected category
+  selectedCategories.forEach(catId => {
+    const cat = categoriesDatabase.find(c => c.id === catId);
+    if (cat) {
+      const items = servicesDatabase.filter(s => s.category === cat.id);
+      if (items.length > 0) {
+        const divider = document.createElement("div");
+        divider.className = "category-divider-title";
+        divider.style.gridColumn = "1 / -1";
+        divider.style.marginTop = "24px";
+        divider.style.fontFamily = "var(--font-serif)";
+        divider.style.fontSize = "0.95rem";
+        divider.style.fontWeight = "bold";
+        divider.style.borderBottom = "1.5px solid var(--color-sand)";
+        divider.style.paddingBottom = "4px";
+        divider.style.color = "var(--color-champagne-dark)";
+        divider.textContent = cat.name;
+        wizardServicesList.appendChild(divider);
+        
+        items.forEach(item => {
+          const isSelected = bookingCart.some(c => c.id === item.id);
+          const itemCard = document.createElement("div");
+          itemCard.className = isSelected ? "wiz-service-select-item selected" : "wiz-service-select-item";
+          itemCard.innerHTML = `
+            <div class="wiz-service-info">
+              <span class="wiz-service-name">${item.name}</span>
+              <span class="wiz-service-meta">${item.duration} Mins · ₦${item.price.toLocaleString()}</span>
+            </div>
+            <div class="wiz-checkbox">
+              <i class="fa-solid fa-check"></i>
+            </div>
+          `;
+          
+          itemCard.addEventListener("click", () => {
+            const index = bookingCart.findIndex(c => c.id === item.id);
+            if (index === -1) {
+              bookingCart.push(item);
+            } else {
+              bookingCart.splice(index, 1);
+            }
+            updateBookingSummaryBanner();
+            syncCartToWizard();
+            
+            // Re-render service tab lists to sync checkmarks
+            const activeTabBtn = document.querySelector(".tab-btn.active");
+            if (activeTabBtn) {
+              const gridContainer = document.getElementById("servicesGrid");
+              renderServices(activeTabBtn.getAttribute("data-category"), gridContainer);
+            }
+          });
+          
+          wizardServicesList.appendChild(itemCard);
+        });
+      }
+    }
+  });
 
   // 2. Render Selected Summary list
   if (bookingCart.length === 0) {
@@ -1298,7 +1364,7 @@ async function saveBooking() {
     
     // Wipe selection state
     bookingCart = [];
-    selectedCategory = null;
+    selectedCategories = [];
     updateBookingSummaryBanner();
     syncCartToWizard();
     
@@ -1371,7 +1437,7 @@ async function saveBooking() {
 
 window.restartBookingWizard = function() {
   // Reset wizard states
-  selectedCategory = null;
+  selectedCategories = [];
   selectedDateObj = null;
   selectedTimeSlot = null;
   currentCalendarDate = new Date(2026, 5, 5);

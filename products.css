@@ -2,63 +2,7 @@
    THE VILLA SPA - SKINCARE PRODUCTS BOUTIQUE CSS
    ========================================================================== */
 
-/* Shop Hero Header */
-.shop-hero {
-  position: relative;
-  height: 45vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  text-align: center;
-  color: var(--color-cream);
-  background-color: var(--color-espresso-dark);
-}
-
-.shop-hero-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  z-index: 1;
-}
-
-.shop-hero-container {
-  position: relative;
-  z-index: 2;
-  max-width: 800px;
-  padding: 0 24px;
-}
-
-.shop-subtitle {
-  font-family: var(--font-sans);
-  font-size: 0.85rem;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--color-champagne);
-  font-weight: 600;
-  display: inline-block;
-  margin-bottom: 12px;
-}
-
-.shop-title {
-  font-family: var(--font-serif);
-  font-size: 2.8rem;
-  font-weight: 500;
-  line-height: 1.2;
-  margin-bottom: 16px;
-}
-
-.shop-description {
-  font-size: 1rem;
-  opacity: 0.85;
-  color: var(--color-sand-light);
-  line-height: 1.6;
-}
+/* Shop Hero header styles are inherited from style.css (global) */
 
 /* Catalog section utilities */
 .catalog-utility-bar {
@@ -659,3 +603,5 @@
   color: var(--color-champagne-dark) !important;
   font-weight: 700;
 }
+
+/* Mobile responsive hero styles are inherited from style.css (global) */

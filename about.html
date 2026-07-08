@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us | The Villa Spa</title>
+  <meta name="description" content="Learn about The Villa Spa, Awka's luxury wellness sanctuary. Our story, mission, facility, and meet our founder Stephanie Jefia.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css?v=2026.07.08.99">
+</head>
+<body class="about-body">
+
+  <!-- Global Ambient Snow Effect -->
+  <div id="globalSnowContainer"></div>
+
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+
+  <!-- Announcement Bar -->
+  <div class="announcement-bar">
+    <div class="announcement-content">
+      <span>✨ <strong>About Sanctuary:</strong> Discover what makes The Villa Spa Awka's absolute premium choice.</span>
+    </div>
+  </div>
+
+  <!-- Header & Navigation -->
+  <header class="main-header">
+    <div class="header-container">
+      <a href="index.html" class="logo-area">
+        <span class="logo-initials">TVS</span>
+        <div class="logo-divider"></div>
+        <div class="logo-text">
+          <span class="brand-name">THE VILLA SPA</span>
+          <span class="brand-tagline">SALON · WELLNESS · LAUNGE</span>
+        </div>
+      </a>
+
+      <nav class="nav-menu" id="navMenu">
+        <a href="about.html" class="nav-link active">About Us</a>
+  <!-- Services Mega Dropdown -->
+      <div class="nav-item nav-has-mega">
+        <a href="services.html" class="nav-link nav-dropdown-toggle ">Services <i class="fa-solid fa-chevron-down nav-chevron"></i></a>
+        <div class="nav-mega-panel">
+          <div class="mega-panel-inner">
+            <div class="mega-col">
+              <div class="mega-col-header"><i class="fa-solid fa-spa"></i> Spa Treatments</div>
+              <a href="services.html#spa-treatments" class="mega-item">Massages</a>
+              <a href="services.html#spa-treatments" class="mega-item">Facials</a>
+              <a href="services.html#spa-treatments" class="mega-item">Body Scrubs</a>
+              <a href="services.html#spa-treatments" class="mega-item">Moroccan Hammam</a>
+              <a href="services.html#spa-treatments" class="mega-item">Waxing &amp; Tinting</a>
+              <a href="services.html#spa-treatments" class="mega-item">Pedicures &amp; Manicures</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-header"><i class="fa-solid fa-user-doctor"></i> Medical Aesthetics</div>
+              <a href="services.html#medical-aesthetics" class="mega-item">Botox Injections</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Dermal Fillers</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">PRP &amp; PRF</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Microneedling</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Chemical Peels</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Skin Boosters</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">Mesotherapy</a>
+              <a href="services.html#medical-aesthetics" class="mega-item">IV Drip Therapies</a>
+            </div>
+            <div class="mega-col">
+              <div class="mega-col-header"><i class="fa-solid fa-gift"></i> Luxury Packages</div>
+              <a href="services.html#packages" class="mega-item">Bride-to-Be Package</a>
+              <a href="services.html#packages" class="mega-item">Couple's Sanctuary</a>
+              <div class="mega-col-cta">
+                <a href="index.html#booking-section" class="btn btn-primary" style="display:block;text-align:center;font-size:0.78rem;padding:10px 16px;">Book a Treatment</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        <a href="products.html" class="nav-link">Skincare Boutique</a>
+        <a href="academy.html" class="nav-link">Academy</a>
+  <!-- Blog / Content Dropdown -->
+      <div class="nav-item nav-has-dropdown">
+        <a href="blog.html" class="nav-link nav-dropdown-toggle ">Blog <i class="fa-solid fa-chevron-down nav-chevron"></i></a>
+        <div class="nav-dropdown-panel">
+          <a href="blog.html" class="dropdown-item">
+            <span class="di-icon"><i class="fa-solid fa-newspaper"></i></span>
+            <div><strong>Articles</strong><span>Expert skincare &amp; wellness guides</span></div>
+          </a>
+          <a href="testimonials.html" class="dropdown-item">
+            <span class="di-icon"><i class="fa-solid fa-star"></i></span>
+            <div><strong>Testimonials</strong><span>Verified client success stories</span></div>
+          </a>
+          <a href="faq.html" class="dropdown-item">
+            <span class="di-icon"><i class="fa-solid fa-circle-question"></i></span>
+            <div><strong>FAQ</strong><span>Booking &amp; aftercare help</span></div>
+          </a>
+        </div>
+      </div>
+        <a href="index.html#booking-section" class="btn btn-primary nav-cta">Book Experience</a>
+      </nav>
+
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="theme-toggle-btn" id="siteThemeToggle" title="Toggle Light / Dark Mode" aria-label="Toggle theme">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+        <button class="mobile-menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Subpage Hero -->
+    <section class="shop-hero">
+      <div class="shop-hero-bg" style="background-image: linear-gradient(rgba(20, 15, 13, 0.72), rgba(20, 15, 13, 0.88)), url('assets/spa_hero_bg.jpeg');"></div>
+      <div class="shop-hero-container">
+        <span class="shop-subtitle">Our Story</span>
+        <h1 class="shop-title">About The Villa Spa</h1>
+        <p class="shop-description">Awka's sanctuary for holistic wellness, premium esthetics, and elite professional training led by Stephanie Jefia.</p>
+      </div>
+    </section>
+
+    <!-- Content Sections -->
+    <section class="about-section" style="padding: 80px 24px;">
+      <div class="section-container" style="max-width: 1000px; margin: 0 auto;">
+        
+        <!-- Our Story & Mission/Vision -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-bottom: 80px;">
+          <div>
+            <span class="section-subtitle">Since Day One</span>
+            <h2 class="section-title" style="font-size: 2.2rem; line-height: 1.2; margin-bottom: 20px;">Our Story</h2>
+            <p style="margin-bottom: 16px; color: var(--color-espresso-light);">The Villa Spa was founded in the heart of Awka as a response to the growing need for high-end, dedicated, and strictly professional spa services. We set out to redefine what a wellness lounge should be, combining elements of deep relaxation with advanced esthetic care.</p>
+            <p style="color: var(--color-espresso-light);">Today, we are recognized as Anambra’s premier wellness destination, housing an state-of-the-art training academy alongside our luxury treatment chambers. Every treatment is designed as a custom investment in your confidence and health.</p>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 24px; justify-content: center; background: var(--color-cream); padding: 32px; border-radius: var(--border-radius-md); border: 1.5px solid var(--color-sand);">
+            <div>
+              <h3 style="font-family: var(--font-serif); color: var(--color-champagne-dark); font-size: 1.4rem; margin-bottom: 8px;"><i class="fa-solid fa-compass"></i> Our Mission</h3>
+              <p style="color: var(--color-espresso-light); font-size: 0.95rem;">To deliver world-class clinical esthetic procedures and soothing holistic therapies that restore skin vitality, relieve stress, and elevate personal confidence.</p>
+            </div>
+            <div style="border-top: 1px solid var(--color-sand); padding-top: 20px;">
+              <h3 style="font-family: var(--font-serif); color: var(--color-champagne-dark); font-size: 1.4rem; margin-bottom: 8px;"><i class="fa-solid fa-eye"></i> Our Vision</h3>
+              <p style="color: var(--color-espresso-light); font-size: 0.95rem;">To remain the benchmark of aesthetic excellence in Nigeria, bridging the gap between raw pampering and clinical results while training the next generation of industry leaders.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Meet Stephanie Jefia -->
+        <div style="display: grid; grid-template-columns: 1.2fr 2fr; gap: 48px; align-items: center; margin-bottom: 80px; border-top: 1px solid var(--color-sand); padding-top: 80px;">
+          <div style="position: relative;">
+            <img src="assets/spa_facial.png" alt="Stephanie Jefia - Founder" style="width: 100%; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-premium);">
+            <div style="position: absolute; bottom: 20px; right: -20px; background: var(--color-espresso); color: var(--color-white); padding: 12px 24px; border-radius: var(--border-radius-sm); border-left: 4px solid var(--color-champagne);">
+              <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--color-champagne);">Founder &amp; CEO</span>
+            </div>
+          </div>
+          <div>
+            <span class="section-subtitle">The Visionary</span>
+            <h2 class="section-title" style="font-size: 2.2rem; margin-bottom: 20px;">Meet Stephanie Jefia</h2>
+            <p style="margin-bottom: 16px; color: var(--color-espresso-light); font-weight: 550; font-size: 1.05rem;">"True beauty begins when you step out of the rush and make space for your soul to breathe."</p>
+            <p style="margin-bottom: 16px; color: var(--color-espresso-light);">Stephanie Jefia, the powerhouse behind The Villa Spa, is an accredited Esthetics Educator and skincare pioneer. Dedicated to the science of dermal health and the art of luxury relaxation, she established the TVS Training Academy to empower aspiring therapists with formal, hands-on certification.</p>
+            <p style="color: var(--color-espresso-light);">Under her guidance, the academy has graduated dozens of beauty professionals who now operate successful clinics across West Africa. Her philosophy centers on safe, highly effective techniques combined with genuine African hospitality.</p>
+          </div>
+        </div>
+
+        <!-- Why Clients Trust Us -->
+        <div style="border-top: 1px solid var(--color-sand); padding-top: 80px; margin-bottom: 80px;">
+          <div style="text-align: center; margin-bottom: 48px;">
+            <span class="section-subtitle">Our Promise</span>
+            <h2 class="section-title">Why Clients Trust The Villa Spa</h2>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+            <div style="background: var(--color-cream); padding: 24px; border-radius: var(--border-radius-md); border-top: 3px solid var(--color-champagne);">
+              <i class="fa-solid fa-shield-virus" style="font-size: 1.8rem; color: var(--color-champagne-dark); margin-bottom: 16px;"></i>
+              <h4 style="font-family: var(--font-serif); font-size: 1.15rem; margin-bottom: 8px;">Strict Medical Hygiene</h4>
+              <p style="font-size: 0.9rem; color: var(--color-espresso-light);">We maintain hospital-grade sanitation protocols, autoclave-sterile tool sets, and single-use supplies for every client visit.</p>
+            </div>
+            <div style="background: var(--color-cream); padding: 24px; border-radius: var(--border-radius-md); border-top: 3px solid var(--color-champagne);">
+              <i class="fa-solid fa-award" style="font-size: 1.8rem; color: var(--color-champagne-dark); margin-bottom: 16px;"></i>
+              <h4 style="font-family: var(--font-serif); font-size: 1.15rem; margin-bottom: 8px;">Accredited Therapists</h4>
+              <p style="font-size: 0.9rem; color: var(--color-espresso-light);">All procedures are performed by certified estheticians who have completed rigorous, formal esthetics board training.</p>
+            </div>
+            <div style="background: var(--color-cream); padding: 24px; border-radius: var(--border-radius-md); border-top: 3px solid var(--color-champagne);">
+              <i class="fa-solid fa-sparkles" style="font-size: 1.8rem; color: var(--color-champagne-dark); margin-bottom: 16px;"></i>
+              <h4 style="font-family: var(--font-serif); font-size: 1.15rem; margin-bottom: 8px;">Premium Formulations</h4>
+              <p style="font-size: 0.9rem; color: var(--color-espresso-light);">We formulate and source pure, dermatologically sound products designed specifically for melanin-rich and sensitive skin types.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Our Facility -->
+        <div style="border-top: 1px solid var(--color-sand); padding-top: 80px; text-align: center;">
+          <span class="section-subtitle">Virtual Tour</span>
+          <h2 class="section-title" style="margin-bottom: 16px;">Our Luxury Facility</h2>
+          <p style="max-width: 600px; margin: 0 auto 40px; color: var(--color-espresso-light);">Explore the sanctuary constructed to soothe your senses and deliver clinical excellence.</p>
+          
+          <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 24px; text-align: left;">
+            <img src="assets/spa_training.png" alt="TVS Facility Treatment Rooms" style="width: 100%; height: 350px; object-fit: cover; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-subtle);">
+            <div style="display: flex; flex-direction: column; justify-content: center; gap: 20px; padding: 20px;">
+              <div>
+                <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-espresso); margin-bottom: 6px;"><i class="fa-solid fa-hot-tub-person"></i> Moroccan Hammam Chamber</h4>
+                <p style="font-size: 0.9rem; color: var(--color-espresso-light);">A dedicated warm, steamy vault for traditional Kessa scrubbing and botanical clay bathing.</p>
+              </div>
+              <div style="border-top: 1px solid var(--color-sand); padding-top: 16px;">
+                <h4 style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-espresso); margin-bottom: 6px;"><i class="fa-solid fa-moon"></i> Soundproofed Treatment Suites</h4>
+                <p style="font-size: 0.9rem; color: var(--color-espresso-light);">Private chambers featuring warm ambient lighting, orthopedic massage beds, and soft music controls.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-brand-column">
+        <a href="index.html" class="footer-logo">
+          <span class="logo-initials">TVS</span>
+          <span class="logo-title">THE VILLA SPA</span>
+        </a>
+        <p class="footer-about">Awka's Premier Salon and Wellness Lounge. Dedicated to luxury treatments, holistic rejuvenation, and premium industry training.</p>
+        <div class="footer-socials">
+          <a href="https://instagram.com/thevillaspa_" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/2348147409153" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          <a href="tel:08147409153"><i class="fas fa-phone"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-links-column">
+        <h4>Navigation</h4>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Sanctuary</a>
+        <a href="services.html">Wellness Menu</a>
+        <a href="products.html">Skincare Boutique</a>
+        <a href="index.html#booking-section">Book Slots</a>
+      </div>
+
+      <div class="footer-hours-column">
+        <h4>Wellness Hours</h4>
+        <p><strong>Monday – Saturday</strong><br>9:00 AM – 7:00 PM</p>
+        <p><strong>Sunday Session</strong><br>1:00 PM – 7:00 PM</p>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <p>&copy; 2026 The Villa Spa. All Rights Reserved. Created with premium excellence.</p>
+    </div>
+  </footer>
+
+  <script type="module" src="app.js?v=2026.07.08.99"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
+</body>
+</html>
