@@ -5,6 +5,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getFirestore, collection, addDoc, setDoc, getDocs, deleteDoc, doc, query, orderBy, writeBatch } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { config } from "./config.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -214,6 +215,7 @@ const defaultCategories = [
 ];
 let categoriesDatabase = [];
 let bookingCart = [];
+let selectedCategory = null;
 let currentWizardStep = 1;
 let selectedDateObj = null;
 let selectedTimeSlot = null;
@@ -228,7 +230,7 @@ async function loadDynamicData() {
     if (!srvSnap.empty) {
       const newServices = [];
       srvSnap.forEach(doc => {
-        newServices.push(doc.data());
+        newServices.push({ id: doc.id, ...doc.data() });
       });
       servicesDatabase.splice(0, servicesDatabase.length, ...newServices);
       console.log("Services loaded dynamically from Firestore:", servicesDatabase);
@@ -243,7 +245,7 @@ async function loadDynamicData() {
     if (!catSnap.empty) {
       const newCategories = [];
       catSnap.forEach(doc => {
-        newCategories.push(doc.data());
+        newCategories.push({ id: doc.id, ...doc.data() });
       });
       categoriesDatabase.splice(0, categoriesDatabase.length, ...newCategories);
       console.log("Categories loaded dynamically from Firestore:", categoriesDatabase);
@@ -420,6 +422,8 @@ document.addEventListener("DOMContentLoaded", () => {
   initPromoToast();
   initMagneticButtons();
   initParticles();
+  initAmbientMusic();
+  initGlobalSnow();
 
   // 3. Load database-dependent data asynchronously (Non-blocking)
   (async () => {
@@ -818,21 +822,36 @@ function initBookingWizard() {
   const step2Prev = document.getElementById("step2Prev");
   const step2Next = document.getElementById("step2Next");
   const step3Prev = document.getElementById("step3Prev");
+  const step3Next = document.getElementById("step3Next");
+  const step4Prev = document.getElementById("step4Prev");
   const bookingForm = document.getElementById("bookingForm");
   
-  // Sync service choices
-  syncCartToWizard();
+  // Sync category choices
+  syncCategoriesToWizard();
   
   step1Next.addEventListener("click", () => {
-    if (bookingCart.length > 0) {
+    if (selectedCategory) {
       changeStep(2);
-      renderCalendar();
+      syncCartToWizard();
     }
   });
   
   step2Prev.addEventListener("click", () => changeStep(1));
-  step2Next.addEventListener("click", () => changeStep(3));
+  step2Next.addEventListener("click", () => {
+    if (bookingCart.length > 0) {
+      changeStep(3);
+      renderCalendar();
+    }
+  });
+  
   step3Prev.addEventListener("click", () => changeStep(2));
+  step3Next.addEventListener("click", () => {
+    if (selectedDateObj && selectedTimeSlot) {
+      changeStep(4);
+    }
+  });
+  
+  step4Prev.addEventListener("click", () => changeStep(3));
   
   bookingForm.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -842,8 +861,9 @@ function initBookingWizard() {
 
 function changeStep(stepNumber) {
   // Validate steps if progressing forward
-  if (stepNumber === 2 && bookingCart.length === 0) return;
-  if (stepNumber === 3 && (!selectedDateObj || !selectedTimeSlot)) return;
+  if (stepNumber === 2 && !selectedCategory) return;
+  if (stepNumber === 3 && bookingCart.length === 0) return;
+  if (stepNumber === 4 && (!selectedDateObj || !selectedTimeSlot)) return;
   
   currentWizardStep = stepNumber;
   
@@ -851,7 +871,10 @@ function changeStep(stepNumber) {
   document.querySelectorAll(".wizard-panel").forEach(panel => {
     panel.classList.remove("active");
   });
-  document.getElementById(`step${stepNumber}Panel`).classList.add("active");
+  const targetPanel = document.getElementById(`step${stepNumber}Panel`);
+  if (targetPanel) {
+    targetPanel.classList.add("active");
+  }
   
   // Update Steps Header Progress
   document.querySelectorAll(".progress-step").forEach(step => {
@@ -869,16 +892,58 @@ function changeStep(stepNumber) {
   scrollToSection("booking-section");
 }
 
-// STEP 1 WIZARD: Cart synchronization
+// STEP 1 WIZARD: Category synchronization
+function syncCategoriesToWizard() {
+  const container = document.getElementById("wizardCategoriesList");
+  const step1Next = document.getElementById("step1Next");
+  if (!container) return;
+  container.innerHTML = "";
+  
+  categoriesDatabase.forEach(cat => {
+    const card = document.createElement("div");
+    card.className = "category-option-card";
+    
+    // Toggle active state styling
+    if (selectedCategory === cat.id) {
+      card.style.borderColor = "var(--color-champagne-dark)";
+      card.style.backgroundColor = "rgba(197, 168, 128, 0.08)";
+    }
+    
+    card.innerHTML = `
+      <div style="font-size: 1.5rem; margin-bottom: 8px; color: var(--color-champagne-dark);"><i class="fa-solid fa-spa"></i></div>
+      <strong style="display: block; font-family: var(--font-serif); font-size: 1.05rem; color: var(--color-espresso);">${cat.name}</strong>
+    `;
+    
+    card.addEventListener("click", () => {
+      selectedCategory = cat.id;
+      bookingCart = [];
+      updateBookingSummaryBanner();
+      
+      document.querySelectorAll(".category-option-card").forEach(c => {
+        c.style.borderColor = "";
+        c.style.backgroundColor = "";
+      });
+      card.style.borderColor = "var(--color-champagne-dark)";
+      card.style.backgroundColor = "rgba(197, 168, 128, 0.08)";
+      
+      step1Next.disabled = false;
+    });
+    
+    container.appendChild(card);
+  });
+}
+
+// STEP 2 WIZARD: Cart synchronization (Service Choice)
 function syncCartToWizard() {
   const wizardServicesList = document.getElementById("wizardServicesList");
   const wizardSelectedList = document.getElementById("wizardSelectedList");
-  const step1Next = document.getElementById("step1Next");
+  const step2Next = document.getElementById("step2Next");
   
-  // 1. Populate selector category dividers and checkboxes
+  if (!wizardServicesList) return;
   wizardServicesList.innerHTML = "";
   
-  categoriesDatabase.forEach(cat => {
+  const cat = categoriesDatabase.find(c => c.id === selectedCategory);
+  if (cat) {
     const items = servicesDatabase.filter(s => s.category === cat.id);
     if (items.length > 0) {
       const divider = document.createElement("div");
@@ -929,14 +994,14 @@ function syncCartToWizard() {
         wizardServicesList.appendChild(itemCard);
       });
     }
-  });
+  }
 
   // 2. Render Selected Summary list
   if (bookingCart.length === 0) {
     wizardSelectedList.innerHTML = `<p class="empty-selection-msg">No treatments selected yet. Add services above to begin.</p>`;
-    step1Next.disabled = true;
+    if (step2Next) step2Next.disabled = true;
   } else {
-    step1Next.disabled = false;
+    if (step2Next) step2Next.disabled = false;
     let sum = 0;
     let listHTML = `<div class="selected-items-wrapper">`;
     
@@ -1039,7 +1104,7 @@ function renderCalendar() {
     dayBtn.addEventListener("click", () => {
       selectedDateObj = dayDate;
       selectedTimeSlot = null; // Reset time slot
-      document.getElementById("step2Next").disabled = true;
+      document.getElementById("step3Next").disabled = true;
       
       // Update visual calendar classes
       document.querySelectorAll(".calendar-day-btn").forEach(btn => {
@@ -1113,19 +1178,18 @@ function renderTimeSlots(date) {
       btn.classList.add("selected-slot");
       
       // Enable next step
-      document.getElementById("step2Next").disabled = false;
+      document.getElementById("step3Next").disabled = false;
     });
     
     container.appendChild(btn);
   });
 }
-
-// STEP 3 WIZARD: Submission & Save
 async function saveBooking() {
   const name = document.getElementById("guestName").value;
   const phone = document.getElementById("guestPhone").value;
   const email = document.getElementById("guestEmail").value;
   const notes = document.getElementById("guestNotes").value;
+  const paymentOption = document.querySelector('input[name="paymentOption"]:checked').value;
   const total = bookingCart.reduce((sum, item) => sum + item.price, 0);
   
   const receiptId = "TVS-" + Math.floor(100000 + Math.random() * 900000);
@@ -1143,61 +1207,133 @@ async function saveBooking() {
     time: selectedTimeSlot,
     services: bookingCart.map(item => ({ name: item.name, price: item.price })),
     total,
+    paymentStatus: paymentOption === "pay-now" ? "Paid" : "Pay Later",
+    status: paymentOption === "pay-now" ? "Confirmed" : "Pending",
     timestamp: new Date().toISOString()
   };
   
-  const submitBtn = document.getElementById("step3Submit");
+  const submitBtn = document.getElementById("step4Submit");
   const originalBtnText = submitBtn.innerHTML;
   submitBtn.disabled = true;
-  submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Securing booking...`;
+  
+  const performSave = async (record) => {
+    try {
+      // Save to Firestore
+      await setDoc(doc(db, "bookings", receiptId), record);
+      console.log("RESERVATION CONFIRMED & SAVED TO FIRESTORE:", record);
+    } catch (err) {
+      console.error("Firestore Save Failed, falling back to LocalStorage:", err);
+      // Local fallback
+      let localDb = JSON.parse(safeGetItem("tvs_bookings") || "[]");
+      localDb.push(record);
+      safeSetItem("tvs_bookings", JSON.stringify(localDb));
+    }
+  };
 
-  try {
-    // Save to Firestore
-    await setDoc(doc(db, "bookings", receiptId), bookingRecord);
-    console.log("RESERVATION CONFIRMED & SAVED TO FIRESTORE:", bookingRecord);
-  } catch (err) {
-    console.error("Firestore Save Failed, falling back to LocalStorage:", err);
-    // Local fallback
-    let localDb = JSON.parse(safeGetItem("tvs_bookings") || "[]");
-    localDb.push(bookingRecord);
-    safeSetItem("tvs_bookings", JSON.stringify(localDb));
-  } finally {
+  const completeBookingUI = (record) => {
+    // Populate Receipt UI
+    document.getElementById("receiptId").textContent = receiptId;
+    document.getElementById("receiptGuest").textContent = name;
+    document.getElementById("receiptDateTime").textContent = `${formattedDate} @ ${selectedTimeSlot}`;
+    document.getElementById("receiptTotal").textContent = `₦${total.toLocaleString()}`;
+    
+    const paymentStatusEl = document.getElementById("receiptPaymentStatus");
+    paymentStatusEl.textContent = record.paymentStatus;
+    
+    if (record.paymentStatus === "Paid") {
+      paymentStatusEl.style.color = "#6E8A75";
+      document.getElementById("bookingSuccessTitle").textContent = "Your Luxury Rejuvenation is Fully Paid!";
+      document.getElementById("bookingSuccessMessage").textContent = "Thank you for your transaction via Paystack. Your booking has been secured and confirmed!";
+    } else {
+      paymentStatusEl.style.color = "var(--color-champagne-dark)";
+      document.getElementById("bookingSuccessTitle").textContent = "Your Escape is Scheduled!";
+      document.getElementById("bookingSuccessMessage").textContent = "Thank you for choosing The Villa Spa. A confirmation receipt has been saved. We look forward to pampering you!";
+    }
+    
+    const receiptServicesUl = document.getElementById("receiptServicesList");
+    receiptServicesUl.innerHTML = "";
+    bookingCart.forEach(item => {
+      const li = document.createElement("li");
+      li.textContent = `${item.name} (₦${item.price.toLocaleString()})`;
+      receiptServicesUl.appendChild(li);
+    });
+    
+    // Wipe selection state
+    bookingCart = [];
+    selectedCategory = null;
+    updateBookingSummaryBanner();
+    syncCartToWizard();
+    
+    // Sync page checkbox checks
+    const activeTabBtn = document.querySelector(".tab-btn.active");
+    if (activeTabBtn) {
+      const gridContainer = document.getElementById("servicesGrid");
+      renderServices(activeTabBtn.getAttribute("data-category"), gridContainer);
+    }
+    
+    // Move to Success Panel
+    changeStep(5);
+  };
+  
+  if (paymentOption === "pay-now") {
+    submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Initializing Paystack...`;
+    try {
+      const handler = PaystackPop.setup({
+        key: config.paystackPublicKey,
+        email: email || "info@thevillaspawellness.com",
+        amount: total * 100, // Amount in kobo
+        currency: "NGN",
+        ref: "TVS-BOOK-" + Math.floor((Math.random() * 100000000) + 1),
+        metadata: {
+          custom_fields: [
+            { display_name: "Customer Name", variable_name: "customer_name", value: name },
+            { display_name: "Phone Number", variable_name: "phone_number", value: phone },
+            { display_name: "Appointment Date", variable_name: "appt_date", value: formattedDate },
+            { display_name: "Appointment Time", variable_name: "appt_time", value: selectedTimeSlot }
+          ]
+        },
+        callback: async function(response) {
+          const paidRecord = {
+            ...bookingRecord,
+            paymentStatus: "Paid",
+            paystackRef: response.reference,
+            status: "Confirmed"
+          };
+          await performSave(paidRecord);
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnText;
+          completeBookingUI(paidRecord);
+        },
+        onClose: function() {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnText;
+          alert("Payment window closed. Transaction was not completed.");
+        }
+      });
+      handler.openIframe();
+    } catch (err) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalBtnText;
+      console.error("Paystack Checkout setup crashed:", err);
+      alert("Could not load Paystack Checkout. Please select 'Pay Later' or check connection.");
+    }
+  } else {
+    submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Securing booking...`;
+    const unpaidRecord = {
+      ...bookingRecord,
+      paymentStatus: "Pay Later",
+      status: "Pending"
+    };
+    await performSave(unpaidRecord);
     submitBtn.disabled = false;
     submitBtn.innerHTML = originalBtnText;
+    completeBookingUI(unpaidRecord);
   }
-  
-  // Populate Receipt UI
-  document.getElementById("receiptId").textContent = receiptId;
-  document.getElementById("receiptGuest").textContent = name;
-  document.getElementById("receiptDateTime").textContent = `${formattedDate} @ ${selectedTimeSlot}`;
-  document.getElementById("receiptTotal").textContent = `₦${total.toLocaleString()}`;
-  
-  const receiptServicesUl = document.getElementById("receiptServicesList");
-  receiptServicesUl.innerHTML = "";
-  bookingCart.forEach(item => {
-    const li = document.createElement("li");
-    li.textContent = `${item.name} (₦${item.price.toLocaleString()})`;
-    receiptServicesUl.appendChild(li);
-  });
-  
-  // Wipe selection state
-  bookingCart = [];
-  updateBookingSummaryBanner();
-  syncCartToWizard();
-  
-  // Sync page checkbox checks
-  const activeTabBtn = document.querySelector(".tab-btn.active");
-  if (activeTabBtn) {
-    const gridContainer = document.getElementById("servicesGrid");
-    renderServices(activeTabBtn.getAttribute("data-category"), gridContainer);
-  }
-  
-  // Move to Success Panel
-  changeStep(4);
 }
 
 window.restartBookingWizard = function() {
   // Reset wizard states
+  selectedCategory = null;
   selectedDateObj = null;
   selectedTimeSlot = null;
   currentCalendarDate = new Date(2026, 5, 5);
@@ -1205,9 +1341,12 @@ window.restartBookingWizard = function() {
   // Clear forms
   document.getElementById("bookingForm").reset();
   
+  const step1Next = document.getElementById("step1Next");
+  if (step1Next) step1Next.disabled = true;
+  
   // Go back to step 1
   changeStep(1);
-  syncCartToWizard();
+  syncCategoriesToWizard();
 };
 
 // ==========================================================================
@@ -1547,4 +1686,254 @@ function initParticles() {
     orb.style.animationDuration = `${Math.random() * 10 + 15}s`;
     container.appendChild(orb);
   }
+}
+
+// ── Web Audio API — Hans Zimmer "Honor Him" (Gladiator) Inspired ──
+let spaAudioCtx = null;
+let spaIsPlaying = false;
+let spaMelodyTimeout = null;
+let spaMasterGain = null;
+let spaAllOscillators = [];
+
+// Global frequencies mapping
+const n = {
+  F2: 87.31, G2: 98.00, A2: 110.00, Bb2: 116.54, C3: 130.81, D3: 146.83, E3: 164.81, F3: 174.61, G3: 196.00, Gs3: 207.65, A3: 220.00, B3: 246.94,
+  C4: 261.63, Cs4: 277.18, D4: 293.66, E4: 329.63, F4: 349.23, G4: 392.00, A4: 440.00, B4: 493.88
+};
+
+// French Horn synthesizer (soft brass attack + warm detuned layers)
+function playHornNote(ctx, freq, startTime, duration, gainNode, velocity = 0.5) {
+  const noteGain = ctx.createGain();
+  noteGain.gain.setValueAtTime(0, startTime);
+  noteGain.gain.linearRampToValueAtTime(velocity, startTime + 0.18); // slow brass swell
+  noteGain.gain.setValueAtTime(velocity, startTime + duration - 0.25);
+  noteGain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+  noteGain.connect(gainNode);
+
+  const osc1 = ctx.createOscillator();
+  osc1.type = "triangle";
+  osc1.frequency.value = freq;
+  osc1.connect(noteGain);
+  osc1.start(startTime);
+  osc1.stop(startTime + duration + 0.1);
+
+  const osc2 = ctx.createOscillator();
+  const g2 = ctx.createGain();
+  osc2.type = "sawtooth";
+  osc2.frequency.value = freq;
+  g2.gain.value = 0.12; // warm sawtooth body
+  osc2.connect(g2);
+  g2.connect(noteGain);
+  osc2.start(startTime);
+  osc2.stop(startTime + duration + 0.1);
+
+  const osc3 = ctx.createOscillator();
+  const g3 = ctx.createGain();
+  osc3.type = "sine";
+  osc3.frequency.value = freq * 2; // 2nd harmonic warmth
+  g3.gain.value = 0.18;
+  osc3.connect(g3);
+  g3.connect(noteGain);
+  osc3.start(startTime);
+  osc3.stop(startTime + duration + 0.1);
+
+  spaAllOscillators.push(osc1, osc2, osc3);
+}
+
+// Orchestral string pad (detuned chorus sawtooths, slow bow swell)
+function playStringNote(ctx, freq, startTime, duration, gainNode, velocity = 0.2) {
+  const noteGain = ctx.createGain();
+  noteGain.gain.setValueAtTime(0, startTime);
+  noteGain.gain.linearRampToValueAtTime(velocity, startTime + 0.3); // slow swell
+  noteGain.gain.setValueAtTime(velocity, startTime + duration - 0.2);
+  noteGain.gain.linearRampToValueAtTime(0, startTime + duration);
+  noteGain.connect(gainNode);
+
+  // Detuned chorus sawtooths
+  [-4, 0, 4].forEach(detune => {
+    const osc = ctx.createOscillator();
+    osc.type = "sawtooth";
+    osc.frequency.value = freq;
+    osc.detune.value = detune;
+    osc.connect(noteGain);
+    osc.start(startTime);
+    osc.stop(startTime + duration + 0.1);
+    spaAllOscillators.push(osc);
+  });
+
+  // Warm organ sine layer
+  const organOsc = ctx.createOscillator();
+  organOsc.type = "sine";
+  organOsc.frequency.value = freq * 2;
+  const organGain = ctx.createGain();
+  organGain.gain.value = 0.25;
+  organOsc.connect(organGain);
+  organGain.connect(noteGain);
+  organOsc.start(startTime);
+  organOsc.stop(startTime + duration + 0.1);
+  spaAllOscillators.push(organOsc);
+}
+
+// Gladiator "Honor Him" - 4/4 Time, 8 Bars (32 seconds total) - loops indefinitely
+function scheduleGladiator() {
+  if (!spaIsPlaying || !spaAudioCtx) return;
+  const ctx = spaAudioCtx;
+
+  // Reverb Delay chain
+  const delayNode = ctx.createDelay(2.0);
+  delayNode.delayTime.value = 0.45;
+  const feedbackGain = ctx.createGain();
+  feedbackGain.gain.value = 0.25;
+  delayNode.connect(feedbackGain);
+  feedbackGain.connect(delayNode);
+
+  const reverbOut = ctx.createGain();
+  reverbOut.gain.value = 0.45;
+  delayNode.connect(reverbOut);
+  reverbOut.connect(spaMasterGain);
+
+  // Strings output
+  const stringsOut = ctx.createGain();
+  stringsOut.gain.value = 0.38;
+  stringsOut.connect(delayNode);
+  stringsOut.connect(spaMasterGain);
+
+  // French Horn output
+  const hornOut = ctx.createGain();
+  hornOut.gain.value = 0.45;
+  const hornLPF = ctx.createBiquadFilter();
+  hornLPF.type = "lowpass";
+  hornLPF.frequency.value = 900; // Soft warm brass
+  hornLPF.connect(delayNode);
+  hornLPF.connect(spaMasterGain);
+  hornOut.connect(hornLPF);
+
+  const now = ctx.currentTime + 0.2;
+
+  // Bass Chords (Strings)
+  const bassChords = [
+    [n.D3, n.F3, n.A3],
+    [n.C3, n.E3, n.G3],
+    [n.C3, n.E3, n.G3],
+    [n.D3, n.F3, n.A3],
+    [n.Bb2, n.D3, n.F3],
+    [n.F2, n.A2, n.C3],
+    [n.C3, n.E3, n.G3],
+    [n.D3, n.F3, n.A3]
+  ];
+
+  // Horn Melody notes: [[freq, duration], ...]
+  const hornMelody = [
+    [[n.D4, 2.0], [n.F4, 2.0]], // Bar 1
+    [[n.E4, 4.0]],              // Bar 2
+    [[n.C4, 2.0], [n.E4, 2.0]], // Bar 3
+    [[n.D4, 4.0]],              // Bar 4
+    [[n.F4, 2.0], [n.A4, 2.0]], // Bar 5
+    [[n.G4, 4.0]],              // Bar 6
+    [[n.E4, 2.0], [n.G4, 2.0]], // Bar 7
+    [[n.F4, 4.0]]               // Bar 8
+  ];
+
+  for (let b = 0; b < 8; b++) {
+    const barStart = now + b * 4.0;
+    
+    // Play wide string chords
+    bassChords[b].forEach(f => playStringNote(ctx, f, barStart, 3.9, stringsOut, 0.24));
+
+    // Play French Horn melody
+    let noteOffset = 0;
+    hornMelody[b].forEach(([freq, dur]) => {
+      playHornNote(ctx, freq, barStart + noteOffset, dur - 0.1, hornOut, 0.42);
+      noteOffset += dur;
+    });
+  }
+
+  // Loop Gladiator theme indefinitely
+  spaMelodyTimeout = setTimeout(() => {
+    if (spaIsPlaying) {
+      scheduleGladiator();
+    }
+  }, 32000 - 150);
+}
+
+function startSpaAudio() {
+  if (spaIsPlaying) return;
+  if (!spaAudioCtx) {
+    spaAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (spaAudioCtx.state === "suspended") {
+    spaAudioCtx.resume();
+  }
+  spaMasterGain = spaAudioCtx.createGain();
+  spaMasterGain.gain.setValueAtTime(0, spaAudioCtx.currentTime);
+  spaMasterGain.gain.linearRampToValueAtTime(0.5, spaAudioCtx.currentTime + 2);
+  spaMasterGain.connect(spaAudioCtx.destination);
+  spaAllOscillators = [];
+  spaIsPlaying = true;
+  scheduleGladiator(); // Gladiator plays first!
+}
+
+function stopSpaAudio() {
+  if (!spaIsPlaying) return;
+  spaIsPlaying = false;
+  if (spaMelodyTimeout) { clearTimeout(spaMelodyTimeout); spaMelodyTimeout = null; }
+  if (spaMasterGain && spaMasterGain.gain) {
+    spaMasterGain.gain.setValueAtTime(spaMasterGain.gain.value, spaAudioCtx.currentTime);
+    spaMasterGain.gain.linearRampToValueAtTime(0, spaAudioCtx.currentTime + 1.5);
+  }
+  setTimeout(() => {
+    spaAllOscillators.forEach(o => { try { o.stop(); o.disconnect(); } catch(e) {} });
+    spaAllOscillators = [];
+    if (spaMasterGain) { try { spaMasterGain.disconnect(); } catch(e) {} spaMasterGain = null; }
+  }, 2000);
+}
+
+function initAmbientMusic() {
+  const musicBtn = document.getElementById("musicToggleBtn");
+  if (!musicBtn) return;
+
+  musicBtn.addEventListener("click", () => {
+    if (!spaIsPlaying) {
+      startSpaAudio();
+      musicBtn.classList.add("playing");
+      musicBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+    } else {
+      stopSpaAudio();
+      musicBtn.classList.remove("playing");
+      musicBtn.innerHTML = '<i class="fa-solid fa-play" style="margin-left: 2px;"></i>';
+    }
+  });
+}
+
+
+
+// ── Global Ambient Snow Effect ──
+function initGlobalSnow() {
+  const container = document.getElementById("globalSnowContainer");
+  if (!container) return;
+  
+  setInterval(() => {
+    if (document.hidden) return;
+    
+    const flake = document.createElement("div");
+    flake.className = "snow-flake";
+    
+    const size = Math.random() * 4 + 2;
+    flake.style.width = `${size}px`;
+    flake.style.height = `${size}px`;
+    flake.style.left = `${Math.random() * 100}%`;
+    flake.style.top = `-10px`;
+    
+    const speed = Math.random() * 8 + 8; // fall duration: 8s to 16s
+    flake.style.animationDuration = `${speed}s`;
+    
+    const drift = Math.random() * 80 - 40;
+    flake.style.setProperty("--drift-x", `${drift}px`);
+    
+    container.appendChild(flake);
+    
+    setTimeout(() => {
+      flake.remove();
+    }, speed * 1000);
+  }, 200);
 }

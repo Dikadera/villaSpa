@@ -528,11 +528,12 @@ function renderDashboardOverview() {
   
   const recent = bookings.slice(0, 5);
   if (recent.length === 0) {
-    recentTableBody.innerHTML = `<tr><td colspan="6" class="text-center text-muted">No appointments booked yet.</td></tr>`;
+    recentTableBody.innerHTML = `<tr><td colspan="7" class="text-center text-muted">No appointments booked yet.</td></tr>`;
   } else {
     recent.forEach(b => {
       const servicesStr = (b.services || []).map(s => s.name).join(", ");
       const statusClass = (b.status || "Pending").toLowerCase();
+      const paymentStatusClass = (b.paymentStatus === "Paid") ? "confirmed" : "pending";
       
       const tr = document.createElement("tr");
       tr.innerHTML = `
@@ -541,6 +542,7 @@ function renderDashboardOverview() {
         <td>${b.date} @ ${b.time}</td>
         <td style="max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${servicesStr}">${servicesStr}</td>
         <td><strong>₦${(b.total || 0).toLocaleString()}</strong></td>
+        <td><span class="status-badge ${paymentStatusClass}">${b.paymentStatus || "Pay Later"}</span></td>
         <td><span class="status-badge ${statusClass}">${b.status || "Pending"}</span></td>
       `;
       recentTableBody.appendChild(tr);
@@ -702,13 +704,14 @@ function renderAppointmentsTable() {
   });
   
   if (filtered.length === 0) {
-    tableBody.innerHTML = `<tr><td colspan="8" class="text-center text-muted">No appointments match your search/filter parameters.</td></tr>`;
+    tableBody.innerHTML = `<tr><td colspan="9" class="text-center text-muted">No appointments match your search/filter parameters.</td></tr>`;
     return;
   }
   
   filtered.forEach(b => {
     const servicesStr = (b.services || []).map(s => s.name).join(", ");
     const currentStatus = b.status || "Pending";
+    const currentPaymentStatus = b.paymentStatus || "Pay Later";
     
     // Create WhatsApp link template
     const waText = encodeURIComponent(
@@ -729,6 +732,12 @@ function renderAppointmentsTable() {
       <td>${b.date} @ ${b.time}</td>
       <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${servicesStr}">${servicesStr}</td>
       <td><strong>₦${(b.total || 0).toLocaleString()}</strong></td>
+      <td>
+        <select class="table-status-select" onchange="changeAppointmentPaymentStatus('${b.id || b.receiptId}', this.value)">
+          <option value="Pay Later" ${currentPaymentStatus === "Pay Later" ? "selected" : ""}>Pay Later</option>
+          <option value="Paid" ${currentPaymentStatus === "Paid" ? "selected" : ""}>Paid</option>
+        </select>
+      </td>
       <td>
         <select class="table-status-select" onchange="changeAppointmentStatus('${b.id || b.receiptId}', this.value)">
           <option value="Pending" ${currentStatus === "Pending" ? "selected" : ""}>Pending</option>
@@ -755,6 +764,33 @@ function initAppointmentFilters() {
   if (apptSearch) apptSearch.addEventListener("input", renderAppointmentsTable);
   if (apptFilter) apptFilter.addEventListener("change", renderAppointmentsTable);
 }
+
+window.changeAppointmentPaymentStatus = async function(id, newPaymentStatus) {
+  try {
+    await updateDoc(doc(db, "bookings", id), { paymentStatus: newPaymentStatus });
+    console.log(`Updated payment status of ${id} to ${newPaymentStatus}`);
+  } catch (err) {
+    console.warn("Firestore update failed, editing localStorage local copy:", err);
+    // Local fallback edit
+    let localDb = JSON.parse(safeGetItem("tvs_bookings") || "[]");
+    const index = localDb.findIndex(b => b.receiptId === id || b.id === id);
+    if (index !== -1) {
+      localDb[index].paymentStatus = newPaymentStatus;
+      safeSetItem("tvs_bookings", JSON.stringify(localDb));
+    }
+  }
+  
+  // Hot update in-memory state
+  const bIndex = bookings.findIndex(b => b.id === id || b.receiptId === id);
+  if (bIndex !== -1) {
+    bookings[bIndex].paymentStatus = newPaymentStatus;
+  }
+  
+  renderDashboardOverview();
+  renderAppointmentsTable();
+  processCustomersLog();
+  renderCustomersTable();
+};
 
 window.changeAppointmentStatus = async function(id, newStatus) {
   try {
