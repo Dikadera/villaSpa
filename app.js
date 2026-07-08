@@ -1475,23 +1475,33 @@ window.closeAdminPortal = function() {
 // ==========================================================================
 function initScrollAnimations() {
   const animatedElements = document.querySelectorAll(".animate-on-scroll");
-  
+
+  // Immediately show any element already in the viewport (e.g. on page refresh)
+  animatedElements.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      el.classList.add("animated");
+    }
+  });
+
   if ("IntersectionObserver" in window) {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add("animated");
-          observer.unobserve(entry.target); // Trigger only once
+          observer.unobserve(entry.target);
         }
       });
     }, {
-      threshold: 0.1,
-      rootMargin: "0px 0px -50px 0px"
+      threshold: 0.01,   // 1% visibility is enough
+      rootMargin: "0px"  // no negative margin that blocks triggering
     });
-    
-    animatedElements.forEach(el => observer.observe(el));
+
+    // Only observe elements not yet animated
+    animatedElements.forEach(el => {
+      if (!el.classList.contains("animated")) observer.observe(el);
+    });
   } else {
-    // Fallback if browser doesn't support observer
     animatedElements.forEach(el => el.classList.add("animated"));
   }
 }
@@ -1592,7 +1602,7 @@ function initCounterAnimations() {
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.3 });
+    }, { threshold: 0.05, rootMargin: "0px" });
     counters.forEach(c => observer.observe(c));
   } else {
     counters.forEach(c => animateCounter(c));
@@ -1826,29 +1836,26 @@ function initAmbientMusic() {
 function initGlobalSnow() {
   const container = document.getElementById("globalSnowContainer");
   if (!container) return;
-  
+
   setInterval(() => {
     if (document.hidden) return;
-    
+
     const flake = document.createElement("div");
     flake.className = "snow-flake";
-    
-    const size = Math.random() * 4 + 2;
+
+    const size = Math.random() * 5 + 3;           // 3–8px (slightly bigger)
     flake.style.width = `${size}px`;
     flake.style.height = `${size}px`;
     flake.style.left = `${Math.random() * 100}%`;
     flake.style.top = `-10px`;
-    
-    const speed = Math.random() * 8 + 8; // fall duration: 8s to 16s
+
+    const speed = Math.random() * 6 + 6;          // 6–12s (faster than before)
     flake.style.animationDuration = `${speed}s`;
-    
+
     const drift = Math.random() * 80 - 40;
     flake.style.setProperty("--drift-x", `${drift}px`);
-    
+
     container.appendChild(flake);
-    
-    setTimeout(() => {
-      flake.remove();
-    }, speed * 1000);
-  }, 200);
+    setTimeout(() => flake.remove(), speed * 1000);
+  }, 140);  // spawn every 140ms (was 200ms)
 }

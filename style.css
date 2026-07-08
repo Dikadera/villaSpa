@@ -3271,15 +3271,15 @@ body.dark-mode .category-option-card:hover {
     opacity: 0;
   }
 }
-/* Light Mode (Faded Brown Snow) */
+/* Light Mode (warm bronze snow) */
 .snow-flake {
-  background-color: rgba(197, 168, 128, 0.35);
-  box-shadow: 0 0 4px rgba(197, 168, 128, 0.15);
+  background-color: rgba(160, 120, 70, 0.6);
+  box-shadow: 0 0 6px rgba(197, 168, 128, 0.5);
 }
-/* Dark Mode (Faded Cream/White Snow) */
+/* Dark Mode (soft white snow) */
 body.dark-mode .snow-flake {
-  background-color: rgba(248, 246, 242, 0.45);
-  box-shadow: 0 0 5px rgba(248, 246, 242, 0.25);
+  background-color: rgba(248, 246, 242, 0.75);
+  box-shadow: 0 0 8px rgba(248, 246, 242, 0.5);
 }
 
 
