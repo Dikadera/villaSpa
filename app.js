@@ -6,9 +6,27 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getFirestore, collection, addDoc, setDoc, getDocs, deleteDoc, doc, query, orderBy, writeBatch } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 // All API keys are managed in config.js (see .env for the master reference)
-import { config } from "./config.js";
+let config;
+try {
+  const configModule = await import("./config.js");
+  config = configModule.config;
+} catch (e) {
+  console.warn("config.js not found, using embedded public keys:", e);
+  config = {
+    firebase: {
+      apiKey: "AIzaSyCrvlvcrHw1vq1zrY_oNPHNAvGQIZkhy7E",
+      authDomain: "thevillaspa-14b57.firebaseapp.com",
+      projectId: "thevillaspa-14b57",
+      storageBucket: "thevillaspa-14b57.firebasestorage.app",
+      messagingSenderId: "266753549058",
+      appId: "1:266753549058:web:d12b9717c4946957f5581b",
+      measurementId: "G-6XN6XK5RB2"
+    },
+    paystackPublicKey: "pk_test_658c0c1b0162548ad78df88ce61d2d0cb537a7cd"
+  };
+}
 
-// Firebase — initialised from config.js
+// Firebase — initialised from config
 const firebaseConfig = config.firebase;
 
 // Initialize Firebase
