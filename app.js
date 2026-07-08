@@ -1688,223 +1688,127 @@ function initParticles() {
   }
 }
 
-// ── Web Audio API — Hans Zimmer "Honor Him" (Gladiator) Inspired ──
-let spaAudioCtx = null;
-let spaIsPlaying = false;
-let spaMelodyTimeout = null;
-let spaMasterGain = null;
-let spaAllOscillators = [];
-
-// Global frequencies mapping
-const n = {
-  F2: 87.31, G2: 98.00, A2: 110.00, Bb2: 116.54, C3: 130.81, D3: 146.83, E3: 164.81, F3: 174.61, G3: 196.00, Gs3: 207.65, A3: 220.00, B3: 246.94,
-  C4: 261.63, Cs4: 277.18, D4: 293.66, E4: 329.63, F4: 349.23, G4: 392.00, A4: 440.00, B4: 493.88
-};
-
-// French Horn synthesizer (soft brass attack + warm detuned layers)
-function playHornNote(ctx, freq, startTime, duration, gainNode, velocity = 0.5) {
-  const noteGain = ctx.createGain();
-  noteGain.gain.setValueAtTime(0, startTime);
-  noteGain.gain.linearRampToValueAtTime(velocity, startTime + 0.18); // slow brass swell
-  noteGain.gain.setValueAtTime(velocity, startTime + duration - 0.25);
-  noteGain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
-  noteGain.connect(gainNode);
-
-  const osc1 = ctx.createOscillator();
-  osc1.type = "triangle";
-  osc1.frequency.value = freq;
-  osc1.connect(noteGain);
-  osc1.start(startTime);
-  osc1.stop(startTime + duration + 0.1);
-
-  const osc2 = ctx.createOscillator();
-  const g2 = ctx.createGain();
-  osc2.type = "sawtooth";
-  osc2.frequency.value = freq;
-  g2.gain.value = 0.12; // warm sawtooth body
-  osc2.connect(g2);
-  g2.connect(noteGain);
-  osc2.start(startTime);
-  osc2.stop(startTime + duration + 0.1);
-
-  const osc3 = ctx.createOscillator();
-  const g3 = ctx.createGain();
-  osc3.type = "sine";
-  osc3.frequency.value = freq * 2; // 2nd harmonic warmth
-  g3.gain.value = 0.18;
-  osc3.connect(g3);
-  g3.connect(noteGain);
-  osc3.start(startTime);
-  osc3.stop(startTime + duration + 0.1);
-
-  spaAllOscillators.push(osc1, osc2, osc3);
-}
-
-// Orchestral string pad (detuned chorus sawtooths, slow bow swell)
-function playStringNote(ctx, freq, startTime, duration, gainNode, velocity = 0.2) {
-  const noteGain = ctx.createGain();
-  noteGain.gain.setValueAtTime(0, startTime);
-  noteGain.gain.linearRampToValueAtTime(velocity, startTime + 0.3); // slow swell
-  noteGain.gain.setValueAtTime(velocity, startTime + duration - 0.2);
-  noteGain.gain.linearRampToValueAtTime(0, startTime + duration);
-  noteGain.connect(gainNode);
-
-  // Detuned chorus sawtooths
-  [-4, 0, 4].forEach(detune => {
-    const osc = ctx.createOscillator();
-    osc.type = "sawtooth";
-    osc.frequency.value = freq;
-    osc.detune.value = detune;
-    osc.connect(noteGain);
-    osc.start(startTime);
-    osc.stop(startTime + duration + 0.1);
-    spaAllOscillators.push(osc);
-  });
-
-  // Warm organ sine layer
-  const organOsc = ctx.createOscillator();
-  organOsc.type = "sine";
-  organOsc.frequency.value = freq * 2;
-  const organGain = ctx.createGain();
-  organGain.gain.value = 0.25;
-  organOsc.connect(organGain);
-  organGain.connect(noteGain);
-  organOsc.start(startTime);
-  organOsc.stop(startTime + duration + 0.1);
-  spaAllOscillators.push(organOsc);
-}
-
-// Gladiator "Honor Him" - 4/4 Time, 8 Bars (32 seconds total) - loops indefinitely
-function scheduleGladiator() {
-  if (!spaIsPlaying || !spaAudioCtx) return;
-  const ctx = spaAudioCtx;
-
-  // Reverb Delay chain
-  const delayNode = ctx.createDelay(2.0);
-  delayNode.delayTime.value = 0.45;
-  const feedbackGain = ctx.createGain();
-  feedbackGain.gain.value = 0.25;
-  delayNode.connect(feedbackGain);
-  feedbackGain.connect(delayNode);
-
-  const reverbOut = ctx.createGain();
-  reverbOut.gain.value = 0.45;
-  delayNode.connect(reverbOut);
-  reverbOut.connect(spaMasterGain);
-
-  // Strings output
-  const stringsOut = ctx.createGain();
-  stringsOut.gain.value = 0.38;
-  stringsOut.connect(delayNode);
-  stringsOut.connect(spaMasterGain);
-
-  // French Horn output
-  const hornOut = ctx.createGain();
-  hornOut.gain.value = 0.45;
-  const hornLPF = ctx.createBiquadFilter();
-  hornLPF.type = "lowpass";
-  hornLPF.frequency.value = 900; // Soft warm brass
-  hornLPF.connect(delayNode);
-  hornLPF.connect(spaMasterGain);
-  hornOut.connect(hornLPF);
-
-  const now = ctx.currentTime + 0.2;
-
-  // Bass Chords (Strings)
-  const bassChords = [
-    [n.D3, n.F3, n.A3],
-    [n.C3, n.E3, n.G3],
-    [n.C3, n.E3, n.G3],
-    [n.D3, n.F3, n.A3],
-    [n.Bb2, n.D3, n.F3],
-    [n.F2, n.A2, n.C3],
-    [n.C3, n.E3, n.G3],
-    [n.D3, n.F3, n.A3]
-  ];
-
-  // Horn Melody notes: [[freq, duration], ...]
-  const hornMelody = [
-    [[n.D4, 2.0], [n.F4, 2.0]], // Bar 1
-    [[n.E4, 4.0]],              // Bar 2
-    [[n.C4, 2.0], [n.E4, 2.0]], // Bar 3
-    [[n.D4, 4.0]],              // Bar 4
-    [[n.F4, 2.0], [n.A4, 2.0]], // Bar 5
-    [[n.G4, 4.0]],              // Bar 6
-    [[n.E4, 2.0], [n.G4, 2.0]], // Bar 7
-    [[n.F4, 4.0]]               // Bar 8
-  ];
-
-  for (let b = 0; b < 8; b++) {
-    const barStart = now + b * 4.0;
-    
-    // Play wide string chords
-    bassChords[b].forEach(f => playStringNote(ctx, f, barStart, 3.9, stringsOut, 0.24));
-
-    // Play French Horn melody
-    let noteOffset = 0;
-    hornMelody[b].forEach(([freq, dur]) => {
-      playHornNote(ctx, freq, barStart + noteOffset, dur - 0.1, hornOut, 0.42);
-      noteOffset += dur;
-    });
-  }
-
-  // Loop Gladiator theme indefinitely
-  spaMelodyTimeout = setTimeout(() => {
-    if (spaIsPlaying) {
-      scheduleGladiator();
-    }
-  }, 32000 - 150);
-}
+// ── Ambient Music — delegates to inline YouTube player in index.html ──
+// All YouTube player logic lives in the non-module <script> block in index.html
+// so it's globally visible to YouTube's iframe_api callback.
 
 function startSpaAudio() {
-  if (spaIsPlaying) return;
-  if (!spaAudioCtx) {
-    spaAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  }
-  if (spaAudioCtx.state === "suspended") {
-    spaAudioCtx.resume();
-  }
-  spaMasterGain = spaAudioCtx.createGain();
-  spaMasterGain.gain.setValueAtTime(0, spaAudioCtx.currentTime);
-  spaMasterGain.gain.linearRampToValueAtTime(0.5, spaAudioCtx.currentTime + 2);
-  spaMasterGain.connect(spaAudioCtx.destination);
-  spaAllOscillators = [];
-  spaIsPlaying = true;
-  scheduleGladiator(); // Gladiator plays first!
+  if (typeof window.startSpaAudioGlobal === 'function') window.startSpaAudioGlobal();
 }
 
 function stopSpaAudio() {
-  if (!spaIsPlaying) return;
-  spaIsPlaying = false;
-  if (spaMelodyTimeout) { clearTimeout(spaMelodyTimeout); spaMelodyTimeout = null; }
-  if (spaMasterGain && spaMasterGain.gain) {
-    spaMasterGain.gain.setValueAtTime(spaMasterGain.gain.value, spaAudioCtx.currentTime);
-    spaMasterGain.gain.linearRampToValueAtTime(0, spaAudioCtx.currentTime + 1.5);
-  }
-  setTimeout(() => {
-    spaAllOscillators.forEach(o => { try { o.stop(); o.disconnect(); } catch(e) {} });
-    spaAllOscillators = [];
-    if (spaMasterGain) { try { spaMasterGain.disconnect(); } catch(e) {} spaMasterGain = null; }
-  }, 2000);
+  if (typeof window.stopSpaAudioGlobal === 'function') window.stopSpaAudioGlobal();
 }
 
 function initAmbientMusic() {
-  const musicBtn = document.getElementById("musicToggleBtn");
+  const musicBtn = document.getElementById('musicToggleBtn');
   if (!musicBtn) return;
-
-  musicBtn.addEventListener("click", () => {
-    if (!spaIsPlaying) {
-      startSpaAudio();
-      musicBtn.classList.add("playing");
-      musicBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
-    } else {
-      stopSpaAudio();
-      musicBtn.classList.remove("playing");
-      musicBtn.innerHTML = '<i class="fa-solid fa-play" style="margin-left: 2px;"></i>';
+  musicBtn.addEventListener('click', () => {
+    if (typeof window.toggleSpaMusic === 'function') {
+      window.toggleSpaMusic();
     }
   });
 }
 
+// ── Web Audio Synthesizer Fallback (fires if YouTube embedding is blocked) ──
+(function() {
+  let ctx = null, masterGain = null, allOscs = [], synthPlaying = false, loopTimer = null;
+
+  const notes = {
+    D3:146.83,F3:174.61,A3:220.00,C3:130.81,E3:164.81,G3:196.00,
+    Bb2:116.54,F2:87.31,A2:110.00,D4:293.66,F4:349.23,E4:329.63,
+    C4:261.63,G4:392.00,A4:440.00
+  };
+
+  function horn(freq, t, dur, out, vel=0.45) {
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0,t);
+    g.gain.linearRampToValueAtTime(vel, t+0.18);
+    g.gain.setValueAtTime(vel, t+dur-0.2);
+    g.gain.exponentialRampToValueAtTime(0.0001, t+dur);
+    g.connect(out);
+    ['triangle','sawtooth','sine'].forEach((type,i) => {
+      const o = ctx.createOscillator();
+      o.type = type; o.frequency.value = freq * (i===2?2:1);
+      const og = ctx.createGain(); og.gain.value = i===0?1:i===1?0.12:0.18;
+      o.connect(og); og.connect(g); o.start(t); o.stop(t+dur+0.1);
+      allOscs.push(o);
+    });
+  }
+
+  function strings(freq, t, dur, out, vel=0.22) {
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0,t);
+    g.gain.linearRampToValueAtTime(vel, t+0.3);
+    g.gain.linearRampToValueAtTime(0, t+dur);
+    g.connect(out);
+    [-4,0,4].forEach(det => {
+      const o = ctx.createOscillator(); o.type='sawtooth';
+      o.frequency.value=freq; o.detune.value=det;
+      o.connect(g); o.start(t); o.stop(t+dur+0.1); allOscs.push(o);
+    });
+  }
+
+  function scheduleLoop() {
+    if (!synthPlaying) return;
+    const delay = ctx.createDelay(2); delay.delayTime.value=0.45;
+    const fb = ctx.createGain(); fb.gain.value=0.25;
+    delay.connect(fb); fb.connect(delay);
+    const rev = ctx.createGain(); rev.gain.value=0.4;
+    delay.connect(rev); rev.connect(masterGain);
+    const sOut = ctx.createGain(); sOut.gain.value=0.36;
+    sOut.connect(delay); sOut.connect(masterGain);
+    const hOut = ctx.createGain(); hOut.gain.value=0.44;
+    const lpf = ctx.createBiquadFilter(); lpf.type='lowpass'; lpf.frequency.value=900;
+    hOut.connect(lpf); lpf.connect(delay); lpf.connect(masterGain);
+    const now = ctx.currentTime+0.2;
+    const chords=[[notes.D3,notes.F3,notes.A3],[notes.C3,notes.E3,notes.G3],[notes.C3,notes.E3,notes.G3],[notes.D3,notes.F3,notes.A3],[notes.Bb2,notes.D3,notes.F3],[notes.F2,notes.A2,notes.C3],[notes.C3,notes.E3,notes.G3],[notes.D3,notes.F3,notes.A3]];
+    const melody=[[[notes.D4,2],[notes.F4,2]],[[notes.E4,4]],[[notes.C4,2],[notes.E4,2]],[[notes.D4,4]],[[notes.F4,2],[notes.A4,2]],[[notes.G4,4]],[[notes.E4,2],[notes.G4,2]],[[notes.F4,4]]];
+    for(let b=0;b<8;b++){
+      const bs=now+b*4;
+      chords[b].forEach(f=>strings(f,bs,3.9,sOut));
+      let off=0; melody[b].forEach(([f,d])=>{horn(f,bs+off,d-0.1,hOut); off+=d;});
+    }
+    loopTimer=setTimeout(scheduleLoop, 31850);
+  }
+
+  function startSynth() {
+    if (synthPlaying) return;
+    ctx = new (window.AudioContext||window.webkitAudioContext)();
+    if (ctx.state==='suspended') ctx.resume();
+    masterGain = ctx.createGain();
+    masterGain.gain.setValueAtTime(0, ctx.currentTime);
+    masterGain.gain.linearRampToValueAtTime(0.5, ctx.currentTime+2);
+    masterGain.connect(ctx.destination);
+    allOscs=[]; synthPlaying=true;
+    scheduleLoop();
+  }
+
+  function stopSynth() {
+    synthPlaying=false;
+    if (loopTimer) clearTimeout(loopTimer);
+    if (masterGain) { masterGain.gain.linearRampToValueAtTime(0, ctx.currentTime+1.5); }
+    setTimeout(()=>{ allOscs.forEach(o=>{try{o.stop();o.disconnect();}catch(e){}}); allOscs=[]; },2000);
+  }
+
+  // Exposed as fallback when YouTube embedding is blocked
+  window._honorHimSynthFallback = function() {
+    console.log('[HonorHim] Synthesizer fallback activated');
+    // Re-wire toggle to synth
+    window.toggleSpaMusic = function() {
+      const btn = document.getElementById('musicToggleBtn');
+      if (!synthPlaying) {
+        startSynth();
+        if (btn) { btn.classList.add('playing'); btn.innerHTML='<i class="fa-solid fa-pause"></i>'; }
+      } else {
+        stopSynth();
+        if (btn) { btn.classList.remove('playing'); btn.innerHTML='<i class="fa-solid fa-play" style="margin-left:2px;"></i>'; }
+      }
+    };
+    window.startSpaAudioGlobal = startSynth;
+    window.stopSpaAudioGlobal  = stopSynth;
+  };
+})();
 
 
 // ── Global Ambient Snow Effect ──

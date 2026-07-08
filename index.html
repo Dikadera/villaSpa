@@ -105,7 +105,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- Paystack Inline SDK -->
   <script src="https://js.paystack.co/v1/inline.js"></script>
-  <link rel="stylesheet" href="style.css?v=2026.07.08.19">
+  <link rel="stylesheet" href="style.css?v=2026.07.08.21">
 </head>
 
 <body>
@@ -1069,8 +1069,77 @@
         class="fa-solid fa-xmark"></i></button>
   </div>
 
+  <!-- Honor Him - Hans Zimmer: YouTube IFrame Player (fully global, non-module) -->
+  <div id="ytHonorHimPlayer" style="position:fixed;bottom:-100px;right:-100px;width:1px;height:1px;opacity:0;pointer-events:none;"></div>
+
+  <script>
+    var _ytPlayer = null;
+    var _ytPlaying = false;
+
+    function onYouTubeIframeAPIReady() {
+      _ytPlayer = new YT.Player('ytHonorHimPlayer', {
+        height: '1',
+        width: '1',
+        videoId: 'F5tP4n5n27A',
+        playerVars: {
+          autoplay: 0,
+          controls: 0,
+          disablekb: 1,
+          fs: 0,
+          iv_load_policy: 3,
+          modestbranding: 1,
+          loop: 1,
+          playlist: 'F5tP4n5n27A',
+          rel: 0,
+          enablejsapi: 1,
+          origin: window.location.href.split('/').slice(0,3).join('/')
+        },
+        events: {
+          onReady: function(e) { console.log('[HonorHim] YouTube player ready ✓'); },
+          onError: function(e) {
+            // Error 150/101 = embedding restricted by video owner
+            console.warn('[HonorHim] YouTube error code:', e.data, '— falling back to synthesizer');
+            if (typeof window._honorHimSynthFallback === 'function') window._honorHimSynthFallback();
+          },
+          onStateChange: function(e) {
+            var btn = document.getElementById('musicToggleBtn');
+            if (!btn) return;
+            if (e.data === YT.PlayerState.PLAYING) {
+              _ytPlaying = true;
+              btn.classList.add('playing');
+              btn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+            } else if (e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED) {
+              _ytPlaying = false;
+              btn.classList.remove('playing');
+              btn.innerHTML = '<i class="fa-solid fa-play" style="margin-left:2px;"></i>';
+            }
+          }
+        }
+      });
+    }
+
+    // Global toggle used by app.js initAmbientMusic
+    window.toggleSpaMusic = function() {
+      if (!_ytPlayer || typeof _ytPlayer.playVideo !== 'function') {
+        console.warn('[HonorHim] Player not ready yet');
+        return;
+      }
+      if (_ytPlaying) {
+        _ytPlayer.pauseVideo();
+      } else {
+        _ytPlayer.playVideo();
+      }
+    };
+
+    // Expose play/stop for app.js compatibility
+    window.startSpaAudioGlobal = function() { if (!_ytPlaying) window.toggleSpaMusic(); };
+    window.stopSpaAudioGlobal  = function() { if (_ytPlaying)  window.toggleSpaMusic(); };
+  </script>
+
   <!-- Script loading -->
-  <script type="module" src="app.js?v=2026.07.08.19"></script>
+  <script type="module" src="app.js?v=2026.07.08.22"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
+
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
