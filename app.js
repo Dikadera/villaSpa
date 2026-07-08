@@ -8,7 +8,7 @@ import { getFirestore, collection, addDoc, setDoc, getDocs, deleteDoc, doc, quer
 // All API keys are managed in config.js (see .env for the master reference)
 let config;
 try {
-  const configModule = await import("./config.js?v=2026.07.08.50");
+  const configModule = await import("./config.js?v=2026.07.08.51");
   config = configModule.config;
 } catch (e) {
   console.warn("config.js not found, using embedded public keys:", e);
@@ -1870,19 +1870,19 @@ function initGlobalSnow() {
     const flake = document.createElement("div");
     flake.className = "snow-flake";
 
-    const size = Math.random() * 5 + 3;           // 3–8px (slightly bigger)
+    const size = Math.random() * 4 + 2;           // 2–6px (smaller and more elegant)
     flake.style.width = `${size}px`;
     flake.style.height = `${size}px`;
     flake.style.left = `${Math.random() * 100}%`;
     flake.style.top = `-10px`;
 
-    const speed = Math.random() * 6 + 6;          // 6–12s (faster than before)
+    const speed = Math.random() * 8 + 12;         // 12–20s (slower fall)
     flake.style.animationDuration = `${speed}s`;
 
-    const drift = Math.random() * 80 - 40;
+    const drift = Math.random() * 60 - 30;        // gentler sway
     flake.style.setProperty("--drift-x", `${drift}px`);
 
     container.appendChild(flake);
     setTimeout(() => flake.remove(), speed * 1000);
-  }, 140);  // spawn every 140ms (was 200ms)
+  }, 350);  // spawn every 350ms (fewer particles)
 }
