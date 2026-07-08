@@ -662,7 +662,7 @@ function initHighlightsModals() {
         <h3 class="modal-headline">The Sanctuary Experience</h3>
         <p class="modal-subline">Take a virtual glance into our serene Awka lounge.</p>
         
-        <img src="assets/spa_hero_bg.png" class="highlight-modal-graphic" alt="Luxury Spa Massage Room">
+        <img src="assets/spa_hero_bg.jpeg" class="highlight-modal-graphic" alt="Luxury Spa Massage Room">
         
         <div style="font-size: 0.9rem; line-height: 1.6; opacity: 0.9;">
           <p style="margin-bottom: 12px;"><strong>Private Treatment Chambers:</strong> Each room is soundproofed and features customizable ambient lighting, aromatherapy diffusion, and temperature control to ensure absolute detachment from the outside world.</p>

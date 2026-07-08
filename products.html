@@ -70,6 +70,12 @@
 </head>
 <body class="shop-body">
 
+  <!-- Global Ambient Snow Effect -->
+  <div id="globalSnowContainer"></div>
+
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+
   <!-- Announcement Bar -->
   <div class="announcement-bar">
     <div class="announcement-content">
@@ -116,7 +122,7 @@
   <main>
     <!-- Shop Hero Header -->
     <section class="shop-hero">
-      <div class="shop-hero-bg" style="background-image: linear-gradient(rgba(30, 26, 25, 0.7), rgba(30, 26, 25, 0.85)), url('assets/spa_hero_bg.png');"></div>
+      <div class="shop-hero-bg" style="background-image: linear-gradient(rgba(30, 26, 25, 0.7), rgba(30, 26, 25, 0.85)), url('assets/spa_hero_bg.jpeg');"></div>
       <div class="shop-hero-container">
         <span class="shop-subtitle">Premium Skincare Boutique</span>
         <h1 class="shop-title">Invest in Your Glow</h1>
@@ -282,7 +288,90 @@
     </div>
   </footer>
 
+  <!-- Floating WhatsApp Button -->
+  <a href="https://wa.me/2348147409153" target="_blank" rel="noopener" class="floating-wa-btn" id="floatingWaBtn"
+    title="Chat with us on WhatsApp" aria-label="WhatsApp Chat">
+    <span class="wa-pulse-ring"></span>
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top-btn" id="backToTopBtn" title="Scroll to top" aria-label="Back to top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <!-- Ambient Music Floating Toggle -->
+  <button class="music-toggle-btn" id="musicToggleBtn" title="Play soothing spa music" aria-label="Toggle spa music">
+    <i class="fa-solid fa-play" style="margin-left: 2px;"></i>
+  </button>
+
+  <!-- Honor Him - Hans Zimmer: YouTube IFrame Player (fully global, non-module) -->
+  <div id="ytHonorHimPlayer"
+    style="position:fixed;bottom:-100px;right:-100px;width:1px;height:1px;opacity:0;pointer-events:none;"></div>
+
+  <script>
+    var _ytPlayer = null;
+    var _ytPlaying = false;
+
+    function onYouTubeIframeAPIReady() {
+      _ytPlayer = new YT.Player('ytHonorHimPlayer', {
+        height: '1',
+        width: '1',
+        videoId: 'F5tP4n5n27A',
+        playerVars: {
+          autoplay: 0,
+          controls: 0,
+          disablekb: 1,
+          fs: 0,
+          iv_load_policy: 3,
+          modestbranding: 1,
+          loop: 1,
+          playlist: 'F5tP4n5n27A',
+          rel: 0,
+          enablejsapi: 1,
+          origin: window.location.href.split('/').slice(0, 3).join('/')
+        },
+        events: {
+          onReady: function (e) { console.log('[HonorHim] YouTube player ready ✓'); },
+          onError: function (e) {
+            console.warn('[HonorHim] YouTube error code:', e.data, '— falling back to synthesizer');
+            if (typeof window._honorHimSynthFallback === 'function') window._honorHimSynthFallback();
+          },
+          onStateChange: function (e) {
+            var btn = document.getElementById('musicToggleBtn');
+            if (!btn) return;
+            if (e.data === YT.PlayerState.PLAYING) {
+              _ytPlaying = true;
+              btn.classList.add('playing');
+              btn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+            } else if (e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED) {
+              _ytPlaying = false;
+              btn.classList.remove('playing');
+              btn.innerHTML = '<i class="fa-solid fa-play" style="margin-left:2px;"></i>';
+            }
+          }
+        }
+      });
+    }
+
+    window.toggleSpaMusic = function () {
+      if (!_ytPlayer || typeof _ytPlayer.playVideo !== 'function') {
+        console.warn('[HonorHim] Player not ready yet');
+        return;
+      }
+      if (_ytPlaying) {
+        _ytPlayer.pauseVideo();
+      } else {
+        _ytPlayer.playVideo();
+      }
+    };
+
+    window.startSpaAudioGlobal = function () { if (!_ytPlaying) window.toggleSpaMusic(); };
+    window.stopSpaAudioGlobal = function () { if (_ytPlaying) window.toggleSpaMusic(); };
+  </script>
+
   <!-- Script Modules -->
   <script type="module" src="products.js?v=2026.06.23.01"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
 </body>
 </html>

@@ -7,19 +7,29 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
 import { 
   getFirestore, collection, doc, getDocs, setDoc, addDoc, query, orderBy, writeBatch 
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-// Import configuration settings
-import { config } from "./config.js";
+// Import configuration settings with fallback for Git deployments
+let config;
+try {
+  const configModule = await import("./config.js");
+  config = configModule.config;
+} catch (e) {
+  console.warn("config.js not found, using embedded public keys:", e);
+  config = {
+    firebase: {
+      apiKey: "AIzaSyCrvlvcrHw1vq1zrY_oNPHNAvGQIZkhy7E",
+      authDomain: "thevillaspa-14b57.firebaseapp.com",
+      projectId: "thevillaspa-14b57",
+      storageBucket: "thevillaspa-14b57.firebasestorage.app",
+      messagingSenderId: "266753549058",
+      appId: "1:266753549058:web:d12b9717c4946957f5581b",
+      measurementId: "G-6XN6XK5RB2"
+    },
+    paystackPublicKey: "pk_test_658c0c1b0162548ad78df88ce61d2d0cb537a7cd"
+  };
+}
 
 // Firebase configuration matching the workspace config
-const firebaseConfig = {
-  apiKey: "AIzaSyCrvlvcrHw1vq1zrY_oNPHNAvGQIZkhy7E",
-  authDomain: "thevillaspa-14b57.firebaseapp.com",
-  projectId: "thevillaspa-14b57",
-  storageBucket: "thevillaspa-14b57.firebasestorage.app",
-  messagingSenderId: "266753549058",
-  appId: "1:266753549058:web:d12b9717c4946957f5581b",
-  measurementId: "G-6XN6XK5RB2"
-};
+const firebaseConfig = config.firebase;
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -95,6 +105,13 @@ document.addEventListener("DOMContentLoaded", () => {
   initHeaderNavigation();
   initCartListeners();
   initCheckoutForm();
+  
+  // Initialize visual premium effects
+  initScrollProgress();
+  initFloatingButtons();
+  initMagneticButtons();
+  initAmbientMusic();
+  initGlobalSnow();
   
   // Seed database then load products asynchronously (Non-blocking)
   (async () => {
@@ -233,6 +250,9 @@ function renderCatalogProducts() {
     
     grid.appendChild(card);
   });
+  
+  // Re-initialize card tilt on dynamically rendered cards
+  initCardTilt();
 }
 
 // Search and Tab controls
@@ -484,3 +504,227 @@ window.restartShopSession = function() {
     behavior: "smooth"
   });
 };
+
+// ==========================================================================
+// PREMIUM VISUAL & AMBIENT EFFECTS (Synced with main site)
+// ==========================================================================
+
+function initScrollProgress() {
+  const progressBar = document.getElementById("scrollProgressBar");
+  if (!progressBar) return;
+  window.addEventListener("scroll", () => {
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+    progressBar.style.width = scrolled + "%";
+  }, { passive: true });
+}
+
+function initCardTilt() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !window.matchMedia("(hover: hover)").matches) {
+    return;
+  }
+  
+  const cards = document.querySelectorAll(".service-card, .shop-product-card");
+  cards.forEach(card => {
+    // Avoid double binding
+    if (card.dataset.tiltBound) return;
+    card.dataset.tiltBound = "true";
+
+    card.addEventListener("mousemove", (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      const rotateX = ((y - centerY) / centerY) * 8; // Max 8 degrees tilt
+      const rotateY = ((centerX - x) / centerX) * 8;
+      
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+    });
+    
+    card.addEventListener("mouseleave", () => {
+      card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
+    });
+  });
+}
+
+function initFloatingButtons() {
+  const backToTopBtn = document.getElementById("backToTopBtn");
+  if (!backToTopBtn) return;
+  
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 400) {
+      backToTopBtn.classList.add("visible");
+    } else {
+      backToTopBtn.classList.remove("visible");
+    }
+  }, { passive: true });
+  
+  backToTopBtn.addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+}
+
+function initMagneticButtons() {
+  if (!window.matchMedia("(hover: hover)").matches) return;
+  
+  const buttons = document.querySelectorAll(".btn-primary, .btn-outline");
+  buttons.forEach(btn => {
+    btn.addEventListener("mousemove", (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - (rect.width / 2);
+      const y = e.clientY - rect.top - (rect.height / 2);
+      
+      btn.style.transform = `translate(${x * 0.25}px, ${y * 0.25}px)`;
+    });
+    
+    btn.addEventListener("mouseleave", () => {
+      btn.style.transform = "translate(0px, 0px)";
+    });
+  });
+}
+
+function initAmbientMusic() {
+  const musicBtn = document.getElementById('musicToggleBtn');
+  if (!musicBtn) return;
+  musicBtn.addEventListener('click', () => {
+    if (typeof window.toggleSpaMusic === 'function') {
+      window.toggleSpaMusic();
+    }
+  });
+}
+
+// ── Web Audio Synthesizer Fallback (fires if YouTube embedding is blocked) ──
+(function() {
+  let ctx = null, masterGain = null, allOscs = [], synthPlaying = false, loopTimer = null;
+
+  const notes = {
+    D3:146.83,F3:174.61,A3:220.00,C3:130.81,E3:164.81,G3:196.00,
+    Bb2:116.54,F2:87.31,A2:110.00,D4:293.66,F4:349.23,E4:329.63,
+    C4:261.63,G4:392.00,A4:440.00
+  };
+
+  function horn(freq, t, dur, out, vel=0.45) {
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0,t);
+    g.gain.linearRampToValueAtTime(vel, t+0.18);
+    g.gain.setValueAtTime(vel, t+dur-0.2);
+    g.gain.exponentialRampToValueAtTime(0.0001, t+dur);
+    g.connect(out);
+    ['triangle','sawtooth','sine'].forEach((type,i) => {
+      const o = ctx.createOscillator();
+      o.type = type; o.frequency.value = freq * (i===2?2:1);
+      const og = ctx.createGain(); og.gain.value = i===0?1:i===1?0.12:0.18;
+      o.connect(og); og.connect(g); o.start(t); o.stop(t+dur+0.1);
+      allOscs.push(o);
+    });
+  }
+
+  function strings(freq, t, dur, out, vel=0.22) {
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0,t);
+    g.gain.linearRampToValueAtTime(vel, t+0.3);
+    g.gain.linearRampToValueAtTime(0, t+dur);
+    g.connect(out);
+    [-4,0,4].forEach(det => {
+      const o = ctx.createOscillator(); o.type='sawtooth';
+      o.frequency.value=freq; o.detune.value=det;
+      o.connect(g); o.start(t); o.stop(t+dur+0.1); allOscs.push(o);
+    });
+  }
+
+  function scheduleLoop() {
+    if (!synthPlaying) return;
+    const delay = ctx.createDelay(2); delay.delayTime.value=0.45;
+    const fb = ctx.createGain(); fb.gain.value=0.25;
+    delay.connect(fb); fb.connect(delay);
+    const rev = ctx.createGain(); rev.gain.value=0.4;
+    delay.connect(rev); rev.connect(masterGain);
+    const sOut = ctx.createGain(); sOut.gain.value=0.36;
+    sOut.connect(delay); sOut.connect(masterGain);
+    const hOut = ctx.createGain(); hOut.gain.value=0.44;
+    const lpf = ctx.createBiquadFilter(); lpf.type='lowpass'; lpf.frequency.value=900;
+    hOut.connect(lpf); lpf.connect(delay); lpf.connect(masterGain);
+    const now = ctx.currentTime+0.2;
+    const chords=[[notes.D3,notes.F3,notes.A3],[notes.C3,notes.E3,notes.G3],[notes.C3,notes.E3,notes.G3],[notes.D3,notes.F3,notes.A3],[notes.Bb2,notes.D3,notes.F3],[notes.F2,notes.A2,notes.C3],[notes.C3,notes.E3,notes.G3],[notes.D3,notes.F3,notes.A3]];
+    const melody=[[[notes.D4,2],[notes.F4,2]],[[notes.E4,4]],[[notes.C4,2],[notes.E4,2]],[[notes.D4,4]],[[notes.F4,2],[notes.A4,2]],[[notes.G4,4]],[[notes.E4,2],[notes.G4,2]],[[notes.F4,4]]];
+    for(let b=0;b<8;b++){
+      const bs=now+b*4;
+      chords[b].forEach(f=>strings(f,bs,3.9,sOut));
+      let off=0; melody[b].forEach(([f,d])=>{horn(f,bs+off,d-0.1,hOut); off+=d;});
+    }
+    loopTimer=setTimeout(scheduleLoop, 31850);
+  }
+
+  function startSynth() {
+    if (synthPlaying) return;
+    ctx = new (window.AudioContext||window.webkitAudioContext)();
+    if (ctx.state==='suspended') ctx.resume();
+    masterGain = ctx.createGain();
+    masterGain.gain.setValueAtTime(0, ctx.currentTime);
+    masterGain.gain.linearRampToValueAtTime(0.5, ctx.currentTime+2);
+    masterGain.connect(ctx.destination);
+    allOscs=[]; synthPlaying=true;
+    scheduleLoop();
+  }
+
+  function stopSynth() {
+    synthPlaying=false;
+    if (loopTimer) clearTimeout(loopTimer);
+    if (masterGain) { masterGain.gain.linearRampToValueAtTime(0, ctx.currentTime+1.5); }
+    setTimeout(()=>{ allOscs.forEach(o=>{try{o.stop();o.disconnect();}catch(e){}}); allOscs=[]; },2000);
+  }
+
+  // Exposed as fallback when YouTube embedding is blocked
+  window._honorHimSynthFallback = function() {
+    console.log('[HonorHim] Synthesizer fallback activated');
+    // Re-wire toggle to synth
+    window.toggleSpaMusic = function() {
+      const btn = document.getElementById('musicToggleBtn');
+      if (!synthPlaying) {
+        startSynth();
+        if (btn) { btn.classList.add('playing'); btn.innerHTML='<i class="fa-solid fa-pause"></i>'; }
+      } else {
+        stopSynth();
+        if (btn) { btn.classList.remove('playing'); btn.innerHTML='<i class="fa-solid fa-play" style="margin-left:2px;"></i>'; }
+      }
+    };
+    window.startSpaAudioGlobal = startSynth;
+    window.stopSpaAudioGlobal  = stopSynth;
+  };
+})();
+
+// ── Global Ambient Snow Effect ──
+function initGlobalSnow() {
+  const container = document.getElementById("globalSnowContainer");
+  if (!container) return;
+
+  setInterval(() => {
+    if (document.hidden) return;
+
+    const flake = document.createElement("div");
+    flake.className = "snow-flake";
+
+    const size = Math.random() * 5 + 3;           // 3–8px
+    flake.style.width = `${size}px`;
+    flake.style.height = `${size}px`;
+    flake.style.left = `${Math.random() * 100}%`;
+    flake.style.top = `-10px`;
+
+    const speed = Math.random() * 6 + 6;          // 6–12s
+    flake.style.animationDuration = `${speed}s`;
+
+    const drift = Math.random() * 80 - 40;
+    flake.style.setProperty("--drift-x", `${drift}px`);
+
+    container.appendChild(flake);
+    setTimeout(() => flake.remove(), speed * 1000);
+  }, 140);
+}
+
