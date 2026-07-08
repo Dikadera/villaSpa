@@ -399,9 +399,26 @@ img {
   height: 100%;
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
   z-index: 1;
   transform: scale(1.02);
   animation: slowZoom 20s infinite alternate ease-in-out;
+}
+
+.shop-hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+.about-img, .bootcamp-img {
+  background-repeat: no-repeat;
 }
 
 @keyframes slowZoom {
@@ -2318,15 +2335,26 @@ img {
    SCROLL EFFECTS & ANIMATIONS
    ========================================================================== */
 
+/* CSS-only fallback: if JS never fires .animated, the @keyframes forces
+   elements to become visible after a 1.5s delay. JS-triggered animation
+   (via .animated class) will always override this instantly. */
+@keyframes revealFallback {
+  0%   { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
 .animate-on-scroll {
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  /* Fallback: auto-reveal after 1.5s even if JS doesn't fire */
+  animation: revealFallback 0.8s ease-out 1.5s forwards;
 }
 
 .animate-on-scroll.animated {
   opacity: 1;
   transform: translateY(0);
+  animation: none; /* JS already triggered it — kill the CSS fallback */
 }
 
 /* ==========================================================================

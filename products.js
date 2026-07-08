@@ -10,7 +10,7 @@ import {
 // Import configuration settings with fallback for Git deployments
 let config;
 try {
-  const configModule = await import("./config.js");
+  const configModule = await import("./config.js?v=2026.07.08.50");
   config = configModule.config;
 } catch (e) {
   console.warn("config.js not found, using embedded public keys:", e);
@@ -29,6 +29,22 @@ try {
 }
 
 // Firebase configuration matching the workspace config
+console.log("[TVS DEBUG] config loaded:", config);
+if (!config || !config.firebase) {
+  console.warn("[TVS DEBUG] config or config.firebase is missing! Falling back to embedded config...");
+  config = {
+    firebase: {
+      apiKey: "AIzaSyCrvlvcrHw1vq1zrY_oNPHNAvGQIZkhy7E",
+      authDomain: "thevillaspa-14b57.firebaseapp.com",
+      projectId: "thevillaspa-14b57",
+      storageBucket: "thevillaspa-14b57.firebasestorage.app",
+      messagingSenderId: "266753549058",
+      appId: "1:266753549058:web:d12b9717c4946957f5581b",
+      measurementId: "G-6XN6XK5RB2"
+    },
+    paystackPublicKey: "pk_test_658c0c1b0162548ad78df88ce61d2d0cb537a7cd"
+  };
+}
 const firebaseConfig = config.firebase;
 
 // Initialize Firebase
@@ -99,8 +115,8 @@ function initSiteTheme() {
   });
 }
 
-// DOM LOADER
-document.addEventListener("DOMContentLoaded", () => {
+// ROBUST INITIALIZER
+function runProductsInitialization() {
   initSiteTheme();
   initHeaderNavigation();
   initCartListeners();
@@ -122,7 +138,13 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error loading products database:", err);
     }
   })();
-});
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", runProductsInitialization);
+} else {
+  runProductsInitialization();
+}
 
 // Navigation menu toggle
 function initHeaderNavigation() {

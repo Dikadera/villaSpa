@@ -3,15 +3,19 @@
    ========================================================================== */
 
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getFirestore, collection, addDoc, setDoc, getDocs, deleteDoc, doc, query, orderBy, writeBatch } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 // All API keys are managed in config.js (see .env for the master reference)
 let config;
 try {
-  const configModule = await import("./config.js");
+  const configModule = await import("./config.js?v=2026.07.08.50");
   config = configModule.config;
 } catch (e) {
   console.warn("config.js not found, using embedded public keys:", e);
+}
+
+// Always guarantee config.firebase is set
+if (!config || !config.firebase) {
   config = {
     firebase: {
       apiKey: "AIzaSyCrvlvcrHw1vq1zrY_oNPHNAvGQIZkhy7E",
@@ -25,13 +29,18 @@ try {
     paystackPublicKey: "pk_test_658c0c1b0162548ad78df88ce61d2d0cb537a7cd"
   };
 }
-
-// Firebase — initialised from config
 const firebaseConfig = config.firebase;
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+// Initialize Firebase — guard against duplicate-app errors
+let app, db;
+try {
+  app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+  db = getFirestore(app);
+} catch (fbErr) {
+  console.error("[TVS] Firebase init error:", fbErr);
+  // Create a minimal stub so the rest of the module doesn't crash
+  db = null;
+}
 
 // 1. SERVICES DATA (Updated prices effective June 8, 2026)
 const servicesDatabase = [
@@ -235,6 +244,10 @@ let currentCalendarDate = new Date(2026, 5, 5); // Start at June 2026 based on t
 
 // DYNAMIC DATA LOADING FROM FIRESTORE
 async function loadDynamicData() {
+  if (!db) {
+    console.warn("[TVS] Firestore not available — using local fallback data only.");
+    return;
+  }
   // 1. Fetch Services
   try {
     const srvSnap = await getDocs(collection(db, "services"));
@@ -414,7 +427,8 @@ function initSiteTheme() {
 }
 
 // DOM ELEMENTS
-document.addEventListener("DOMContentLoaded", () => {
+// ROBUST INITIALIZER
+function runMainInitialization() {
   // 1. Initialize local UI interactions immediately (Non-blocking)
   initSiteTheme();
   initNavigation();
@@ -436,19 +450,32 @@ document.addEventListener("DOMContentLoaded", () => {
   initAmbientMusic();
   initGlobalSnow();
 
+  // Initialize service menu and booking wizard IMMEDIATELY with fallback data
+  // so the page is fully interactive and doesn't wait for Firestore (offline-first)
+  categoriesDatabase = [...defaultCategories];
+  initServicesMenu();
+  initBookingWizard();
+  checkAdminRoute();
+
   // 3. Load database-dependent data asynchronously (Non-blocking)
   (async () => {
     try {
       await loadDynamicData();
+      // Re-render and activate elements with loaded data
+      initServicesMenu();
+      initBookingWizard();
+      checkAdminRoute();
     } catch (err) {
       console.error("Error loading dynamic data from Firestore:", err);
     }
-    // Render and activate elements dependent on the loaded database array
-    initServicesMenu();
-    initBookingWizard();
-    checkAdminRoute();
   })();
-});
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", runMainInitialization);
+} else {
+  runMainInitialization();
+}
 
 
 // ==========================================================================
