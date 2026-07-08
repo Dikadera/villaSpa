@@ -59,6 +59,14 @@ const defaultSkincare = [
 ];
 
 // STATE MANAGEMENT
+const defaultCategories = [
+  { id: "massages", name: "Luxury Massages" },
+  { id: "facials", name: "Facials & Peels" },
+  { id: "waxing", name: "Waxing & Tinting" },
+  { id: "body", name: "Body Therapy" },
+  { id: "nails", name: "Manicures & Pedicures" }
+];
+let dbCategories = [];
 let bookings = [];
 let bootcampEnrollments = [];
 let services = [];
@@ -168,6 +176,7 @@ async function initializeDashboard() {
   initOrderFilters();
   initExporters();
   initWipeDatabase();
+  initCategoryManagement();
 }
 
 // ==========================================================================
@@ -300,6 +309,19 @@ async function seedDatabaseIfNeeded() {
       await batch.commit();
       console.log("Skincare products seeded successfully.");
     }
+
+    // 4. Check categories
+    const categoriesSnap = await getDocs(collection(db, "categories"));
+    if (categoriesSnap.empty) {
+      console.log("Seeding categories to Firestore...");
+      const batch = writeBatch(db);
+      defaultCategories.forEach(cat => {
+        const docRef = doc(db, "categories", cat.id);
+        batch.set(docRef, cat);
+      });
+      await batch.commit();
+      console.log("Categories seeded successfully.");
+    }
   } catch (err) {
     console.error("Database seeding failed. Using offline fallbacks:", err);
   }
@@ -366,6 +388,15 @@ async function loadAllData() {
       orders.sort((a,b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0));
     }
 
+    // 8. Fetch Categories
+    try {
+      const catSnap = await getDocs(collection(db, "categories"));
+      dbCategories = catSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    } catch (e) {
+      console.warn("Could not load categories, using defaults:", e);
+    }
+    if (dbCategories.length === 0) dbCategories = [...defaultCategories];
+
   } catch (err) {
     console.error("Firestore Loading failed. Using LocalStorage client fallback:", err);
     // Fallback loading from localStorage
@@ -378,7 +409,11 @@ async function loadAllData() {
     services = [...defaultServices];
     reviews = [...defaultReviews];
     skincareProducts = [...defaultSkincare];
+    dbCategories = [...defaultCategories];
   }
+
+  // Populate dynamic category dropdown
+  populateServiceCategoryDropdown();
 
   // Process customer lists from bookings and enrollments
   processCustomersLog();
@@ -590,22 +625,31 @@ function renderAnalyticsCharts() {
   const catCtx = document.getElementById("categoryDistributionChart").getContext("2d");
   
   // Calculate distribution of category choices in appointments
-  const catCounts = { massages: 0, facials: 0, waxing: 0, body: 0, nails: 0 };
+  const catCounts = {};
+  dbCategories.forEach(cat => {
+    catCounts[cat.id] = 0;
+  });
   bookings.forEach(b => {
     (b.services || []).forEach(srv => {
       // Find the service category in database
       const dbSrv = services.find(s => s.name === srv.name);
-      if (dbSrv && dbSrv.category) {
-        catCounts[dbSrv.category] = (catCounts[dbSrv.category] || 0) + 1;
-      } else {
-        // Fallback checks
-        catCounts.massages += 1;
+      if (dbSrv && dbSrv.category && catCounts[dbSrv.category] !== undefined) {
+        catCounts[dbSrv.category] += 1;
       }
     });
   });
 
-  const catLabels = ["Massages", "Facials & Peels", "Waxing & Tinting", "Body Therapy", "Nails Care"];
-  const catValues = [catCounts.massages, catCounts.facials, catCounts.waxing, catCounts.body, catCounts.nails];
+  const catLabels = dbCategories.map(cat => cat.name);
+  const catValues = dbCategories.map(cat => catCounts[cat.id] || 0);
+  
+  const defaultColors = [
+    '#C5A880', // Gold
+    '#6E8A75', // Success Green
+    '#C29668', // Sand
+    '#B56B6B', // Error Red
+    '#2E2725'  // Charcoal
+  ];
+  const chartColors = dbCategories.map((_, i) => defaultColors[i % defaultColors.length]);
   
   categoryChart = new Chart(catCtx, {
     type: 'doughnut',
@@ -613,13 +657,7 @@ function renderAnalyticsCharts() {
       labels: catLabels,
       datasets: [{
         data: catValues,
-        backgroundColor: [
-          '#C5A880', // Gold
-          '#6E8A75', // Success Green
-          '#C29668', // Sand
-          '#B56B6B', // Error Red
-          '#2E2725'  // Charcoal
-        ],
+        backgroundColor: chartColors,
         borderWidth: isDark ? 2 : 1,
         borderColor: isDark ? '#221C1A' : '#ffffff'
       }]
@@ -886,27 +924,18 @@ function renderServicesGrid() {
   const container = document.getElementById("servicesAdminList");
   container.innerHTML = "";
   
-  const categories = ["massages", "facials", "waxing", "body", "nails"];
-  const catNames = {
-    massages: "Luxury Massages",
-    facials: "Facials & Peels",
-    waxing: "Waxing & Tinting",
-    body: "Body Therapy",
-    nails: "Manicures & Pedicures"
-  };
-  
-  categories.forEach(cat => {
-    const catItems = services.filter(s => s.category === cat);
+  dbCategories.forEach(cat => {
+    const catItems = services.filter(s => s.category === cat.id);
     
     const catSection = document.createElement("div");
     catSection.className = "admin-category-section";
     catSection.innerHTML = `
-      <h4 class="admin-category-title">${catNames[cat]}</h4>
-      <div class="admin-services-subgrid" id="catGrid-${cat}"></div>
+      <h4 class="admin-category-title">${cat.name}</h4>
+      <div class="admin-services-subgrid" id="catGrid-${cat.id}"></div>
     `;
     container.appendChild(catSection);
     
-    const subgrid = catSection.querySelector(`#catGrid-${cat}`);
+    const subgrid = catSection.querySelector(`#catGrid-${cat.id}`);
     
     if (catItems.length === 0) {
       subgrid.innerHTML = `<p class="text-muted" style="grid-column: 1/-1; font-size: 0.8rem; font-style: italic;">No services added in this category yet.</p>`;
@@ -1585,3 +1614,127 @@ window.deleteOrder = async function(reference) {
     renderDashboardOverview();
   }
 };
+
+// ==========================================================================
+// 12. CATEGORY MANAGEMENT FUNCTIONS
+// ==========================================================================
+let categoryForm;
+
+function populateServiceCategoryDropdown() {
+  const select = document.getElementById("serviceCategory");
+  if (!select) return;
+  select.innerHTML = "";
+  dbCategories.forEach(cat => {
+    const opt = document.createElement("option");
+    opt.value = cat.id;
+    opt.textContent = cat.name;
+    select.appendChild(opt);
+  });
+}
+
+window.openCategoryModal = function() {
+  renderCategoriesList();
+  document.getElementById("categoryModal").classList.add("active");
+};
+
+window.closeCategoryModal = function() {
+  document.getElementById("categoryModal").classList.remove("active");
+};
+
+function renderCategoriesList() {
+  const tableBody = document.getElementById("adminCategoriesTableBody");
+  if (!tableBody) return;
+  tableBody.innerHTML = "";
+  
+  if (dbCategories.length === 0) {
+    tableBody.innerHTML = `<tr><td colspan="2" class="text-center text-muted">No categories available.</td></tr>`;
+    return;
+  }
+  
+  dbCategories.forEach(cat => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td><strong>${cat.name}</strong></td>
+      <td style="text-align: center;">
+        <button class="btn-icon delete" onclick="deleteCategory('${cat.id}')" title="Delete Category"><i class="fa-solid fa-trash-can"></i></button>
+      </td>
+    `;
+    tableBody.appendChild(tr);
+  });
+}
+
+window.deleteCategory = async function(id) {
+  if (confirm(`Are you sure you want to permanently delete this category?\n⚠️ Warning: All services under this category will also be deleted!`)) {
+    try {
+      // 1. Delete category document
+      await deleteDoc(doc(db, "categories", id));
+      console.log(`Category ${id} deleted.`);
+      
+      // 2. Delete all services under this category
+      const servicesToDelete = services.filter(s => s.category === id);
+      const batch = writeBatch(db);
+      servicesToDelete.forEach(srv => {
+        batch.delete(doc(db, "services", srv.id));
+      });
+      await batch.commit();
+      console.log(`Deleted ${servicesToDelete.length} services under category ${id}.`);
+      
+      // 3. Update local state
+      dbCategories = dbCategories.filter(cat => cat.id !== id);
+      services = services.filter(s => s.category !== id);
+      
+      // 4. Update UI
+      populateServiceCategoryDropdown();
+      renderServicesGrid();
+      renderCategoriesList();
+      renderAnalyticsCharts();
+    } catch (err) {
+      console.error("Firestore category delete failed:", err);
+      alert("Could not delete category from Firestore.");
+    }
+  }
+};
+
+function initCategoryManagement() {
+  categoryForm = document.getElementById("categoryAddForm");
+  if (!categoryForm) return;
+  
+  categoryForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const nameInput = document.getElementById("newCategoryName");
+    const name = nameInput.value.trim();
+    if (!name) return;
+    
+    const id = name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+    
+    // Check if ID already exists
+    if (dbCategories.some(cat => cat.id === id)) {
+      alert("A category with a similar name already exists!");
+      return;
+    }
+    
+    const record = { id, name };
+    const saveBtn = document.getElementById("saveCategoryBtn");
+    saveBtn.disabled = true;
+    saveBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i>`;
+    
+    try {
+      await setDoc(doc(db, "categories", id), record);
+      console.log("Category saved in Firestore:", record);
+      
+      dbCategories.push(record);
+      nameInput.value = "";
+      
+      populateServiceCategoryDropdown();
+      renderServicesGrid();
+      renderCategoriesList();
+      renderAnalyticsCharts();
+    } catch (err) {
+      alert("Could not save category to Firestore.");
+      console.error(err);
+    } finally {
+      saveBtn.disabled = false;
+      saveBtn.textContent = "Add";
+    }
+  });
+}

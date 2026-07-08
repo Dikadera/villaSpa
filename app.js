@@ -205,6 +205,14 @@ function safeRemoveItem(key) {
 }
 
 // STATE MANAGEMENT
+const defaultCategories = [
+  { id: "massages", name: "Luxury Massages" },
+  { id: "facials", name: "Facials & Peels" },
+  { id: "waxing", name: "Waxing & Tinting" },
+  { id: "body", name: "Body Therapy" },
+  { id: "nails", name: "Manicures & Pedicures" }
+];
+let categoriesDatabase = [];
 let bookingCart = [];
 let currentWizardStep = 1;
 let selectedDateObj = null;
@@ -227,6 +235,24 @@ async function loadDynamicData() {
     }
   } catch (err) {
     console.error("Failed to load services from Firestore. Using hardcoded fallback:", err);
+  }
+
+  // Fetch Categories
+  try {
+    const catSnap = await getDocs(collection(db, "categories"));
+    if (!catSnap.empty) {
+      const newCategories = [];
+      catSnap.forEach(doc => {
+        newCategories.push(doc.data());
+      });
+      categoriesDatabase.splice(0, categoriesDatabase.length, ...newCategories);
+      console.log("Categories loaded dynamically from Firestore:", categoriesDatabase);
+    }
+  } catch (err) {
+    console.error("Failed to load categories from Firestore. Using fallback:", err);
+  }
+  if (categoriesDatabase.length === 0) {
+    categoriesDatabase = [...defaultCategories];
   }
 
   // 2. Fetch Reviews
@@ -497,20 +523,29 @@ function scrollToSection(id) {
 // 3. SERVICES MENU (Tabs rendering)
 // ==========================================================================
 function initServicesMenu() {
-  const tabButtons = document.querySelectorAll(".tab-btn");
+  const tabsContainer = document.querySelector(".services-tabs");
   const gridContainer = document.getElementById("servicesGrid");
+  if (!tabsContainer || !gridContainer) return;
 
-  // Initial render (Massages)
-  renderServices("massages", gridContainer);
-
-  tabButtons.forEach(btn => {
+  tabsContainer.innerHTML = "";
+  categoriesDatabase.forEach((cat, index) => {
+    const btn = document.createElement("button");
+    btn.className = `tab-btn${index === 0 ? " active" : ""}`;
+    btn.setAttribute("data-category", cat.id);
+    btn.textContent = cat.name;
+    
     btn.addEventListener("click", () => {
-      tabButtons.forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".services-tabs .tab-btn").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
-      const category = btn.getAttribute("data-category");
-      renderServices(category, gridContainer);
+      renderServices(cat.id, gridContainer);
     });
+    
+    tabsContainer.appendChild(btn);
   });
+
+  // Initial render (First category or fallback)
+  const initialCategory = categoriesDatabase[0]?.id || "massages";
+  renderServices(initialCategory, gridContainer);
 }
 
 function renderServices(category, container) {
@@ -843,17 +878,8 @@ function syncCartToWizard() {
   // 1. Populate selector category dividers and checkboxes
   wizardServicesList.innerHTML = "";
   
-  const categories = ["massages", "facials", "waxing", "body", "nails"];
-  const catNames = {
-    massages: "Luxury Massages",
-    facials: "Facials & Peels",
-    waxing: "Waxing & Tinting",
-    body: "Body Therapy",
-    nails: "Manicures & Pedicures"
-  };
-  
-  categories.forEach(cat => {
-    const items = servicesDatabase.filter(s => s.category === cat);
+  categoriesDatabase.forEach(cat => {
+    const items = servicesDatabase.filter(s => s.category === cat.id);
     if (items.length > 0) {
       const divider = document.createElement("div");
       divider.className = "category-divider-title";
@@ -865,7 +891,7 @@ function syncCartToWizard() {
       divider.style.borderBottom = "1.5px solid var(--color-sand)";
       divider.style.paddingBottom = "4px";
       divider.style.color = "var(--color-champagne-dark)";
-      divider.textContent = catNames[cat];
+      divider.textContent = cat.name;
       wizardServicesList.appendChild(divider);
       
       items.forEach(item => {

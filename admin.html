@@ -7,6 +7,7 @@
   <title>TVS Admin Portal | The Villa Spa Management Suite</title>
   <meta name="description"
     content="Secure administrative panel for managing appointments, bootcamp enrollments, services, customer feedback, and business analytics.">
+  <meta name="robots" content="noindex, nofollow">
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -342,9 +343,14 @@
               <h3>Service Categories Menu</h3>
               <p class="text-muted">Manage products and services rendering dynamically on the landing page</p>
             </div>
-            <button class="btn btn-primary btn-sm" onclick="openServiceModal()">
-              <i class="fa-solid fa-plus"></i> Add New Service
-            </button>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn btn-outline btn-sm" onclick="openCategoryModal()">
+                <i class="fa-solid fa-tags"></i> Manage Categories
+              </button>
+              <button class="btn btn-primary btn-sm" onclick="openServiceModal()">
+                <i class="fa-solid fa-plus"></i> Add New Service
+              </button>
+            </div>
           </div>
 
           <div class="services-admin-grid" id="servicesAdminList">
@@ -573,6 +579,48 @@
     </div>
   </div>
 
+  <!-- CATEGORY MANAGEMENT MODAL -->
+  <div class="admin-modal" id="categoryModal">
+    <div class="modal-backdrop" onclick="closeCategoryModal()"></div>
+    <div class="modal-card" style="max-width: 500px;">
+      <button class="modal-close" onclick="closeCategoryModal()"><i class="fa-solid fa-xmark"></i></button>
+      <h3 class="modal-title">Manage Service Categories</h3>
+
+      <!-- Add Category Form -->
+      <form id="categoryAddForm" style="margin-bottom: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px;">
+        <div class="form-group">
+          <label for="newCategoryName">New Category Name *</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="newCategoryName" required placeholder="e.g. Hair Treatments" style="flex: 1;">
+            <button type="submit" class="btn btn-primary btn-sm" id="saveCategoryBtn">Add</button>
+          </div>
+        </div>
+      </form>
+
+      <!-- Category List -->
+      <div class="form-group">
+        <label>Existing Categories</label>
+        <div class="table-responsive" style="max-height: 250px; overflow-y: auto;">
+          <table class="data-table" style="font-size: 0.85rem;">
+            <thead>
+              <tr>
+                <th>Category Name</th>
+                <th style="width: 80px; text-align: center;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminCategoriesTableBody">
+              <!-- Dynamically populated categories -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="modal-footer" style="margin-top: 16px;">
+        <button type="button" class="btn btn-outline btn-sm" onclick="closeCategoryModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
   <!-- SERVICE MODAL (Add / Edit Service) -->
   <div class="admin-modal" id="serviceModal">
     <div class="modal-backdrop" onclick="closeServiceModal()"></div>
@@ -602,11 +650,7 @@
         <div class="form-group">
           <label for="serviceCategory">Category *</label>
           <select id="serviceCategory" required>
-            <option value="massages">Massages</option>
-            <option value="facials">Facials & Peels</option>
-            <option value="waxing">Waxing & Tinting</option>
-            <option value="body">Body Therapy</option>
-            <option value="nails">Manicure & Pedicure</option>
+            <!-- Dynamically populated from Firestore categories -->
           </select>
         </div>
 
