@@ -111,7 +111,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- Paystack Inline SDK -->
   <script src="https://js.paystack.co/v1/inline.js"></script>
-  <link rel="stylesheet" href="style.css?v=2026.07.08.99">
+  <link rel="stylesheet" href="style.css?v=2026.07.09.13">
 </head>
 
 <body>
@@ -222,20 +222,72 @@
   <main>
     <!-- Hero Section -->
     <section class="hero-section" id="hero">
-      <div class="hero-bg"
-        style="background-image: linear-gradient(rgba(30, 26, 25, 0.6), rgba(30, 26, 25, 0.8)), url('assets/spa_hero_bg.jpeg');">
+      <!-- Background slides -->
+      <div class="hero-bg-slides" id="heroBgSlides">
+        <div class="hero-bg-slide active" style="background-image: linear-gradient(rgba(30, 26, 25, 0.55), rgba(30, 26, 25, 0.75)), url('assets/hero_spa_candles.png');"></div>
+        <div class="hero-bg-slide" style="background-image: linear-gradient(rgba(30, 26, 25, 0.55), rgba(30, 26, 25, 0.75)), url('assets/hero_skincare_serums.png');"></div>
+        <div class="hero-bg-slide" style="background-image: linear-gradient(rgba(30, 26, 25, 0.55), rgba(30, 26, 25, 0.75)), url('assets/hero_aesthetics_clinical.png');"></div>
+        <div class="hero-bg-slide" style="background-image: linear-gradient(rgba(30, 26, 25, 0.55), rgba(30, 26, 25, 0.75)), url('assets/hero_academy_towels.png');"></div>
       </div>
+
       <div class="hero-particles"></div>
-      <div class="hero-container">
-        <div class="hero-content">
-          <span class="hero-subtitle fade-in">Awka's Premier Spa &amp; Wellness Destination</span>
-          <h1 class="hero-title fade-in">Reclaim Your Balance, <br><span id="heroTypingText"
-              class="hero-typing-accent">Restore Your Glow</span><span class="typing-cursor">|</span></h1>
-          <p class="hero-description fade-in"></p>
-          <div class="hero-actions fade-in">
-            <a href="#booking-section" class="btn btn-primary btn-lg hero-btn-standout">Book Appointment</a>
-            <a href="services.html#medical-aesthetics" class="btn btn-outline btn-lg hero-btn-dynamic">Medical Aesthetics <i class="fa-solid fa-chevron-right dynamic-arrow"></i></a>
-            <a href="academy.html" class="btn btn-outline btn-lg hero-btn-dynamic">Academy <i class="fa-solid fa-chevron-right dynamic-arrow"></i></a>
+
+      <!-- Slider Navigation Controls -->
+      <div class="slider-controls">
+        <button type="button" class="slider-nav-btn prev-slide" id="heroPrevSlide" aria-label="Previous slide"><i class="fa-solid fa-chevron-left"></i></button>
+        <div class="slider-dots" id="heroSliderDots"></div>
+        <button type="button" class="slider-nav-btn next-slide" id="heroNextSlide" aria-label="Next slide"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+
+      <div class="hero-container hero-grid-layout">
+        <!-- Column 1: Active Slide Content -->
+        <div class="hero-content-column">
+          <div class="hero-content">
+            <span class="hero-subtitle" id="dynamicHeroSubtitle">Awka's Premier Spa &amp; Wellness Destination</span>
+            <h1 class="hero-title" id="dynamicHeroTitle">Reclaim Your Balance, <br><span id="heroTypingText" class="hero-typing-accent">Restore Your Glow</span><span class="typing-cursor">|</span></h1>
+            <p class="hero-description" id="dynamicHeroDesc">Experience award-winning hot stone therapies, Moroccan Hammam baths, and custom organic facials in a serene, luxurious sanctuary.</p>
+            <div class="hero-actions">
+              <a href="#booking-section" class="btn btn-primary btn-lg hero-btn-standout" id="dynamicHeroCta">Book Appointment</a>
+              <a href="services.html#medical-aesthetics" class="btn btn-outline btn-lg hero-btn-dynamic" id="dynamicHeroSubCta1">Medical Aesthetics <i class="fa-solid fa-chevron-right dynamic-arrow"></i></a>
+              <a href="academy.html" class="btn btn-outline btn-lg hero-btn-dynamic" id="dynamicHeroSubCta2">Academy <i class="fa-solid fa-chevron-right dynamic-arrow"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 2: Floating Promo Slider Card -->
+        <div class="hero-promo-column">
+          <div class="promo-slider-card">
+            <div class="promo-slider-track-wrapper">
+              <div class="promo-slider-track" id="promoSliderTrack">
+                <!-- Slide 1: Bootcamp Promo -->
+                <div class="promo-slide-card-item">
+                  <span class="promo-badge">Bootcamp</span>
+                  <h3>Esthetics Bootcamp</h3>
+                  <p>Next cohort begins June 22. Secure your seat & professional kit today!</p>
+                  <a href="academy.html" class="promo-card-link">Register Now <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                <!-- Slide 2: Promo Discount -->
+                <div class="promo-slide-card-item">
+                  <span class="promo-badge-discount">Special Offer</span>
+                  <h3>First-Time Client Deal</h3>
+                  <p>Get a complimentary skin consultation. Use code <strong>GLOW2026</strong>.</p>
+                  <a href="#booking-section" class="promo-card-link">Claim Offer <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                <!-- Slide 3: Sunday Bookings -->
+                <div class="promo-slide-card-item">
+                  <span class="promo-badge-info">Hours</span>
+                  <h3>Sunday Spa Sessions</h3>
+                  <p>1:00 PM – 7:00 PM. Reservations required. Book your weekend escape!</p>
+                  <a href="#booking-section" class="promo-card-link">Schedule Sunday <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+              </div>
+            </div>
+            <!-- Promo Dots -->
+            <div class="promo-slider-dots" id="promoSliderDots">
+              <span class="promo-dot active" data-promo-slide="0"></span>
+              <span class="promo-dot" data-promo-slide="1"></span>
+              <span class="promo-dot" data-promo-slide="2"></span>
+            </div>
           </div>
         </div>
       </div>
@@ -1204,7 +1256,7 @@
   </script>
 
   <!-- Script loading -->
-  <script type="module" src="app.js?v=2026.07.08.99"></script>
+  <script type="module" src="app.js?v=2026.07.09.13"></script>
   <script src="https://www.youtube.com/iframe_api"></script>
 
   <script type="application/ld+json">

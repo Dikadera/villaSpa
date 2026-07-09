@@ -233,6 +233,40 @@ const defaultCategories = [
   { id: "body", name: "Body Therapy" },
   { id: "nails", name: "Manicures & Pedicures" }
 ];
+const heroSlides = [
+  {
+    subtitle: "Awka's Premier Spa & Wellness Destination",
+    title: "Reclaim Your Balance, <br><span id=\"heroTypingText\" class=\"hero-typing-accent\">Restore Your Glow</span><span class=\"typing-cursor\">|</span>",
+    desc: "Experience award-winning hot stone therapies, Moroccan Hammam baths, and custom organic facials in a serene, luxurious sanctuary.",
+    btnText: "Book Appointment",
+    btnLink: "#booking-section",
+    isTypewriter: true
+  },
+  {
+    subtitle: "Premium Skinvestments",
+    title: "Nourish Your Skin, <br><span class=\"hero-styling-title\">Maintain Your Radiance</span>",
+    desc: "Bring the spa experience home with our dermatologist-approved cleansers, hydrating serums, and signature whipped body creams.",
+    btnText: "Shop Skincare Boutique",
+    btnLink: "products.html",
+    isTypewriter: false
+  },
+  {
+    subtitle: "Advanced Medical Esthetics",
+    title: "Clinical Procedures, <br><span class=\"hero-styling-title\">Flawless Natural Results</span>",
+    desc: "Rejuvenate with professional Botox, dermal fillers, microneedling, and highly potent skin boosters administered by certified experts.",
+    btnText: "Explore Treatments",
+    btnLink: "services.html#medical-aesthetics",
+    isTypewriter: false
+  },
+  {
+    subtitle: "The Villa Spa Academy",
+    title: "Launch Your Career in <br><span class=\"hero-styling-title\">Luxury Wellness</span>",
+    desc: "Enroll in our 4-Week Intensive Spa & Esthetics Bootcamp. Gain hands-on practical skills, starter kits, and professional certification.",
+    btnText: "Join the Bootcamp",
+    btnLink: "academy.html",
+    isTypewriter: false
+  }
+];
 let categoriesDatabase = [];
 let bookingCart = [];
 let selectedCategories = [];
@@ -240,6 +274,30 @@ let currentWizardStep = 1;
 let selectedDateObj = null;
 let selectedTimeSlot = null;
 let currentCalendarDate = new Date(2026, 5, 5); // Start at June 2026 based on timeline (June 5, 2026)
+
+function addCategoryToSelected(catId) {
+  if (!selectedCategories.includes(catId)) {
+    selectedCategories.push(catId);
+  }
+  const step1Next = document.getElementById("step1Next");
+  if (step1Next) {
+    step1Next.disabled = (selectedCategories.length === 0);
+  }
+}
+
+function removeCategoryFromSelectedIfEmpty(catId) {
+  const remains = bookingCart.some(item => item.category === catId);
+  if (!remains) {
+    const idx = selectedCategories.indexOf(catId);
+    if (idx > -1) {
+      selectedCategories.splice(idx, 1);
+    }
+  }
+  const step1Next = document.getElementById("step1Next");
+  if (step1Next) {
+    step1Next.disabled = (selectedCategories.length === 0);
+  }
+}
 
 
 // DYNAMIC DATA LOADING FROM FIRESTORE
@@ -440,6 +498,7 @@ function runMainInitialization() {
   // 2. Custom interactive animations & effects
   initScrollProgress();
   initHeroTypewriter();
+  initHeroCarousels();
   initParallaxHero();
   initCounterAnimations();
   initCardTilt();
@@ -669,15 +728,18 @@ function toggleCartItem(service, buttonElement) {
     bookingCart.push(service);
     buttonElement.textContent = "Added ✓";
     buttonElement.className = "btn btn-sm btn-primary select-service-btn";
+    addCategoryToSelected(service.category);
   } else {
     // Remove from Cart
     bookingCart.splice(index, 1);
     buttonElement.textContent = "Add to Booking";
     buttonElement.className = "btn btn-sm btn-outline select-service-btn";
+    removeCategoryFromSelectedIfEmpty(service.category);
   }
   
   updateBookingSummaryBanner();
   syncCartToWizard();
+  syncCategoriesToWizard();
 }
 
 function updateBookingSummaryBanner() {
@@ -912,6 +974,11 @@ function initBookingWizard() {
   
   // Sync category choices
   syncCategoriesToWizard();
+
+  if (window.bookingWizardInitialized) {
+    return;
+  }
+  window.bookingWizardInitialized = true;
   
   step1Next.addEventListener("click", () => {
     if (selectedCategories.length > 0) {
@@ -1080,11 +1147,14 @@ function syncCartToWizard() {
             const index = bookingCart.findIndex(c => c.id === item.id);
             if (index === -1) {
               bookingCart.push(item);
+              addCategoryToSelected(item.category);
             } else {
               bookingCart.splice(index, 1);
+              removeCategoryFromSelectedIfEmpty(item.category);
             }
             updateBookingSummaryBanner();
             syncCartToWizard();
+            syncCategoriesToWizard();
             
             // Re-render service tab lists to sync checkmarks
             const activeTabBtn = document.querySelector(".tab-btn.active");
@@ -1138,7 +1208,9 @@ function syncCartToWizard() {
 window.removeWizardCartItem = function(id) {
   const index = bookingCart.findIndex(item => item.id === id);
   if (index !== -1) {
+    const category = bookingCart[index].category;
     bookingCart.splice(index, 1);
+    removeCategoryFromSelectedIfEmpty(category);
     updateBookingSummaryBanner();
     syncCartToWizard();
     
@@ -1148,6 +1220,7 @@ window.removeWizardCartItem = function(id) {
       const gridContainer = document.getElementById("servicesGrid");
       renderServices(activeTabBtn.getAttribute("data-category"), gridContainer);
     }
+    syncCategoriesToWizard();
   }
 };
 
@@ -1644,9 +1717,180 @@ function initHeroTypewriter() {
       typingSpeed = 500; // Pause before typing next word
     }
 
-    setTimeout(type, typingSpeed);
+    window.typewriterTimeout = setTimeout(type, typingSpeed);
   }
   type();
+}
+
+
+function initHeroCarousels() {
+  const slider = document.getElementById("hero");
+  const bgSlidesContainer = document.getElementById("heroBgSlides");
+  const dotsContainer = document.getElementById("heroSliderDots");
+  const prevBtn = document.getElementById("heroPrevSlide");
+  const nextBtn = document.getElementById("heroNextSlide");
+  
+  if (!slider || !bgSlidesContainer) return;
+  
+  let currentSlide = 0;
+  let slideInterval;
+  
+  // Set up dot indicators
+  if (dotsContainer) {
+    dotsContainer.innerHTML = "";
+    heroSlides.forEach((_, index) => {
+      const dot = document.createElement("span");
+      dot.className = index === 0 ? "slider-dot active" : "slider-dot";
+      dot.addEventListener("click", () => {
+        goToSlide(index);
+        resetSlideTimer();
+      });
+      dotsContainer.appendChild(dot);
+    });
+  }
+  
+  function updateSlideUI() {
+    const bgSlides = document.querySelectorAll(".hero-bg-slide");
+    const dots = document.querySelectorAll(".slider-dot");
+    
+    // Toggle active background slide
+    bgSlides.forEach((slide, index) => {
+      slide.classList.toggle("active", index === currentSlide);
+    });
+    
+    // Toggle active dot
+    dots.forEach((dot, index) => {
+      dot.classList.toggle("active", index === currentSlide);
+    });
+    
+    // Update Text Content with transition
+    const subtitleEl = document.getElementById("dynamicHeroSubtitle");
+    const titleEl = document.getElementById("dynamicHeroTitle");
+    const descEl = document.getElementById("dynamicHeroDesc");
+    const ctaEl = document.getElementById("dynamicHeroCta");
+    
+    const slide = heroSlides[currentSlide];
+    
+    if (subtitleEl) {
+      subtitleEl.style.opacity = 0;
+      subtitleEl.style.transform = "translateY(15px)";
+      setTimeout(() => {
+        subtitleEl.textContent = slide.subtitle;
+        subtitleEl.style.opacity = 1;
+        subtitleEl.style.transform = "translateY(0)";
+      }, 300);
+    }
+    
+    if (titleEl) {
+      titleEl.style.opacity = 0;
+      titleEl.style.transform = "translateY(15px)";
+      setTimeout(() => {
+        titleEl.innerHTML = slide.title;
+        titleEl.style.opacity = 1;
+        titleEl.style.transform = "translateY(0)";
+        
+        // Re-initialize typewriter if this slide uses it
+        if (slide.isTypewriter) {
+          initHeroTypewriter();
+        } else {
+          // Clear any active typewriter timeouts
+          if (window.typewriterTimeout) {
+            clearTimeout(window.typewriterTimeout);
+          }
+        }
+      }, 300);
+    }
+    
+    if (descEl) {
+      descEl.style.opacity = 0;
+      descEl.style.transform = "translateY(15px)";
+      setTimeout(() => {
+        descEl.textContent = slide.desc;
+        descEl.style.opacity = 1;
+        descEl.style.transform = "translateY(0)";
+      }, 300);
+    }
+    
+    if (ctaEl) {
+      ctaEl.style.opacity = 0;
+      ctaEl.style.transform = "translateY(15px)";
+      setTimeout(() => {
+        ctaEl.textContent = slide.btnText;
+        ctaEl.setAttribute("href", slide.btnLink);
+        ctaEl.style.opacity = 1;
+        ctaEl.style.transform = "translateY(0)";
+      }, 300);
+    }
+  }
+  
+  function goToSlide(index) {
+    currentSlide = (index + heroSlides.length) % heroSlides.length;
+    updateSlideUI();
+  }
+  
+  function nextSlide() {
+    goToSlide(currentSlide + 1);
+  }
+  
+  function prevSlide() {
+    goToSlide(currentSlide - 1);
+  }
+  
+  if (prevBtn) prevBtn.addEventListener("click", () => { prevSlide(); resetSlideTimer(); });
+  if (nextBtn) nextBtn.addEventListener("click", () => { nextSlide(); resetSlideTimer(); });
+  
+  function startSlideTimer() {
+    slideInterval = setInterval(nextSlide, 7000); // Change slide every 7 seconds
+  }
+  
+  function resetSlideTimer() {
+    clearInterval(slideInterval);
+    startSlideTimer();
+  }
+  
+  startSlideTimer();
+  
+  // Initialize Secondary Floating Promo Slider
+  initPromoSlider();
+}
+
+function initPromoSlider() {
+  const track = document.getElementById("promoSliderTrack");
+  const dots = document.querySelectorAll(".promo-dot");
+  if (!track || dots.length === 0) return;
+  
+  let currentPromo = 0;
+  let promoInterval;
+  
+  function goToPromo(index) {
+    currentPromo = (index + dots.length) % dots.length;
+    track.style.transform = `translateX(-${currentPromo * 100}%)`;
+    dots.forEach((dot, idx) => {
+      dot.classList.toggle("active", idx === currentPromo);
+    });
+  }
+  
+  dots.forEach((dot, index) => {
+    dot.addEventListener("click", () => {
+      goToPromo(index);
+      resetPromoTimer();
+    });
+  });
+  
+  function nextPromo() {
+    goToPromo(currentPromo + 1);
+  }
+  
+  function startPromoTimer() {
+    promoInterval = setInterval(nextPromo, 4500); // Cycle promo card every 4.5 seconds
+  }
+  
+  function resetPromoTimer() {
+    clearInterval(promoInterval);
+    startPromoTimer();
+  }
+  
+  startPromoTimer();
 }
 
 function initParallaxHero() {
