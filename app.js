@@ -2,9 +2,10 @@
    THE VILLA SPA - MAIN INTERACTION CONTROLLER
    ========================================================================== */
 
-// Import the functions you need from the SDKs you need
-import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getFirestore, collection, addDoc, setDoc, getDocs, deleteDoc, doc, query, orderBy, writeBatch } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+// Import declarations mapped to variables in outer scope
+let initializeApp, getApps, getApp;
+let getFirestore, collection, addDoc, setDoc, getDocs, deleteDoc, doc, query, orderBy, writeBatch;
+
 // All API keys are managed in config.js (see .env for the master reference)
 let config;
 try {
@@ -31,15 +32,36 @@ if (!config || !config.firebase) {
 }
 const firebaseConfig = config.firebase;
 
-// Initialize Firebase — guard against duplicate-app errors
-let app, db;
-try {
-  app = getApps().length ? getApp() : initializeApp(firebaseConfig);
-  db = getFirestore(app);
-} catch (fbErr) {
-  console.error("[TVS] Firebase init error:", fbErr);
-  // Create a minimal stub so the rest of the module doesn't crash
-  db = null;
+let app, db = null;
+
+// Initialize Firebase dynamically to prevent blocking when offline or network restricted
+async function tryInitFirebase() {
+  try {
+    const firebaseAppModule = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js");
+    const firebaseFirestoreModule = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js");
+    
+    initializeApp = firebaseAppModule.initializeApp;
+    getApps = firebaseAppModule.getApps;
+    getApp = firebaseAppModule.getApp;
+    
+    getFirestore = firebaseFirestoreModule.getFirestore;
+    collection = firebaseFirestoreModule.collection;
+    addDoc = firebaseFirestoreModule.addDoc;
+    setDoc = firebaseFirestoreModule.setDoc;
+    getDocs = firebaseFirestoreModule.getDocs;
+    deleteDoc = firebaseFirestoreModule.deleteDoc;
+    doc = firebaseFirestoreModule.doc;
+    query = firebaseFirestoreModule.query;
+    orderBy = firebaseFirestoreModule.orderBy;
+    writeBatch = firebaseFirestoreModule.writeBatch;
+
+    app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+    db = getFirestore(app);
+    console.log("[TVS] Firebase initialized dynamically successfully.");
+  } catch (fbErr) {
+    console.warn("[TVS] Dynamic Firebase SDK load failed — offline/local fallback enabled:", fbErr);
+    db = null;
+  }
 }
 
 // 1. SERVICES DATA (Updated prices effective June 8, 2026)
@@ -486,44 +508,54 @@ function initSiteTheme() {
 
 // DOM ELEMENTS
 // ROBUST INITIALIZER
-function runMainInitialization() {
+async function runMainInitialization() {
+  function safeRun(fn, name) {
+    try {
+      fn();
+    } catch (e) {
+      console.warn(`[TVS Init] Failed to run ${name || fn.name}:`, e);
+    }
+  }
+
+  // Try to load Firebase dynamically first
+  await tryInitFirebase();
+
   // 1. Initialize local UI interactions immediately (Non-blocking)
-  initSiteTheme();
-  initNavigation();
-  initTestimonialCarousel();
-  initHighlightsModals();
-  initSyllabusDrawer();
-  initScrollAnimations();
+  safeRun(initSiteTheme, "initSiteTheme");
+  safeRun(initNavigation, "initNavigation");
+  safeRun(initTestimonialCarousel, "initTestimonialCarousel");
+  safeRun(initHighlightsModals, "initHighlightsModals");
+  safeRun(initSyllabusDrawer, "initSyllabusDrawer");
+  safeRun(initScrollAnimations, "initScrollAnimations");
   
   // 2. Custom interactive animations & effects
-  initScrollProgress();
-  initHeroTypewriter();
-  initHeroCarousels();
-  initParallaxHero();
-  initCounterAnimations();
-  initCardTilt();
-  initFloatingButtons();
-  initPromoToast();
-  initMagneticButtons();
-  initParticles();
-  initAmbientMusic();
-  initGlobalSnow();
+  safeRun(initScrollProgress, "initScrollProgress");
+  safeRun(initHeroTypewriter, "initHeroTypewriter");
+  safeRun(initHeroCarousels, "initHeroCarousels");
+  safeRun(initParallaxHero, "initParallaxHero");
+  safeRun(initCounterAnimations, "initCounterAnimations");
+  safeRun(initCardTilt, "initCardTilt");
+  safeRun(initFloatingButtons, "initFloatingButtons");
+  safeRun(initPromoToast, "initPromoToast");
+  safeRun(initMagneticButtons, "initMagneticButtons");
+  safeRun(initParticles, "initParticles");
+  safeRun(initAmbientMusic, "initAmbientMusic");
+  safeRun(initGlobalSnow, "initGlobalSnow");
 
   // Initialize service menu and booking wizard IMMEDIATELY with fallback data
-  // so the page is fully interactive and doesn't wait for Firestore (offline-first)
   categoriesDatabase = [...defaultCategories];
-  initServicesMenu();
-  initBookingWizard();
-  checkAdminRoute();
+  safeRun(initServicesMenu, "initServicesMenu");
+  safeRun(initBookingWizard, "initBookingWizard");
+  safeRun(checkAdminRoute, "checkAdminRoute");
 
   // 3. Load database-dependent data asynchronously (Non-blocking)
   (async () => {
     try {
       await loadDynamicData();
       // Re-render and activate elements with loaded data
-      initServicesMenu();
-      initBookingWizard();
-      checkAdminRoute();
+      safeRun(initServicesMenu, "initServicesMenu");
+      safeRun(initBookingWizard, "initBookingWizard");
+      safeRun(checkAdminRoute, "checkAdminRoute");
     } catch (err) {
       console.error("Error loading dynamic data from Firestore:", err);
     }
@@ -713,57 +745,27 @@ function initServicesMenu() {
   const gridContainer = document.getElementById("servicesGrid");
   if (!tabsContainer || !gridContainer) return;
 
-  tabsContainer.innerHTML = "";
-  tabsContainer.style.cssText = "display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--color-sand);border-radius:12px;overflow:hidden;margin-bottom:36px;";
+  // Bind click event listeners directly to the hardcoded buttons inside index.html
+  const buttons = tabsContainer.querySelectorAll(".tab-btn");
+  buttons.forEach(btn => {
+    const sectionId = btn.getAttribute("data-category");
+    const section = homepageSections.find(s => s.id === sectionId);
 
-  homepageSections.forEach((section, index) => {
-    const card = document.createElement("button");
-    card.className = `tab-btn${index === 0 ? " active" : ""}`;
-    card.setAttribute("data-section", section.id);
-    card.style.cssText = `
-      flex: 1 1 140px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      padding: 20px 16px;
-      border: none;
-      border-right: 1px solid var(--color-sand);
-      cursor: pointer;
-      transition: background 0.2s;
-      font-family: var(--font-sans);
-      position: relative;
-      background: ${index === 0 ? "var(--color-cream)" : "var(--color-white)"};
-      ${index === 0 ? "border-bottom: 3px solid var(--color-champagne-dark);" : ""}
-    `;
-    card.innerHTML = `
-      <i class="fa-solid ${section.icon}" style="font-size:1.5rem;color:var(--color-champagne-dark);transition:transform 0.2s;"></i>
-      <span style="font-family:var(--font-serif);font-size:0.92rem;font-weight:700;color:var(--color-espresso);line-height:1.2;text-align:center;">${section.name}</span>
-      <span style="font-size:0.62rem;color:var(--color-espresso-light);text-align:center;line-height:1.4;">${section.tagline}</span>
-    `;
-
-    card.addEventListener("click", () => {
-      document.querySelectorAll(".services-tabs .tab-btn").forEach(b => {
+    btn.addEventListener("click", () => {
+      buttons.forEach(b => {
         b.classList.remove("active");
-        b.style.background = "var(--color-white)";
-        b.style.borderBottom = "none";
-        const i = b.querySelector("i");
-        if (i) i.style.transform = "scale(1)";
       });
-      card.classList.add("active");
-      card.style.background = "var(--color-cream)";
-      card.style.borderBottom = "3px solid var(--color-champagne-dark)";
-      const cardIcon = card.querySelector("i");
-      if (cardIcon) cardIcon.style.transform = "scale(1.15)";
-      renderHomepageServices(section, gridContainer);
+      btn.classList.add("active");
+      if (section) {
+        renderHomepageServices(section, gridContainer);
+      }
     });
 
-    tabsContainer.appendChild(card);
+    // Run initial render for the active button
+    if (btn.classList.contains("active") && section) {
+      renderHomepageServices(section, gridContainer);
+    }
   });
-
-  // Initial render
-  renderHomepageServices(homepageSections[0], gridContainer);
 }
 
 function renderHomepageServices(section, container) {
@@ -792,9 +794,7 @@ function renderHomepageServices(section, container) {
     // CTA button
     let ctaBtn = "";
     if (section.id === "medical-aesthetics") {
-      ctaBtn = `<a href="${section.ctaHref}" target="_blank" class="btn btn-sm btn-outline" style="white-space:nowrap;font-size:0.72rem;">
-        <i class="fa-brands fa-whatsapp"></i> Enquire
-      </a>`;
+      ctaBtn = `<a href="booking.html" class="btn btn-sm btn-outline" style="white-space:nowrap;font-size:0.72rem;">Book Consultation</a>`;
     } else if (section.id === "luxury-packages") {
       ctaBtn = `<a href="booking.html" class="btn btn-sm btn-primary" style="white-space:nowrap;font-size:0.72rem;">Book Package</a>`;
     } else {

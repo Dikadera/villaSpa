@@ -207,6 +207,7 @@
             </a>
           </div>
         </div>
+        <a href="#contact" class="nav-link">Contact Us</a>
         <a href="booking.html" class="btn btn-primary nav-cta">Book Experience</a>
       </nav>
 
@@ -253,8 +254,6 @@
             <p class="hero-description" id="dynamicHeroDesc">Experience award-winning hot stone therapies, Moroccan Hammam baths, and custom organic facials in a serene, luxurious sanctuary.</p>
             <div class="hero-actions">
               <a href="booking.html" class="btn btn-primary btn-lg hero-btn-standout" id="dynamicHeroCta">Book Appointment</a>
-              <a href="services.html#medical-aesthetics" class="btn btn-outline btn-lg hero-btn-dynamic" id="dynamicHeroSubCta1">Medical Aesthetics <i class="fa-solid fa-chevron-right dynamic-arrow"></i></a>
-              <a href="academy.html" class="btn btn-outline btn-lg hero-btn-dynamic" id="dynamicHeroSubCta2">Academy <i class="fa-solid fa-chevron-right dynamic-arrow"></i></a>
             </div>
           </div>
         </div>
@@ -458,7 +457,21 @@
 
         <!-- Service Category Selector -->
         <div class="services-tabs" id="serviceCategoryBar">
-          <!-- Populated dynamically by JS -->
+          <button class="tab-btn active" data-category="spa-treatments">
+            <i class="fa-solid fa-spa"></i>
+            <span>Spa Treatments</span>
+            <span class="tab-tagline">Massages · Facials · Body · Nails</span>
+          </button>
+          <button class="tab-btn" data-category="medical-aesthetics">
+            <i class="fa-solid fa-user-doctor"></i>
+            <span>Medical Aesthetics</span>
+            <span class="tab-tagline">Clinical precision · Natural results</span>
+          </button>
+          <button class="tab-btn" data-category="luxury-packages">
+            <i class="fa-solid fa-gift"></i>
+            <span>Luxury Packages</span>
+            <span class="tab-tagline">Curated bundles · Total indulgence</span>
+          </button>
         </div>
 
         <!-- Service Grid Container -->
@@ -1028,7 +1041,7 @@
   </script>
 
   <!-- Script loading -->
-  <script type="module" src="app.js?v=2026.07.09.13"></script>
+  <script type="module" src="app.js?v=2026.07.10.05"></script>
   <script src="https://www.youtube.com/iframe_api"></script>
 
   <script type="application/ld+json">

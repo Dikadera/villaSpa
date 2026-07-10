@@ -1144,35 +1144,81 @@ img {
 
 .services-tabs {
   display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 40px;
   flex-wrap: wrap;
+  gap: 0;
+  border: 1px solid var(--color-sand);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 36px;
+  background-color: var(--color-white);
 }
 
 .tab-btn {
-  background-color: var(--color-white);
-  border: 1px solid var(--color-sand);
-  color: var(--color-espresso);
-  padding: 10px 22px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  flex: 1 1 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 20px 16px;
+  border: none;
+  border-right: 1px solid var(--color-sand);
+  background: var(--color-white);
   cursor: pointer;
-  border-radius: 4px;
-  transition: var(--transition-smooth);
+  transition: all 0.3s ease;
+  font-family: var(--font-sans);
+  position: relative;
+  text-transform: none;
+  letter-spacing: normal;
+  border-radius: 0;
+  color: var(--color-espresso);
+}
+
+.tab-btn:last-child {
+  border-right: none;
+}
+
+.tab-btn i {
+  font-size: 1.5rem;
+  color: var(--color-champagne-dark);
+  transition: transform 0.2s ease;
+  margin-bottom: 2px;
+}
+
+.tab-btn span {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-espresso);
+  line-height: 1.2;
+  text-align: center;
+  display: block;
+}
+
+.tab-btn .tab-tagline {
+  font-size: 0.65rem;
+  color: var(--color-espresso-light);
+  opacity: 0.85;
+  text-align: center;
+  line-height: 1.4;
+  margin-top: 2px;
+  font-family: var(--font-sans);
+  font-weight: normal;
+  text-transform: none;
 }
 
 .tab-btn:hover {
-  border-color: var(--color-champagne);
-  color: var(--color-champagne-dark);
+  background-color: var(--color-sand-light);
 }
 
 .tab-btn.active {
-  background-color: var(--color-espresso);
-  color: var(--color-cream);
-  border-color: var(--color-espresso);
+  background-color: var(--color-cream);
+  border-bottom: 3px solid var(--color-champagne-dark);
+  color: var(--color-espresso);
+}
+
+.tab-btn.active i {
+  transform: scale(1.15);
 }
 
 .services-grid {
