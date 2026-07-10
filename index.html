@@ -179,7 +179,7 @@
                 <a href="services.html#packages" class="mega-item">Bride-to-Be Package</a>
                 <a href="services.html#packages" class="mega-item">Couple's Sanctuary</a>
                 <div class="mega-col-cta">
-                  <a href="index.html#booking-section" class="btn btn-primary"
+                  <a href="booking.html" class="btn btn-primary"
                     style="display:block;text-align:center;font-size:0.78rem;padding:10px 16px;">Book a Treatment</a>
                 </div>
               </div>
@@ -207,7 +207,7 @@
             </a>
           </div>
         </div>
-        <a href="index.html#booking-section" class="btn btn-primary nav-cta">Book Experience</a>
+        <a href="booking.html" class="btn btn-primary nav-cta">Book Experience</a>
       </nav>
 
       <div style="display:flex;align-items:center;gap:12px;">
@@ -252,7 +252,7 @@
             <h1 class="hero-title" id="dynamicHeroTitle">Reclaim Your Balance, <br><span id="heroTypingText" class="hero-typing-accent">Restore Your Glow</span><span class="typing-cursor">|</span></h1>
             <p class="hero-description" id="dynamicHeroDesc">Experience award-winning hot stone therapies, Moroccan Hammam baths, and custom organic facials in a serene, luxurious sanctuary.</p>
             <div class="hero-actions">
-              <a href="#booking-section" class="btn btn-primary btn-lg hero-btn-standout" id="dynamicHeroCta">Book Appointment</a>
+              <a href="booking.html" class="btn btn-primary btn-lg hero-btn-standout" id="dynamicHeroCta">Book Appointment</a>
               <a href="services.html#medical-aesthetics" class="btn btn-outline btn-lg hero-btn-dynamic" id="dynamicHeroSubCta1">Medical Aesthetics <i class="fa-solid fa-chevron-right dynamic-arrow"></i></a>
               <a href="academy.html" class="btn btn-outline btn-lg hero-btn-dynamic" id="dynamicHeroSubCta2">Academy <i class="fa-solid fa-chevron-right dynamic-arrow"></i></a>
             </div>
@@ -276,14 +276,14 @@
                   <span class="promo-badge-discount">Special Offer</span>
                   <h3>First-Time Client Deal</h3>
                   <p>Get a complimentary skin consultation. Use code <strong>GLOW2026</strong>.</p>
-                  <a href="#booking-section" class="promo-card-link">Claim Offer <i class="fa-solid fa-arrow-right"></i></a>
+                  <a href="booking.html" class="promo-card-link">Claim Offer <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
                 <!-- Slide 3: Sunday Bookings -->
                 <div class="promo-slide-card-item">
                   <span class="promo-badge-info">Hours</span>
                   <h3>Sunday Spa Sessions</h3>
                   <p>1:00 PM – 7:00 PM. Reservations required. Book your weekend escape!</p>
-                  <a href="#booking-section" class="promo-card-link">Schedule Sunday <i class="fa-solid fa-arrow-right"></i></a>
+                  <a href="booking.html" class="promo-card-link">Schedule Sunday <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
               </div>
             </div>
@@ -453,17 +453,12 @@
         <div class="text-center-wrapper">
           <span class="section-subtitle">Luxury Service Menu</span>
           <h2 class="section-title">Indulge in Our Curated Experiences</h2>
-          <p class="section-desc">Each treatment is customizable to your wellness goals. Select services below to add
-            them to your booking cart.</p>
+          <p class="section-desc">Choose a category to explore our treatments. Click any service to add it to your booking cart.</p>
         </div>
 
-        <!-- Service Category Tabs -->
-        <div class="services-tabs">
-          <button class="tab-btn active" data-category="massages">Massages</button>
-          <button class="tab-btn" data-category="facials">Facials & Peels</button>
-          <button class="tab-btn" data-category="waxing">Waxing & Tinting</button>
-          <button class="tab-btn" data-category="body">Body Therapy</button>
-          <button class="tab-btn" data-category="nails">Manicure & Pedicure</button>
+        <!-- Service Category Selector -->
+        <div class="services-tabs" id="serviceCategoryBar">
+          <!-- Populated dynamically by JS -->
         </div>
 
         <!-- Service Grid Container -->
@@ -550,249 +545,7 @@
       </div>
     </section>
 
-    <!-- Multi-Step Interactive Booking Wizard -->
-    <section class="booking-section" id="booking-section">
-      <div class="section-container">
-        <div class="text-center-wrapper">
-          <span class="section-subtitle">Online Reservations</span>
-          <h2 class="section-title">Schedule Your Wellness Escape</h2>
-          <p class="section-desc">Secure your preferred treatment and timeslot. Complete your details and receive
-            instant confirmation.</p>
-        </div>
 
-        <div class="booking-wizard-card">
-          <!-- Wizard Progress Bar -->
-          <div class="wizard-progress">
-            <div class="progress-step active" data-step="1">
-              <span class="step-num">1</span>
-              <span class="step-label">Select Category</span>
-            </div>
-            <div class="progress-line"></div>
-            <div class="progress-step" data-step="2">
-              <span class="step-num">2</span>
-              <span class="step-label">Select Services</span>
-            </div>
-            <div class="progress-line"></div>
-            <div class="progress-step" data-step="3">
-              <span class="step-num">3</span>
-              <span class="step-label">Choose Date & Time</span>
-            </div>
-            <div class="progress-line"></div>
-            <div class="progress-step" data-step="4">
-              <span class="step-num">4</span>
-              <span class="step-label">Guest Details</span>
-            </div>
-            <div class="progress-line"></div>
-            <div class="progress-step" data-step="5">
-              <span class="step-num">5</span>
-              <span class="step-label">Confirmation</span>
-            </div>
-          </div>
-
-          <!-- Step Panels -->
-          <form id="bookingForm">
-            <!-- STEP 1: CATEGORY CHOICE -->
-            <div class="wizard-panel active" id="step1Panel">
-              <h3 class="panel-title">Select Service Category</h3>
-              <p class="panel-subtitle">Choose a category of wellness treatments to begin.</p>
-
-              <div class="wizard-categories-grid" id="wizardCategoriesList"
-                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 24px 0;">
-                <!-- Loaded dynamically by JavaScript -->
-              </div>
-
-              <div class="wizard-footer">
-                <span></span>
-                <button type="button" class="btn btn-primary" id="step1Next" disabled>Select Services <i
-                    class="fa-solid fa-arrow-right"></i></button>
-              </div>
-            </div>
-
-            <!-- STEP 2: SERVICE CHOICE -->
-            <div class="wizard-panel" id="step2Panel">
-              <h3 class="panel-title">Choose your luxurious treats</h3>
-              <p class="panel-subtitle">Select one or more services. You can always change these later.</p>
-
-              <div class="wizard-services-selector" id="wizardServicesList">
-                <!-- Loaded dynamically by JavaScript to reflect exact category choices -->
-              </div>
-
-              <div class="wizard-selected-list" id="wizardSelectedList">
-                <!-- Selected summary will appear here -->
-                <p class="empty-selection-msg">No treatments selected yet. Add services above to begin.</p>
-              </div>
-
-              <div class="wizard-footer">
-                <button type="button" class="btn btn-outline" id="step2Prev"><i class="fa-solid fa-arrow-left"></i>
-                  Back</button>
-                <button type="button" class="btn btn-primary" id="step2Next" disabled>Choose Date & Time <i
-                    class="fa-solid fa-arrow-right"></i></button>
-              </div>
-            </div>
-
-            <!-- STEP 3: DATE & TIME -->
-            <div class="wizard-panel" id="step3Panel">
-              <h3 class="panel-title">Select Date & Time</h3>
-              <p class="panel-subtitle">Note: We operate Mon-Sat 9am–7pm and Sun 1pm–7pm.</p>
-
-              <div class="datetime-grid">
-                <div class="calendar-wrapper">
-                  <div class="calendar-header">
-                    <button type="button" id="prevMonthBtn" class="calendar-nav-btn"><i
-                        class="fa-solid fa-chevron-left"></i></button>
-                    <span id="calendarMonthYear" class="calendar-title">June 2026</span>
-                    <button type="button" id="nextMonthBtn" class="calendar-nav-btn"><i
-                        class="fa-solid fa-chevron-right"></i></button>
-                  </div>
-                  <div class="calendar-weekdays">
-                    <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
-                  </div>
-                  <div class="calendar-days" id="calendarDaysGrid">
-                    <!-- Calendar days loaded dynamically -->
-                  </div>
-                </div>
-
-                <div class="time-slots-wrapper">
-                  <h4 class="time-slots-title">Available Slots for <span id="selectedDateDisplay">Select a date</span>
-                  </h4>
-                  <div class="time-slots-grid" id="timeSlotsGrid">
-                    <p class="select-date-prompt">Please select a date to view available time slots.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="wizard-footer">
-                <button type="button" class="btn btn-outline" id="step3Prev"><i class="fa-solid fa-arrow-left"></i>
-                  Back</button>
-                <button type="button" class="btn btn-primary" id="step3Next" disabled>Personal Information <i
-                    class="fa-solid fa-arrow-right"></i></button>
-              </div>
-            </div>
-
-            <!-- STEP 4: USER DETAILS -->
-            <div class="wizard-panel" id="step4Panel">
-              <h3 class="panel-title">Guest Details</h3>
-              <p class="panel-subtitle">Provide your contact info. We will send booking reminders via SMS/WhatsApp.</p>
-
-              <div class="guest-details-form">
-                <div class="form-row">
-                  <div class="form-group">
-                    <label for="guestName">Full Name <span class="required">*</span></label>
-                    <input type="text" id="guestName" name="guestName" placeholder="e.g. Chinedu Okafor" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="guestPhone">WhatsApp / Phone Number <span class="required">*</span></label>
-                    <input type="tel" id="guestPhone" name="guestPhone" placeholder="e.g. 08147409153" required>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="guestEmail">Email Address (Optional)</label>
-                  <input type="email" id="guestEmail" name="guestEmail" placeholder="e.g. chinedu@example.com">
-                </div>
-
-                <div class="form-group">
-                  <label for="guestNotes">Special Instructions / Therapist Preferences (Optional)</label>
-                  <textarea id="guestNotes" name="guestNotes" rows="3"
-                    placeholder="Tell us about skin sensitivities, preferred room temperature, or any specific therapist requests..."></textarea>
-                </div>
-
-                <!-- Pay Now or Pay Later Option -->
-                <div class="form-group"
-                  style="margin-top: 24px; border-top: 1px solid var(--color-sand); padding-top: 16px;">
-                  <label>Choose Payment Method <span class="required">*</span></label>
-                  <div
-                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 8px;">
-                    <label class="payment-option-card">
-                      <input type="radio" name="paymentOption" value="pay-later" checked
-                        style="width: auto; margin-right: 8px;">
-                      <div>
-                        <strong style="display: block; font-size: 0.9rem; color: var(--color-espresso);">Pay
-                          Later</strong>
-                        <span style="font-size: 0.72rem; opacity: 0.8;">Pay at the spa during your visit</span>
-                      </div>
-                    </label>
-                    <label class="payment-option-card">
-                      <input type="radio" name="paymentOption" value="pay-now" style="width: auto; margin-right: 8px;">
-                      <div>
-                        <strong style="display: block; font-size: 0.9rem; color: var(--color-espresso);">Pay
-                          Now</strong>
-                        <span style="font-size: 0.72rem; opacity: 0.8;">Secure inline checkout via Paystack</span>
-                      </div>
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-              <div class="wizard-footer">
-                <button type="button" class="btn btn-outline" id="step4Prev"><i class="fa-solid fa-arrow-left"></i>
-                  Back</button>
-                <button type="submit" class="btn btn-primary" id="step4Submit">Confirm & Secure Booking <i
-                    class="fa-solid fa-check"></i></button>
-              </div>
-            </div>
-
-            <!-- STEP 5: SUCCESS/CONFIRMATION -->
-            <div class="wizard-panel" id="step5Panel">
-              <div class="booking-success-wrapper">
-                <div class="success-animation-circle">
-                  <i class="fa-solid fa-check-double"></i>
-                </div>
-                <h3 class="success-title" id="bookingSuccessTitle">Your Escape is Scheduled!</h3>
-                <p class="success-message" id="bookingSuccessMessage">Thank you for choosing The Villa Spa. A
-                  confirmation receipt has been
-                  saved. We look forward to pampering you!</p>
-
-                <!-- Ticket Receipt -->
-                <div class="luxury-receipt">
-                  <div class="receipt-header">
-                    <span>THE VILLA SPA</span>
-                    <span class="receipt-id" id="receiptId">TVS-483920</span>
-                  </div>
-                  <div class="receipt-body">
-                    <div class="receipt-row">
-                      <span class="row-label">Guest:</span>
-                      <strong id="receiptGuest">Chinedu Okafor</strong>
-                    </div>
-                    <div class="receipt-row">
-                      <span class="row-label">Date & Time:</span>
-                      <strong id="receiptDateTime">Mon, June 8, 2026 @ 10:00 AM</strong>
-                    </div>
-                    <div class="receipt-row">
-                      <span class="row-label">Payment:</span>
-                      <strong id="receiptPaymentStatus" style="color: var(--color-champagne-dark);">Pay Later</strong>
-                    </div>
-                    <div class="receipt-divider"></div>
-                    <div class="receipt-row-services">
-                      <span class="row-label">Treatments:</span>
-                      <ul id="receiptServicesList">
-                        <!-- Loaded dynamically -->
-                      </ul>
-                    </div>
-                    <div class="receipt-divider"></div>
-                    <div class="receipt-row total">
-                      <span class="row-label">Total Paid/Estimated:</span>
-                      <strong class="price-highlight" id="receiptTotal">₦15,000</strong>
-                    </div>
-                  </div>
-                  <div class="receipt-footer">
-                    <p>Opp Don Ritz Hotel, Udoka Housing Estate, Awka</p>
-                    <p>Please arrive 10 minutes prior to your slot time.</p>
-                  </div>
-                </div>
-
-                <div class="success-actions">
-                  <button type="button" class="btn btn-primary" onclick="restartBookingWizard()">Schedule Another
-                    Experience</button>
-                  <a href="https://wa.me/2348147409153" target="_blank" class="btn btn-outline"><i
-                      class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </section>
 
     <!-- Skincare Products Boutique Teaser Section -->
     <section class="products-teaser-section" id="products-teaser"
@@ -1049,7 +802,7 @@
         <a href="#about">About Sanctuary</a>
         <a href="#services">Wellness Menu</a>
         <a href="#bootcamp">Intensive Training</a>
-        <a href="#booking-section">Book Slots</a>
+        <a href="booking.html">Book Slots</a>
         <a href="admin.html"><i class="fa-solid fa-lock"></i> Admin Portal</a>
       </div>
 
@@ -1196,6 +949,11 @@
     style="position:fixed;bottom:-100px;right:-100px;width:1px;height:1px;opacity:0;pointer-events:none;"></div>
 
   <script>
+    // Redirect old hash links to dedicated booking page
+    if (window.location.hash === '#booking-section') {
+      window.location.href = 'booking.html';
+    }
+
     // Hide Preloader on load
     window.addEventListener('load', () => {
       const preloader = document.getElementById('tvs-preloader');

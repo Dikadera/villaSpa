@@ -239,7 +239,7 @@ const heroSlides = [
     title: "Reclaim Your Balance, <br><span id=\"heroTypingText\" class=\"hero-typing-accent\">Restore Your Glow</span><span class=\"typing-cursor\">|</span>",
     desc: "Experience award-winning hot stone therapies, Moroccan Hammam baths, and custom organic facials in a serene, luxurious sanctuary.",
     btnText: "Book Appointment",
-    btnLink: "#booking-section",
+    btnLink: "booking.html",
     isTypewriter: true
   },
   {
@@ -281,7 +281,7 @@ function addCategoryToSelected(catId) {
   }
   const step1Next = document.getElementById("step1Next");
   if (step1Next) {
-    step1Next.disabled = (selectedCategories.length === 0);
+    step1Next.disabled = (bookingCart.length === 0);
   }
 }
 
@@ -295,7 +295,7 @@ function removeCategoryFromSelectedIfEmpty(catId) {
   }
   const step1Next = document.getElementById("step1Next");
   if (step1Next) {
-    step1Next.disabled = (selectedCategories.length === 0);
+    step1Next.disabled = (bookingCart.length === 0);
   }
 }
 
@@ -661,38 +661,175 @@ function scrollToSection(id) {
 }
 
 // ==========================================================================
-// 3. SERVICES MENU (Tabs rendering)
+// 3. SERVICES MENU — Homepage 3-Category Display
 // ==========================================================================
+
+// 3 top-level categories shown on the homepage services section
+const homepageSections = [
+  {
+    id: "spa-treatments",
+    name: "Spa Treatments",
+    icon: "fa-spa",
+    tagline: "Massages · Facials · Body Therapy · Nails",
+    services: null, // pulled from servicesDatabase at runtime
+    ctaLabel: "Add to Booking",
+    pricePrefix: "₦"
+  },
+  {
+    id: "medical-aesthetics",
+    name: "Medical Aesthetics",
+    icon: "fa-user-doctor",
+    tagline: "Clinical precision · Natural results",
+    services: [
+      { id: "med-botox",        name: "Botox Injections",    price: null, duration: 30, desc: "FDA-approved neuromodulators to smooth fine lines and prevent dynamic wrinkles. Results visible in 3–7 days." },
+      { id: "med-fillers",      name: "Dermal Fillers",      price: null, duration: 45, desc: "Hyaluronic acid fillers to restore facial volume, define lips, and sculpt cheekbones naturally." },
+      { id: "med-prp",          name: "PRP & PRF Therapy",   price: null, duration: 60, desc: "Platelet-rich plasma from your own blood to stimulate collagen production and deep skin renewal." },
+      { id: "med-microneedle",  name: "Microneedling",       price: null, duration: 60, desc: "Controlled micro-injuries that stimulate collagen, reduce scarring, and visibly refine skin texture." },
+      { id: "med-peels",        name: "Chemical Peels",      price: null, duration: 45, desc: "Medical-grade acids to resurface skin, even pigmentation, and reveal a brighter complexion." },
+      { id: "med-boosters",     name: "Skin Boosters",       price: null, duration: 45, desc: "Micro-injections of hyaluronic acid to deeply hydrate, plump, and restore skin elasticity." },
+      { id: "med-meso",         name: "Mesotherapy",         price: null, duration: 45, desc: "Vitamin & enzyme cocktails injected to rejuvenate, tighten, and restore youthful skin." },
+      { id: "med-iv",           name: "IV Drip Therapies",   price: null, duration: 60, desc: "Intravenous nutrient infusions for skin brightening, immune boost, and anti-aging benefits." },
+    ],
+    ctaLabel: "Enquire via WhatsApp",
+    ctaHref: "https://wa.me/2348147409153?text=Hello%2C%20I%27d%20like%20to%20enquire%20about%20a%20medical%20aesthetics%20treatment.",
+  },
+  {
+    id: "luxury-packages",
+    name: "Luxury Packages",
+    icon: "fa-gift",
+    tagline: "Curated bundles · Total indulgence",
+    services: [
+      { id: "pkg-bride",    name: "Bride-to-Be Package",   price: 85000, duration: 240, desc: "A full pre-wedding beauty ritual: deep facial, body scrub, full waxing, manicure & pedicure, plus a signature hot stone massage. The ultimate bridal glow-up." },
+      { id: "pkg-couples",  name: "Couple's Sanctuary",    price: 65000, duration: 180, desc: "A shared wellness escape for two — side-by-side massages, aromatherapy baths, and a luxurious dual facial in our private couple's suite." },
+      { id: "pkg-radiance", name: "Radiance Ritual",       price: 45000, duration: 150, desc: "Full-body indulgence: Moroccan Hammam steam bath, custom brightening facial, and healing foot therapy. Deeply purifying and revitalizing." },
+    ],
+    ctaLabel: "Book This Package",
+    pricePrefix: "₦"
+  }
+];
+
 function initServicesMenu() {
   const tabsContainer = document.querySelector(".services-tabs");
   const gridContainer = document.getElementById("servicesGrid");
   if (!tabsContainer || !gridContainer) return;
 
   tabsContainer.innerHTML = "";
-  categoriesDatabase.forEach((cat, index) => {
-    const btn = document.createElement("button");
-    btn.className = `tab-btn${index === 0 ? " active" : ""}`;
-    btn.setAttribute("data-category", cat.id);
-    btn.textContent = cat.name;
-    
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".services-tabs .tab-btn").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      renderServices(cat.id, gridContainer);
+  tabsContainer.style.cssText = "display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--color-sand);border-radius:12px;overflow:hidden;margin-bottom:36px;";
+
+  homepageSections.forEach((section, index) => {
+    const card = document.createElement("button");
+    card.className = `tab-btn${index === 0 ? " active" : ""}`;
+    card.setAttribute("data-section", section.id);
+    card.style.cssText = `
+      flex: 1 1 140px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 20px 16px;
+      border: none;
+      border-right: 1px solid var(--color-sand);
+      cursor: pointer;
+      transition: background 0.2s;
+      font-family: var(--font-sans);
+      position: relative;
+      background: ${index === 0 ? "var(--color-cream)" : "var(--color-white)"};
+      ${index === 0 ? "border-bottom: 3px solid var(--color-champagne-dark);" : ""}
+    `;
+    card.innerHTML = `
+      <i class="fa-solid ${section.icon}" style="font-size:1.5rem;color:var(--color-champagne-dark);transition:transform 0.2s;"></i>
+      <span style="font-family:var(--font-serif);font-size:0.92rem;font-weight:700;color:var(--color-espresso);line-height:1.2;text-align:center;">${section.name}</span>
+      <span style="font-size:0.62rem;color:var(--color-espresso-light);text-align:center;line-height:1.4;">${section.tagline}</span>
+    `;
+
+    card.addEventListener("click", () => {
+      document.querySelectorAll(".services-tabs .tab-btn").forEach(b => {
+        b.classList.remove("active");
+        b.style.background = "var(--color-white)";
+        b.style.borderBottom = "none";
+        const i = b.querySelector("i");
+        if (i) i.style.transform = "scale(1)";
+      });
+      card.classList.add("active");
+      card.style.background = "var(--color-cream)";
+      card.style.borderBottom = "3px solid var(--color-champagne-dark)";
+      const cardIcon = card.querySelector("i");
+      if (cardIcon) cardIcon.style.transform = "scale(1.15)";
+      renderHomepageServices(section, gridContainer);
     });
-    
-    tabsContainer.appendChild(btn);
+
+    tabsContainer.appendChild(card);
   });
 
-  // Initial render (First category or fallback)
-  const initialCategory = categoriesDatabase[0]?.id || "massages";
-  renderServices(initialCategory, gridContainer);
+  // Initial render
+  renderHomepageServices(homepageSections[0], gridContainer);
 }
 
+function renderHomepageServices(section, container) {
+  container.innerHTML = "";
+
+  // For Spa Treatments, pull from the live database
+  let services = section.services;
+  if (section.id === "spa-treatments") {
+    services = servicesDatabase;
+  }
+
+  if (!services || services.length === 0) {
+    container.innerHTML = `<p style="grid-column:1/-1;text-align:center;color:var(--color-espresso-light);padding:40px 0;">No services found. Please check back soon.</p>`;
+    return;
+  }
+
+  services.forEach(service => {
+    const isAdded = bookingCart.some(item => item.id === service.id);
+    const card = document.createElement("div");
+    card.className = "service-card animate-on-scroll animated";
+
+    const priceDisplay = service.price != null
+      ? `<span class="service-price">${(section.pricePrefix || "")}${service.price.toLocaleString()}</span>`
+      : `<span class="service-price" style="font-size:0.75rem;color:var(--color-champagne-dark);">Call for Pricing</span>`;
+
+    // CTA button
+    let ctaBtn = "";
+    if (section.id === "medical-aesthetics") {
+      ctaBtn = `<a href="${section.ctaHref}" target="_blank" class="btn btn-sm btn-outline" style="white-space:nowrap;font-size:0.72rem;">
+        <i class="fa-brands fa-whatsapp"></i> Enquire
+      </a>`;
+    } else if (section.id === "luxury-packages") {
+      ctaBtn = `<a href="booking.html" class="btn btn-sm btn-primary" style="white-space:nowrap;font-size:0.72rem;">Book Package</a>`;
+    } else {
+      const btnText = isAdded ? "Added ✓" : "Add to Booking";
+      const btnClass = isAdded ? "btn btn-sm btn-primary select-service-btn" : "btn btn-sm btn-outline select-service-btn";
+      ctaBtn = `<button class="${btnClass}" data-id="${service.id}">${btnText}</button>`;
+    }
+
+    card.innerHTML = `
+      <div class="service-header">
+        <h3 class="service-name">${service.name}</h3>
+        ${priceDisplay}
+      </div>
+      <p class="service-detail">${service.desc}</p>
+      <div class="service-footer">
+        <span class="service-duration"><i class="fa-regular fa-clock"></i> ${service.duration} Mins</span>
+        ${ctaBtn}
+      </div>
+    `;
+
+    // Bind cart toggle for spa treatments
+    if (section.id === "spa-treatments") {
+      const btn = card.querySelector(".select-service-btn");
+      if (btn) btn.addEventListener("click", () => toggleCartItem(service, btn));
+    }
+
+    container.appendChild(card);
+  });
+}
+
+// Legacy renderServices — kept for compatibility (booking wizard re-renders)
 function renderServices(category, container) {
   container.innerHTML = "";
   const filtered = servicesDatabase.filter(s => s.category === category);
-  
+
   filtered.forEach(service => {
     const isAdded = bookingCart.some(item => item.id === service.id);
     const btnText = isAdded ? "Added ✓" : "Add to Booking";
@@ -738,7 +875,7 @@ function toggleCartItem(service, buttonElement) {
   }
   
   updateBookingSummaryBanner();
-  syncCartToWizard();
+  renderSelectedSummary();
   syncCategoriesToWizard();
 }
 
@@ -746,6 +883,8 @@ function updateBookingSummaryBanner() {
   const banner = document.getElementById("bookingSummaryBanner");
   const countEl = document.getElementById("selectedCount");
   const totalEl = document.getElementById("selectedTotal");
+  
+  if (!banner || !countEl || !totalEl) return;
   
   const total = bookingCart.reduce((sum, item) => sum + item.price, 0);
   
@@ -958,143 +1097,219 @@ function initSyllabusDrawer() {
 // 7. BOOKING WIZARD LOGIC
 // ==========================================================================
 function initBookingWizard() {
-  // Navigation Buttons
   const step1Next = document.getElementById("step1Next");
   const step2Prev = document.getElementById("step2Prev");
   const step2Next = document.getElementById("step2Next");
   const step3Prev = document.getElementById("step3Prev");
-  const step3Next = document.getElementById("step3Next");
-  const step4Prev = document.getElementById("step4Prev");
   const bookingForm = document.getElementById("bookingForm");
-  
+
   if (!step1Next || !bookingForm) {
     console.log("[TVS] Booking wizard not found on this page, skipping wizard initialization.");
     return;
   }
-  
-  // Sync category choices
+
+  // Populate categories accordion (Step 1)
   syncCategoriesToWizard();
 
-  if (window.bookingWizardInitialized) {
-    return;
-  }
+  if (window.bookingWizardInitialized) return;
   window.bookingWizardInitialized = true;
-  
+
+  // Step 1 Next → Step 2 (Date/Time)
   step1Next.addEventListener("click", () => {
-    if (selectedCategories.length > 0) {
-      changeStep(2);
-      syncCartToWizard();
-    }
-  });
-  
-  step2Prev.addEventListener("click", () => changeStep(1));
-  step2Next.addEventListener("click", () => {
     if (bookingCart.length > 0) {
-      changeStep(3);
+      changeStep(2);
       renderCalendar();
     }
   });
-  
-  step3Prev.addEventListener("click", () => changeStep(2));
-  step3Next.addEventListener("click", () => {
-    if (selectedDateObj && selectedTimeSlot) {
-      changeStep(4);
+
+  // Step 2 back/next
+  if (step2Prev) step2Prev.addEventListener("click", () => changeStep(1));
+  if (step2Next) step2Next.addEventListener("click", () => {
+    if (selectedDateObj && selectedTimeSlot) changeStep(3);
+  });
+
+  // Step 3 back/submit
+  if (step3Prev) step3Prev.addEventListener("click", () => changeStep(2));
+
+  const step3SubmitBtn = document.getElementById("step3Submit");
+  if (step3SubmitBtn) {
+    bookingForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      saveBooking();
+    });
+  } else {
+    // fallback for legacy step4Submit
+    const step4Submit = document.getElementById("step4Submit");
+    if (step4Submit) {
+      bookingForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        saveBooking();
+      });
     }
-  });
-  
-  step4Prev.addEventListener("click", () => changeStep(3));
-  
-  bookingForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    saveBooking();
-  });
+  }
 }
 
 function changeStep(stepNumber) {
-  // Validate steps if progressing forward
-  if (stepNumber === 2 && selectedCategories.length === 0) return;
-  if (stepNumber === 3 && bookingCart.length === 0) return;
-  if (stepNumber === 4 && (!selectedDateObj || !selectedTimeSlot)) return;
-  
+  // Map from old 5-step numbering to new 4-step IDs
+  // 1 = Services, 2 = Date/Time, 3 = Guest Details, 4 = Success
+  if (stepNumber === 2 && bookingCart.length === 0) return;
+  if (stepNumber === 3 && (!selectedDateObj || !selectedTimeSlot)) return;
+
   currentWizardStep = stepNumber;
-  
+
   // Update UI Panels
   document.querySelectorAll(".wizard-panel").forEach(panel => {
     panel.classList.remove("active");
   });
   const targetPanel = document.getElementById(`step${stepNumber}Panel`);
-  if (targetPanel) {
-    targetPanel.classList.add("active");
-  }
-  
-  // Update Steps Header Progress
+  if (targetPanel) targetPanel.classList.add("active");
+
+  // Update Progress Bar
   document.querySelectorAll(".progress-step").forEach(step => {
     const sNum = parseInt(step.getAttribute("data-step"));
     step.classList.remove("active", "completed");
-    
-    if (sNum === stepNumber) {
-      step.classList.add("active");
-    } else if (sNum < stepNumber) {
-      step.classList.add("completed");
-    }
+    if (sNum === stepNumber) step.classList.add("active");
+    else if (sNum < stepNumber) step.classList.add("completed");
   });
-  
-  // Scroll to Wizard Header nicely
+
+  // Scroll to booking section
   scrollToSection("booking-section");
 }
 
-// STEP 1 WIZARD: Category synchronization
+// STEP 1: Render categories as accordion rows; clicking expands services inline
 function syncCategoriesToWizard() {
   const container = document.getElementById("wizardCategoriesList");
   const step1Next = document.getElementById("step1Next");
   if (!container) return;
   container.innerHTML = "";
-  
+
+  const catIcons = {
+    massages: "fa-hand-sparkles",
+    facials:  "fa-face-smile-beam",
+    waxing:   "fa-scissors",
+    body:     "fa-spa",
+    nails:    "fa-hand-back-fist",
+  };
+
   categoriesDatabase.forEach(cat => {
-    const card = document.createElement("div");
-    card.className = "category-option-card";
-    
-    // Toggle active state styling
-    if (selectedCategories.includes(cat.id)) {
-      card.style.borderColor = "var(--color-champagne-dark)";
-      card.style.backgroundColor = "rgba(197, 168, 128, 0.08)";
-    }
-    
-    card.innerHTML = `
-      <div style="font-size: 1.5rem; margin-bottom: 8px; color: var(--color-champagne-dark);"><i class="fa-solid fa-spa"></i></div>
-      <strong style="display: block; font-family: var(--font-serif); font-size: 1.05rem; color: var(--color-espresso);">${cat.name}</strong>
+    const iconClass = catIcons[cat.id] || "fa-spa";
+
+    // Wrapper row
+    const row = document.createElement("div");
+    row.className = "wiz-category-accordion";
+    row.style.cssText = "border:1px solid var(--color-sand);border-radius:8px;overflow:hidden;";
+
+    // Header (clickable)
+    const header = document.createElement("div");
+    header.className = "wiz-cat-header";
+    header.style.cssText = "display:flex;align-items:center;gap:12px;padding:14px 18px;cursor:pointer;background:var(--color-white);user-select:none;transition:background 0.2s;";
+    header.innerHTML = `
+      <i class="fa-solid ${iconClass}" style="color:var(--color-champagne-dark);font-size:1.2rem;width:22px;text-align:center;"></i>
+      <span style="font-family:var(--font-serif);font-size:1rem;font-weight:600;color:var(--color-espresso);flex:1;">${cat.name}</span>
+      <i class="fa-solid fa-chevron-down wiz-chevron" style="color:var(--color-espresso-light);font-size:0.75rem;transition:transform 0.25s;"></i>
     `;
-    
-    card.addEventListener("click", () => {
-      const idx = selectedCategories.indexOf(cat.id);
-      if (idx > -1) {
-        // Deselect
-        selectedCategories.splice(idx, 1);
-        card.style.borderColor = "";
-        card.style.backgroundColor = "";
-      } else {
-        // Select
-        selectedCategories.push(cat.id);
-        card.style.borderColor = "var(--color-champagne-dark)";
-        card.style.backgroundColor = "rgba(197, 168, 128, 0.08)";
-      }
-      
-      // Auto-remove any items in cart that aren't in selected categories anymore
-      bookingCart = bookingCart.filter(item => selectedCategories.includes(item.category));
-      updateBookingSummaryBanner();
-      
-      if (step1Next) {
-        step1Next.disabled = (selectedCategories.length === 0);
+
+    // Services body (initially hidden)
+    const body = document.createElement("div");
+    body.className = "wiz-cat-body";
+    body.style.cssText = "display:none;flex-direction:column;gap:0;border-top:1px solid var(--color-sand-light);";
+
+    // Populate services
+    const services = servicesDatabase.filter(s => s.category === cat.id);
+    services.forEach((item, idx) => {
+      const row2 = document.createElement("div");
+      row2.className = "wiz-service-row";
+      const isSelected = bookingCart.some(c => c.id === item.id);
+      row2.style.cssText = `display:flex;align-items:center;gap:12px;padding:12px 18px;cursor:pointer;transition:background 0.15s;border-top:${idx === 0 ? 'none' : '1px solid var(--color-sand-light)'};background:${isSelected ? 'rgba(197,168,128,0.08)' : 'var(--color-cream)'};`;
+
+      row2.innerHTML = `
+        <div style="flex:1;">
+          <span style="font-size:0.88rem;font-weight:600;color:var(--color-espresso);display:block;">${item.name}</span>
+          <span style="font-size:0.72rem;color:var(--color-espresso-light);">${item.duration} mins &nbsp;·&nbsp; ₦${item.price.toLocaleString()}</span>
+        </div>
+        <div class="wiz-row-check" style="width:22px;height:22px;border-radius:50%;border:2px solid ${isSelected ? 'var(--color-champagne-dark)' : 'var(--color-sand)'};display:flex;align-items:center;justify-content:center;transition:all 0.2s;background:${isSelected ? 'var(--color-champagne-dark)' : 'transparent'};">
+          <i class="fa-solid fa-check" style="font-size:0.65rem;color:${isSelected ? '#fff' : 'transparent'};"></i>
+        </div>
+      `;
+
+      row2.addEventListener("click", () => {
+        const index = bookingCart.findIndex(c => c.id === item.id);
+        if (index === -1) {
+          bookingCart.push(item);
+          addCategoryToSelected(item.category);
+        } else {
+          bookingCart.splice(index, 1);
+          removeCategoryFromSelectedIfEmpty(item.category);
+        }
+        updateBookingSummaryBanner();
+        // Re-render to reflect new selection state
+        syncCategoriesToWizard();
+        // Re-open this category accordion
+        const headerEl = container.querySelector(`[data-cat-id="${cat.id}"]`);
+        if (headerEl) headerEl.click();
+        // Update cart summary
+        renderSelectedSummary();
+      });
+
+      body.appendChild(row2);
+    });
+
+    // Toggle expand/collapse
+    header.setAttribute("data-cat-id", cat.id);
+    header.addEventListener("click", () => {
+      const isOpen = body.style.display === "flex";
+      // Collapse all
+      container.querySelectorAll(".wiz-cat-body").forEach(b => b.style.display = "none");
+      container.querySelectorAll(".wiz-chevron").forEach(c => c.style.transform = "rotate(0deg)");
+      if (!isOpen) {
+        body.style.display = "flex";
+        body.style.flexDirection = "column";
+        header.querySelector(".wiz-chevron").style.transform = "rotate(180deg)";
       }
     });
-    
-    container.appendChild(card);
+
+    row.appendChild(header);
+    row.appendChild(body);
+    container.appendChild(row);
   });
 
+  // Render the cart summary underneath
+  renderSelectedSummary();
+
   if (step1Next) {
-    step1Next.disabled = (selectedCategories.length === 0);
+    step1Next.disabled = bookingCart.length === 0;
   }
 }
+
+// Renders what's in the booking cart as a summary list below the accordions
+function renderSelectedSummary() {
+  const summaryEl = document.getElementById("wizardSelectedList");
+  if (!summaryEl) return;
+
+  if (bookingCart.length === 0) {
+    summaryEl.innerHTML = `<p class="empty-selection-msg">No treatments selected yet. Pick a category above to get started.</p>`;
+    return;
+  }
+
+  const total = bookingCart.reduce((s, i) => s + i.price, 0);
+  summaryEl.innerHTML = `
+    <div style="padding:12px 16px;background:var(--color-cream);border:1px solid var(--color-sand);border-radius:8px;margin-top:8px;">
+      <div style="font-family:var(--font-serif);font-size:0.88rem;font-weight:bold;color:var(--color-espresso);margin-bottom:8px;">Selected Treatments (${bookingCart.length})</div>
+      ${bookingCart.map(item => `
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--color-sand-light);font-size:0.8rem;">
+          <span style="color:var(--color-espresso);">${item.name}</span>
+          <span style="color:var(--color-champagne-dark);font-weight:600;">₦${item.price.toLocaleString()}</span>
+        </div>
+      `).join("")}
+      <div style="display:flex;justify-content:space-between;padding-top:8px;font-weight:bold;font-size:0.85rem;">
+        <span>Total Estimate</span>
+        <span style="color:var(--color-champagne-dark);">₦${total.toLocaleString()}</span>
+      </div>
+    </div>
+  `;
+}
+
+
 
 // STEP 2 WIZARD: Cart synchronization (Service Choice)
 function syncCartToWizard() {
@@ -1389,7 +1604,7 @@ async function saveBooking() {
     timestamp: new Date().toISOString()
   };
   
-  const submitBtn = document.getElementById("step4Submit");
+  const submitBtn = document.getElementById("step3Submit") || document.getElementById("step4Submit");
   const originalBtnText = submitBtn.innerHTML;
   submitBtn.disabled = true;
   
@@ -1448,8 +1663,8 @@ async function saveBooking() {
       renderServices(activeTabBtn.getAttribute("data-category"), gridContainer);
     }
     
-    // Move to Success Panel
-    changeStep(5);
+    // Move to Success Panel (step 4 in 4-step wizard)
+    changeStep(4);
   };
   
   if (paymentOption === "pay-now") {
@@ -1514,16 +1729,17 @@ window.restartBookingWizard = function() {
   selectedDateObj = null;
   selectedTimeSlot = null;
   currentCalendarDate = new Date(2026, 5, 5);
+  bookingCart = [];
   
   // Clear forms
-  document.getElementById("bookingForm").reset();
-  
-  const step1Next = document.getElementById("step1Next");
-  if (step1Next) step1Next.disabled = true;
+  const form = document.getElementById("bookingForm");
+  if (form) form.reset();
   
   // Go back to step 1
+  window.bookingWizardInitialized = false;
   changeStep(1);
   syncCategoriesToWizard();
+  renderSelectedSummary();
 };
 
 // ==========================================================================

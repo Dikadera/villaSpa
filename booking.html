@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Primary Meta Tags -->
+  <title>Book Online | The Villa Spa Awka</title>
+  <meta name="description"
+    content="Book your luxury massage, custom facial, waxing, or clinical aesthetic treatment online. Secure your preferred slots at Awka's premier wellness sanctuary.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Paystack Inline SDK -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+  <link rel="stylesheet" href="style.css?v=2026.07.09.13">
+
+  <style>
+    /* Specific booking page additions to ensure richness */
+    .booking-hero {
+      text-align: center;
+      padding: 60px 20px 40px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .booking-hero h1 {
+      font-family: var(--font-serif);
+      font-size: 2.5rem;
+      color: var(--color-espresso);
+      margin-bottom: 12px;
+    }
+    .booking-hero p {
+      font-size: 1rem;
+      color: var(--color-espresso-light);
+      line-height: 1.6;
+    }
+
+    .booking-container-layout {
+      display: grid;
+      grid-template-columns: 1.4fr 0.8fr;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto 80px auto;
+      padding: 0 20px;
+    }
+
+    @media (max-width: 992px) {
+      .booking-container-layout {
+        grid-template-columns: 1fr;
+        margin-bottom: 40px;
+      }
+    }
+
+    /* Policy & Guideline Cards styling */
+    .booking-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .policy-box {
+      background-color: var(--color-white);
+      border: 1px solid var(--color-sand);
+      border-radius: var(--border-radius-md);
+      padding: 24px;
+      box-shadow: var(--shadow-subtle);
+    }
+    .policy-box h3 {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      color: var(--color-espresso);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--color-sand-light);
+      padding-bottom: 8px;
+    }
+    .policy-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .policy-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .policy-item i {
+      color: var(--color-champagne-dark);
+      font-size: 1.1rem;
+      margin-top: 2px;
+    }
+    .policy-item h4 {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--color-espresso);
+      margin-bottom: 2px;
+    }
+    .policy-item p {
+      font-size: 0.78rem;
+      color: var(--color-espresso-light);
+      line-height: 1.4;
+    }
+
+    /* Live Support Widget */
+    .support-widget-card {
+      background-color: var(--color-cream);
+      border: 1px dashed var(--color-champagne);
+      border-radius: var(--border-radius-md);
+      padding: 24px;
+      text-align: center;
+    }
+    .support-widget-card h3 {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      color: var(--color-espresso);
+      margin-bottom: 10px;
+    }
+    .support-widget-card p {
+      font-size: 0.82rem;
+      color: var(--color-espresso-light);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Premium Dynamic Preloader -->
+  <div id="tvs-preloader">
+    <div class="preloader-content">
+      <img src="assets/logo.png" alt="The Villa Spa Logo" class="preloader-logo">
+      <div class="preloader-spinner-bar">
+        <div class="preloader-progress"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Ambient Snow Effect -->
+  <div id="globalSnowContainer"></div>
+
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+
+  <!-- Announcement Bar -->
+  <div class="announcement-bar">
+    <div class="announcement-content">
+      <span>✨ <strong>Important:</strong> Please double check timeslot availability before confirming booking. Mon-Sat 9am-7pm, Sun 1pm-7pm.</span>
+    </div>
+  </div>
+
+  <!-- Header & Navigation -->
+  <header class="main-header">
+    <div class="header-container">
+      <a href="index.html" class="logo-area" style="display: flex; align-items: center;">
+        <img src="assets/logo.png" alt="The Villa Spa Logo" class="main-logo-img" style="height: 52px; width: auto; object-fit: contain;">
+      </a>
+
+      <nav class="nav-menu" id="navMenu">
+        <a href="about.html" class="nav-link">About Us</a>
+        <!-- Services Mega Dropdown -->
+        <div class="nav-item nav-has-mega">
+          <a href="services.html" class="nav-link nav-dropdown-toggle">Services <i
+              class="fa-solid fa-chevron-down nav-chevron"></i></a>
+          <div class="nav-mega-panel">
+            <div class="mega-panel-inner">
+              <div class="mega-col">
+                <div class="mega-col-header"><i class="fa-solid fa-spa"></i> Spa Treatments</div>
+                <a href="services.html#spa-treatments" class="mega-item">Massages</a>
+                <a href="services.html#spa-treatments" class="mega-item">Facials</a>
+                <a href="services.html#spa-treatments" class="mega-item">Body Scrubs</a>
+                <a href="services.html#spa-treatments" class="mega-item">Moroccan Hammam</a>
+                <a href="services.html#spa-treatments" class="mega-item">Waxing &amp; Tinting</a>
+                <a href="services.html#spa-treatments" class="mega-item">Pedicures &amp; Manicures</a>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-header"><i class="fa-solid fa-user-doctor"></i> Medical Aesthetics</div>
+                <a href="services.html#medical-aesthetics" class="mega-item">Botox Injections</a>
+                <a href="services.html#medical-aesthetics" class="mega-item">Dermal Fillers</a>
+                <a href="services.html#medical-aesthetics" class="mega-item">PRP &amp; PRF</a>
+                <a href="services.html#medical-aesthetics" class="mega-item">Microneedling</a>
+                <a href="services.html#medical-aesthetics" class="mega-item">Chemical Peels</a>
+                <a href="services.html#medical-aesthetics" class="mega-item">Skin Boosters</a>
+                <a href="services.html#medical-aesthetics" class="mega-item">Mesotherapy</a>
+                <a href="services.html#medical-aesthetics" class="mega-item">IV Drip Therapies</a>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-header"><i class="fa-solid fa-gift"></i> Luxury Packages</div>
+                <a href="services.html#packages" class="mega-item">Bride-to-Be Package</a>
+                <a href="services.html#packages" class="mega-item">Couple's Sanctuary</a>
+                <div class="mega-col-cta">
+                  <a href="booking.html" class="btn btn-primary"
+                    style="display:block;text-align:center;font-size:0.78rem;padding:10px 16px;">Book a Treatment</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a href="products.html" class="nav-link">Skincare Boutique</a>
+        <a href="academy.html" class="nav-link">Academy</a>
+        <!-- Blog / Dropdown -->
+        <div class="nav-item nav-has-dropdown">
+          <a href="blog.html" class="nav-link nav-dropdown-toggle">Blog <i
+              class="fa-solid fa-chevron-down nav-chevron"></i></a>
+          <div class="nav-dropdown-panel">
+            <a href="blog.html" class="dropdown-item">
+              <span class="di-icon"><i class="fa-solid fa-newspaper"></i></span>
+              <div><strong>Articles</strong><span>Expert skincare &amp; wellness guides</span></div>
+            </a>
+            <a href="testimonials.html" class="dropdown-item">
+              <span class="di-icon"><i class="fa-solid fa-star"></i></span>
+              <div><strong>Testimonials</strong><span>Verified client success stories</span></div>
+            </a>
+            <a href="faq.html" class="dropdown-item">
+              <span class="di-icon"><i class="fa-solid fa-circle-question"></i></span>
+              <div><strong>FAQ</strong><span>Booking &amp; aftercare help</span></div>
+            </a>
+          </div>
+        </div>
+        <a href="booking.html" class="btn btn-primary nav-cta">Book Experience</a>
+      </nav>
+
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="theme-toggle-btn" id="siteThemeToggle" title="Toggle Light / Dark Mode"
+          aria-label="Toggle theme">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+        <button class="mobile-menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main style="padding-top: 100px;">
+    <!-- Booking Page Hero Area -->
+    <div class="booking-hero">
+      <span class="section-subtitle">Luxury Reservations Portal</span>
+      <h1>Schedule Your Wellness Escape</h1>
+      <p>Select your favorite treatments, customize your schedule, and secure your session. Choose to settle your invoice online via Paystack or pay in-person during your wellness sanctuary visit.</p>
+    </div>
+
+    <!-- Booking Layout Grid -->
+    <div class="booking-container-layout">
+      
+      <!-- Column 1: Multi-Step Wizard -->
+      <div class="booking-wizard-card" id="booking-section" style="border: 1px solid var(--color-sand);">
+        <!-- Wizard Progress Bar -->
+        <div class="wizard-progress">
+          <div class="progress-step active" data-step="1">
+            <span class="step-num">1</span>
+            <span class="step-label">Services</span>
+          </div>
+          <div class="progress-line"></div>
+          <div class="progress-step" data-step="2">
+            <span class="step-num">2</span>
+            <span class="step-label">Schedule</span>
+          </div>
+          <div class="progress-line"></div>
+          <div class="progress-step" data-step="3">
+            <span class="step-num">3</span>
+            <span class="step-label">Guest Details</span>
+          </div>
+          <div class="progress-line"></div>
+          <div class="progress-step" data-step="4">
+            <span class="step-num">4</span>
+            <span class="step-label">Confirm</span>
+          </div>
+        </div>
+
+        <form id="bookingForm">
+          <!-- STEP 1: CATEGORIES + INLINE SERVICES -->
+          <div class="wizard-panel active" id="step1Panel">
+            <h3 class="panel-title">Select Your Treatments</h3>
+            <p class="panel-subtitle">Click a category below to browse and add services to your booking.</p>
+
+            <!-- Category accordion list -->
+            <div id="wizardCategoriesList" style="display: flex; flex-direction: column; gap: 12px; margin: 20px 0;"></div>
+
+            <!-- Cart summary -->
+            <div class="wizard-selected-list" id="wizardSelectedList">
+              <p class="empty-selection-msg">No treatments selected yet. Pick a category above to get started.</p>
+            </div>
+
+            <div class="wizard-footer">
+              <span></span>
+              <button type="button" class="btn btn-primary" id="step1Next" disabled>Choose Date &amp; Time <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+          </div>
+
+          <!-- STEP 2: DATE & TIME -->
+          <div class="wizard-panel" id="step2Panel">
+            <h3 class="panel-title">Select Date & Time</h3>
+            <p class="panel-subtitle">Note: We operate Mon-Sat 9am–7pm and Sun 1pm–7pm.</p>
+
+            <div class="datetime-grid">
+              <div class="calendar-wrapper">
+                <div class="calendar-header">
+                  <button type="button" id="prevMonthBtn" class="calendar-nav-btn"><i
+                      class="fa-solid fa-chevron-left"></i></button>
+                  <span id="calendarMonthYear" class="calendar-title">June 2026</span>
+                  <button type="button" id="nextMonthBtn" class="calendar-nav-btn"><i
+                      class="fa-solid fa-chevron-right"></i></button>
+                </div>
+                <div class="calendar-weekdays">
+                  <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+                </div>
+                <div class="calendar-days" id="calendarDaysGrid">
+                  <!-- Calendar days loaded dynamically -->
+                </div>
+              </div>
+
+              <div class="time-slots-wrapper">
+                <h4 class="time-slots-title">Available Slots for <span id="selectedDateDisplay">Select a date</span></h4>
+                <div class="time-slots-grid" id="timeSlotsGrid">
+                  <p class="select-date-prompt">Please select a date to view available time slots.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="wizard-footer">
+              <button type="button" class="btn btn-outline" id="step2Prev"><i class="fa-solid fa-arrow-left"></i> Back</button>
+              <button type="button" class="btn btn-primary" id="step2Next" disabled>Personal Information <i
+                  class="fa-solid fa-arrow-right"></i></button>
+            </div>
+          </div>
+
+          <!-- STEP 3: USER DETAILS -->
+          <div class="wizard-panel" id="step3Panel">
+            <h3 class="panel-title">Guest Details</h3>
+            <p class="panel-subtitle">Provide your contact info. We will send booking reminders via SMS/WhatsApp.</p>
+
+            <div class="guest-details-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="guestName">Full Name <span class="required">*</span></label>
+                  <input type="text" id="guestName" name="guestName" placeholder="e.g. Chinedu Okafor" required>
+                </div>
+                <div class="form-group">
+                  <label for="guestPhone">WhatsApp / Phone Number <span class="required">*</span></label>
+                  <input type="tel" id="guestPhone" name="guestPhone" placeholder="e.g. 08147409153" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="guestEmail">Email Address (Optional)</label>
+                <input type="email" id="guestEmail" name="guestEmail" placeholder="e.g. chinedu@example.com">
+              </div>
+
+              <div class="form-group">
+                <label for="guestNotes">Special Instructions / Therapist Preferences (Optional)</label>
+                <textarea id="guestNotes" name="guestNotes" rows="3"
+                  placeholder="Tell us about skin sensitivities, preferred room temperature, or any specific requests..."></textarea>
+              </div>
+
+              <div class="form-group" style="margin-top: 24px; border-top: 1px solid var(--color-sand); padding-top: 16px;">
+                <label>Choose Payment Method <span class="required">*</span></label>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 8px;">
+                  <label class="payment-option-card">
+                    <input type="radio" name="paymentOption" value="pay-later" checked style="width: auto; margin-right: 8px;">
+                    <div>
+                      <strong style="display: block; font-size: 0.9rem; color: var(--color-espresso);">Pay Later</strong>
+                      <span style="font-size: 0.72rem; opacity: 0.8;">Pay at the spa during your visit</span>
+                    </div>
+                  </label>
+                  <label class="payment-option-card">
+                    <input type="radio" name="paymentOption" value="pay-now" style="width: auto; margin-right: 8px;">
+                    <div>
+                      <strong style="display: block; font-size: 0.9rem; color: var(--color-espresso);">Pay Now</strong>
+                      <span style="font-size: 0.72rem; opacity: 0.8;">Secure inline checkout via Paystack</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="wizard-footer">
+              <button type="button" class="btn btn-outline" id="step3Prev"><i class="fa-solid fa-arrow-left"></i> Back</button>
+              <button type="submit" class="btn btn-primary" id="step3Submit">Confirm &amp; Secure Booking <i
+                  class="fa-solid fa-check"></i></button>
+            </div>
+          </div>
+
+          <!-- STEP 4: SUCCESS -->
+          <div class="wizard-panel" id="step4Panel">
+            <div class="booking-success-wrapper">
+              <div class="success-animation-circle">
+                <i class="fa-solid fa-check-double"></i>
+              </div>
+              <h3 class="success-title" id="bookingSuccessTitle">Your Escape is Scheduled!</h3>
+              <p class="success-message" id="bookingSuccessMessage">Thank you for choosing The Villa Spa. A confirmation receipt has been saved. We look forward to pampering you!</p>
+
+              <!-- Luxury Receipt -->
+              <div class="luxury-receipt">
+                <div class="receipt-header">
+                  <span>THE VILLA SPA</span>
+                  <span class="receipt-id" id="receiptId">TVS-483920</span>
+                </div>
+                <div class="receipt-body">
+                  <div class="receipt-row">
+                    <span class="row-label">Guest:</span>
+                    <strong id="receiptGuest">Chinedu Okafor</strong>
+                  </div>
+                  <div class="receipt-row">
+                    <span class="row-label">Date & Time:</span>
+                    <strong id="receiptDateTime">Mon, June 8, 2026 @ 10:00 AM</strong>
+                  </div>
+                  <div class="receipt-row">
+                    <span class="row-label">Payment:</span>
+                    <strong id="receiptPaymentStatus" style="color: var(--color-champagne-dark);">Pay Later</strong>
+                  </div>
+                  <div class="receipt-divider"></div>
+                  <div class="receipt-row-services">
+                    <span class="row-label">Treatments:</span>
+                    <ul id="receiptServicesList"></ul>
+                  </div>
+                  <div class="receipt-divider"></div>
+                  <div class="receipt-row total">
+                    <span class="row-label">Total Paid/Estimated:</span>
+                    <strong class="price-highlight" id="receiptTotal">₦15,000</strong>
+                  </div>
+                </div>
+                <div class="receipt-footer">
+                  <p>Opp Don Ritz Hotel, Udoka Housing Estate, Awka</p>
+                  <p>Please arrive 10 minutes prior to your slot time.</p>
+                </div>
+              </div>
+
+              <div class="success-actions">
+                <button type="button" class="btn btn-primary" onclick="restartBookingWizard()">Schedule Another Experience</button>
+                <a href="https://wa.me/2348147409153" target="_blank" class="btn btn-outline"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Column 2: Information Sidebar -->
+      <div class="booking-sidebar">
+        <!-- Guidelines policy box -->
+        <div class="policy-box">
+          <h3><i class="fa-solid fa-circle-info"></i> Arrival & Preparation</h3>
+          <div class="policy-list">
+            <div class="policy-item">
+              <i class="fa-solid fa-clock"></i>
+              <div>
+                <h4>Arrive 10 Mins Early</h4>
+                <p>Allow yourself time to transition. Relax with a glass of champagne or botanical tea before your therapist greets you.</p>
+              </div>
+            </div>
+            <div class="policy-item">
+              <i class="fa-solid fa-heart-pulse"></i>
+              <div>
+                <h4>Medical Conditions</h4>
+                <p>Please state skin sensitivities, allergies, pregnancy, or medical concerns in the application notes so we can adjust serums safely.</p>
+              </div>
+            </div>
+            <div class="policy-item">
+              <i class="fa-solid fa-shirt"></i>
+              <div>
+                <h4>Comfortable Attire</h4>
+                <p>We provide sterile robes and disposable underwear for body scrubs, hammam, and therapeutic massages.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sanctuary Commitment Box -->
+        <div class="policy-box">
+          <h3><i class="fa-solid fa-shield-heart"></i> Our Cleanliness Standards</h3>
+          <div class="policy-list">
+            <div class="policy-item">
+              <i class="fa-solid fa-circle-check"></i>
+              <div>
+                <h4>100% Autoclave Sterilization</h4>
+                <p>All metal spa instruments undergo autoclave sanitation cycles between patients.</p>
+              </div>
+            </div>
+            <div class="policy-item">
+              <i class="fa-solid fa-circle-check"></i>
+              <div>
+                <h4>Fresh Linens Always</h4>
+                <p>Towels and bed sheets are single-use only and washed using hypoallergenic sanitizers.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Whatsapp Help Widget -->
+        <div class="support-widget-card">
+          <h3>Need Help Booking?</h3>
+          <p>If you're booking for groups, private spa takeovers, bridal showers, or encountering issues with checkout, click to chat with our front-desk advisor.</p>
+          <a href="https://wa.me/2348147409153?text=Hello%2C%20I%20need%20assistance%20booking%20a%20spa%20treatment." target="_blank" class="whatsapp-btn" style="background-color: #25D366; color: white;">
+            <i class="fa-brands fa-whatsapp"></i> Chat Support
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-brand-column">
+        <a href="index.html" class="footer-logo" style="display: inline-block;">
+          <img src="assets/logo.png" alt="The Villa Spa Logo" class="footer-logo-img" style="height: 52px; width: auto; object-fit: contain; filter: brightness(0) invert(1);">
+        </a>
+        <p class="footer-about">Awka's Premier Salon and Wellness Lounge. Dedicated to luxury treatments, holistic rejuvenation, and premium industry training.</p>
+        <div class="footer-socials">
+          <a href="https://instagram.com/thevillaspa_" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/2348147409153" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          <a href="tel:08147409153"><i class="fas fa-phone"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-links-column">
+        <h4>Navigation</h4>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Sanctuary</a>
+        <a href="services.html">Wellness Menu</a>
+        <a href="products.html">Skincare Boutique</a>
+        <a href="academy.html">Academy</a>
+      </div>
+
+      <div class="footer-hours-column">
+        <h4>Wellness Hours</h4>
+        <p><strong>Monday – Saturday</strong><br>9:00 AM – 7:00 PM</p>
+        <p><strong>Sunday Session</strong><br>1:00 PM – 7:00 PM</p>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <p>&copy; 2026 The Villa Spa. All Rights Reserved. Created with premium excellence.</p>
+    </div>
+  </footer>
+
+  <script type="module" src="app.js?v=2026.07.09.13"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
+
+  <script>
+    // Hide Preloader on load
+    window.addEventListener('load', () => {
+      const preloader = document.getElementById('tvs-preloader');
+      if (preloader) {
+        setTimeout(() => {
+          preloader.classList.add('fade-out');
+        }, 1000);
+      }
+    });
+  </script>
+</body>
+
+</html>
