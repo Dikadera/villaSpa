@@ -115,6 +115,16 @@
 </head>
 
 <body>
+  <!-- Premium Dynamic Preloader -->
+  <div id="tvs-preloader">
+    <div class="preloader-content">
+      <img src="assets/logo.png" alt="The Villa Spa Logo" class="preloader-logo">
+      <div class="preloader-spinner-bar">
+        <div class="preloader-progress"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- Global Ambient Snow Effect -->
   <div id="globalSnowContainer"></div>
 
@@ -132,13 +142,8 @@
   <!-- Header & Navigation -->
   <header class="main-header">
     <div class="header-container">
-      <a href="#" class="logo-area">
-        <span class="logo-initials">TVS</span>
-        <div class="logo-divider"></div>
-        <div class="logo-text">
-          <span class="brand-name">THE VILLA SPA</span>
-          <span class="brand-tagline">SALON · WELLNESS · LAUNGE</span>
-        </div>
+      <a href="#" class="logo-area" style="display: flex; align-items: center;">
+        <img src="assets/logo.png" alt="The Villa Spa Logo" class="main-logo-img" style="height: 52px; width: auto; object-fit: contain;">
       </a>
 
       <nav class="nav-menu" id="navMenu">
@@ -403,7 +408,7 @@
       <div class="section-container">
         <div class="about-grid">
           <div class="about-img-wrapper">
-            <img src="assets/spa_facial.png" alt="Facial treatment at The Villa Spa"
+            <img src="assets/spa_room.jpg" alt="Luxury treatment room at The Villa Spa"
               class="about-img animate-on-scroll">
             <div class="about-tag">
               <span class="tag-title">Skinvestment</span>
@@ -1026,9 +1031,8 @@
   <footer class="main-footer">
     <div class="footer-container">
       <div class="footer-brand-column">
-        <a href="#" class="footer-logo">
-          <span class="logo-initials">TVS</span>
-          <span class="logo-title">THE VILLA SPA</span>
+        <a href="#" class="footer-logo" style="display: inline-block;">
+          <img src="assets/logo.png" alt="The Villa Spa Logo" class="footer-logo-img" style="height: 52px; width: auto; object-fit: contain; filter: brightness(0) invert(1);">
         </a>
         <p class="footer-about">Awka's Premier Salon and Wellness Lounge. Dedicated to luxury treatments, holistic
           rejuvenation, and premium industry training.</p>
@@ -1192,6 +1196,16 @@
     style="position:fixed;bottom:-100px;right:-100px;width:1px;height:1px;opacity:0;pointer-events:none;"></div>
 
   <script>
+    // Hide Preloader on load
+    window.addEventListener('load', () => {
+      const preloader = document.getElementById('tvs-preloader');
+      if (preloader) {
+        setTimeout(() => {
+          preloader.classList.add('fade-out');
+        }, 1000);
+      }
+    });
+
     var _ytPlayer = null;
     var _ytPlaying = false;
 

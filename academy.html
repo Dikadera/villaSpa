@@ -1,42 +1,371 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TVS Training Academy | The Villa Spa</title>
-  <meta name="description" content="Enroll in Awka's premier Spa &amp; Esthetics Bootcamp. Hands-on curriculum, national certification, student cohorts, and transparent tuition options.">
+  <meta name="description"
+    content="Enroll in Awka's premier Spa &amp; Esthetics Bootcamp. Hands-on curriculum, national certification, student cohorts, and transparent tuition options.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="style.css?v=2026.07.08.99">
   <style>
-    .curriculum-module-card {
-      background-color: var(--color-cream);
-      border: 1px solid var(--color-sand);
-      border-radius: var(--border-radius-md);
-      padding: 24px;
-      transition: var(--transition-smooth);
+    /* Premium Dynamic Preloader */
+    #tvs-preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--color-espresso);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 99999;
+      opacity: 1;
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.6s;
     }
-    .curriculum-module-card:hover {
-      border-color: var(--color-champagne);
+    #tvs-preloader.fade-out {
+      opacity: 0;
+      visibility: hidden;
+    }
+    .preloader-content {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    .preloader-logo {
+      height: 90px;
+      width: auto;
+      animation: pulseLogo 2s infinite ease-in-out;
+      filter: brightness(0) invert(1);
+    }
+    .preloader-spinner-bar {
+      width: 160px;
+      height: 3px;
+      background-color: rgba(197, 168, 128, 0.2);
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+    .preloader-progress {
+      width: 0%;
+      height: 100%;
+      background-color: var(--color-champagne);
+      border-radius: 10px;
+      animation: loadProgress 1.6s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+    }
+    @keyframes pulseLogo {
+      0%, 100% { transform: scale(0.95); opacity: 0.85; }
+      50% { transform: scale(1.05); opacity: 1; }
+    }
+    @keyframes loadProgress {
+      0% { width: 0%; }
+      50% { width: 75%; }
+      100% { width: 100%; }
+    }
+
+    /* Custom Premium Academy Styling */
+    .academy-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background-color: rgba(197, 168, 128, 0.15);
+      border: 1px solid var(--color-champagne);
+      color: var(--color-champagne-dark);
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 50px;
+      margin-bottom: 12px;
+    }
+
+    .promo-banner {
+      background-color: var(--color-espresso);
+      color: var(--color-cream);
+      border-radius: var(--border-radius-lg);
+      padding: 40px;
+      margin: 40px auto;
+      max-width: 1000px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+      border: 1px solid var(--color-champagne);
+      box-shadow: var(--shadow-premium);
+    }
+
+    .promo-content h3 {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      color: var(--color-champagne-light);
+      margin-bottom: 8px;
+    }
+
+    .promo-content p {
+      color: var(--color-sand);
+      font-size: 0.95rem;
+      max-width: 600px;
+    }
+
+    .diff-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin: 60px 0;
+    }
+
+    .diff-card {
+      background: var(--color-white);
+      border: 1.5px solid var(--color-sand);
+      border-radius: var(--border-radius-lg);
+      padding: 40px;
       box-shadow: var(--shadow-subtle);
     }
+
+    .diff-card.tvs-diff {
+      border-color: var(--color-champagne);
+      background: var(--color-cream);
+    }
+
+    .diff-card h3 {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Course Filters */
+    .filter-container {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: 40px 0;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 10px 24px;
+      border-radius: 50px;
+      border: 1px solid var(--color-sand);
+      background-color: var(--color-white);
+      color: var(--color-espresso-light);
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background-color: var(--color-espresso);
+      color: var(--color-cream);
+      border-color: var(--color-espresso);
+    }
+
+    /* Course Cards Grid */
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      margin-bottom: 60px;
+    }
+
+    .course-card {
+      background-color: var(--color-white);
+      border: 1px solid var(--color-sand);
+      border-radius: var(--border-radius-lg);
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: var(--transition-smooth);
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .course-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-premium);
+      border-color: var(--color-champagne);
+    }
+
+    .course-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .course-num {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      color: var(--color-champagne);
+      font-weight: 600;
+    }
+
+    .course-title {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      color: var(--color-espresso);
+      margin-bottom: 12px;
+    }
+
+    .course-desc {
+      font-size: 0.9rem;
+      color: var(--color-espresso-light);
+      opacity: 0.85;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .curriculum-toggle-btn {
+      background: none;
+      border: none;
+      color: var(--color-champagne-dark);
+      font-weight: 650;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      margin-bottom: 15px;
+      padding: 0;
+    }
+
+    .curriculum-toggle-btn i {
+      transition: transform 0.3s ease;
+    }
+
+    .curriculum-toggle-btn.active i {
+      transform: rotate(180deg);
+    }
+
+    .curriculum-details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      margin-bottom: 15px;
+    }
+
+    .curriculum-list {
+      list-style: none;
+      padding: 12px;
+      background: var(--color-cream);
+      border-radius: var(--border-radius-md);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .curriculum-list li {
+      font-size: 0.85rem;
+      color: var(--color-espresso-light);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .curriculum-list li i {
+      color: var(--color-champagne-dark);
+      margin-top: 4px;
+      font-size: 0.75rem;
+    }
+
+    .course-footer {
+      border-top: 1px solid var(--color-sand-light);
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .course-price-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--color-espresso-light);
+      opacity: 0.6;
+    }
+
+    .course-price-val {
+      font-family: var(--font-serif);
+      font-size: 1.45rem;
+      font-weight: bold;
+      color: var(--color-espresso);
+    }
+
+    /* FAQ System */
+    .faq-wrapper {
+      max-width: 800px;
+      margin: 40px auto;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--color-sand);
+      padding: 20px 0;
+    }
+
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      color: var(--color-espresso);
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, margin-top 0.3s ease;
+      color: var(--color-espresso-light);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .faq-item.active .faq-answer {
+      margin-top: 12px;
+    }
+
+    .faq-icon-arrow {
+      transition: transform 0.3s ease;
+      color: var(--color-champagne-dark);
+    }
+
+    .faq-item.active .faq-icon-arrow {
+      transform: rotate(180deg);
+    }
+
+    /* Enrol Form */
     .enrol-form-container {
       background-color: var(--color-cream);
-      border: 1px solid var(--color-sand);
+      border: 1.5px solid var(--color-sand);
       border-radius: var(--border-radius-lg);
       padding: 40px;
       max-width: 600px;
       margin: 0 auto;
       box-shadow: var(--shadow-premium);
     }
+
     .enrol-input-group {
       margin-bottom: 20px;
       display: flex;
       flex-direction: column;
       gap: 6px;
     }
+
     .enrol-input-group label {
       font-size: 0.85rem;
       font-weight: 600;
@@ -44,7 +373,10 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
-    .enrol-input-group input, .enrol-input-group select, .enrol-input-group textarea {
+
+    .enrol-input-group input,
+    .enrol-input-group select,
+    .enrol-input-group textarea {
       padding: 12px;
       border: 1.5px solid var(--color-sand);
       border-radius: var(--border-radius-sm);
@@ -54,14 +386,292 @@
       color: var(--color-espresso);
       transition: var(--transition-fast);
     }
-    .enrol-input-group input:focus, .enrol-input-group select:focus, .enrol-input-group textarea:focus {
+
+    .enrol-input-group input:focus,
+    .enrol-input-group select:focus,
+    .enrol-input-group textarea:focus {
       outline: none;
       border-color: var(--color-champagne-dark);
       background-color: var(--color-white);
     }
+
+    /* Responsive grid override */
+    @media (max-width: 768px) {
+      .diff-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .promo-banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px 20px;
+      }
+    }
+
+    /* Training Pillars & Detailed Info */
+    .outside-accommodation-box {
+      background-color: var(--color-white);
+      border: 1.5px solid var(--color-sand);
+      border-radius: var(--border-radius-lg);
+      padding: 40px;
+      margin: 40px auto;
+      max-width: 1000px;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .outside-accommodation-box h3 {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      color: var(--color-espresso);
+      margin-bottom: 15px;
+    }
+
+    .outside-accommodation-box p {
+      color: var(--color-espresso-light);
+      margin-bottom: 20px;
+      line-height: 1.7;
+    }
+
+    .pillar-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+      margin: 40px 0;
+    }
+
+    .pillar-card {
+      background-color: var(--color-cream);
+      border: 1px solid var(--color-sand);
+      border-radius: var(--border-radius-md);
+      padding: 24px;
+      transition: var(--transition-smooth);
+      position: relative;
+    }
+
+    .pillar-card:hover {
+      border-color: var(--color-champagne);
+      box-shadow: var(--shadow-subtle);
+      transform: translateY(-4px);
+    }
+
+    .pillar-num {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      color: var(--color-champagne);
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    .pillar-card h4 {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      color: var(--color-espresso);
+      margin-bottom: 10px;
+    }
+
+    .pillar-card p {
+      font-size: 0.85rem;
+      color: var(--color-espresso-light);
+      opacity: 0.85;
+      line-height: 1.5;
+    }
+
+    .cpd-section {
+      background-color: var(--color-espresso);
+      color: var(--color-cream);
+      border-radius: var(--border-radius-lg);
+      padding: 40px;
+      margin: 60px auto;
+      max-width: 1000px;
+      display: flex;
+      gap: 30px;
+      align-items: center;
+      border: 1px solid var(--color-champagne-dark);
+      box-shadow: var(--shadow-premium);
+    }
+
+    .cpd-logo-area {
+      font-family: var(--font-serif);
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--color-champagne);
+      border: 3.5px solid var(--color-champagne);
+      padding: 10px 20px;
+      border-radius: var(--border-radius-md);
+      text-align: center;
+      line-height: 1;
+      display: inline-block;
+    }
+
+    .cpd-logo-sub {
+      font-family: var(--font-sans);
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      display: block;
+      color: var(--color-cream);
+      margin-top: 4px;
+    }
+
+    .cpd-content h3 {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      color: var(--color-champagne-light);
+      margin-bottom: 10px;
+    }
+
+    .cpd-content p {
+      font-size: 0.9rem;
+      color: var(--color-sand);
+      line-height: 1.6;
+    }
+
+    .whatsapp-enroll-section {
+      text-align: center;
+      padding: 40px 20px;
+      background: var(--color-cream);
+      border: 1px dashed var(--color-champagne);
+      border-radius: var(--border-radius-lg);
+      margin: 40px auto;
+      max-width: 600px;
+    }
+
+    .whatsapp-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background-color: #25D366;
+      color: var(--color-white);
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: var(--transition-fast);
+      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+    }
+
+    .whatsapp-btn:hover {
+      background-color: #1ebd54;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
+      color: var(--color-white);
+    }
+
+    @media (max-width: 768px) {
+      .cpd-section {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px 20px;
+      }
+    }
+
+    /* Stats, Disclaimer & Decision Boxes */
+    .stats-wrapper {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      margin: 40px auto;
+      max-width: 1000px;
+      text-align: center;
+    }
+
+    .stat-box {
+      background: var(--color-white);
+      border: 1px solid var(--color-sand);
+      border-radius: var(--border-radius-md);
+      padding: 30px;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .stat-box h3 {
+      font-family: var(--font-serif);
+      font-size: 2.2rem;
+      color: var(--color-champagne-dark);
+      margin-bottom: 8px;
+    }
+
+    .stat-box p {
+      font-size: 0.9rem;
+      color: var(--color-espresso-light);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .disclaimer-box {
+      background-color: var(--color-cream);
+      border: 1.5px solid var(--color-sand);
+      border-radius: var(--border-radius-lg);
+      padding: 40px;
+      margin: 60px auto;
+      max-width: 1000px;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .disclaimer-title {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      color: var(--color-espresso);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .disclaimer-content {
+      font-size: 0.9rem;
+      color: var(--color-espresso-light);
+      line-height: 1.7;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .decision-box {
+      background-color: var(--color-espresso);
+      color: var(--color-cream);
+      border-radius: var(--border-radius-lg);
+      padding: 65px 40px;
+      margin: 60px auto;
+      max-width: 1000px;
+      text-align: center;
+      border: 1px solid var(--color-champagne);
+      box-shadow: var(--shadow-premium);
+    }
+
+    .decision-box h2 {
+      font-family: var(--font-serif);
+      font-size: 2.3rem;
+      line-height: 1.25;
+      margin-bottom: 20px;
+    }
+
+    .decision-box h2 em {
+      color: var(--color-champagne);
+      font-style: italic;
+    }
+
+    .decision-box p {
+      font-size: 1.05rem;
+      color: var(--color-sand);
+      max-width: 700px;
+      margin: 0 auto 30px auto;
+      line-height: 1.65;
+    }
   </style>
 </head>
+
 <body class="academy-body">
+
+  <!-- Premium Dynamic Preloader -->
+  <div id="tvs-preloader">
+    <div class="preloader-content">
+      <img src="assets/logo.png" alt="The Villa Spa Logo" class="preloader-logo">
+      <div class="preloader-spinner-bar">
+        <div class="preloader-progress"></div>
+      </div>
+    </div>
+  </div>
 
   <!-- Global Ambient Snow Effect -->
   <div id="globalSnowContainer"></div>
@@ -72,85 +682,85 @@
   <!-- Announcement Bar -->
   <div class="announcement-bar">
     <div class="announcement-content">
-      <span>✨ <strong>Academy Enrollment:</strong> Registration is now open for our upcoming cohort. Limited slots.</span>
+      <span>✨ <strong>Academy Enrollment:</strong> Secure your seat. UK CPD-Accreditation Standards and flexible
+        installments available.</span>
     </div>
   </div>
 
   <!-- Header & Navigation -->
   <header class="main-header">
     <div class="header-container">
-      <a href="index.html" class="logo-area">
-        <span class="logo-initials">TVS</span>
-        <div class="logo-divider"></div>
-        <div class="logo-text">
-          <span class="brand-name">THE VILLA SPA</span>
-          <span class="brand-tagline">SALON · WELLNESS · LAUNGE</span>
-        </div>
+      <a href="index.html" class="logo-area" style="display: flex; align-items: center;">
+        <img src="assets/logo.png" alt="The Villa Spa Logo" class="main-logo-img" style="height: 52px; width: auto; object-fit: contain;">
       </a>
 
       <nav class="nav-menu" id="navMenu">
         <a href="about.html" class="nav-link">About Us</a>
-  <!-- Services Mega Dropdown -->
-      <div class="nav-item nav-has-mega">
-        <a href="services.html" class="nav-link nav-dropdown-toggle ">Services <i class="fa-solid fa-chevron-down nav-chevron"></i></a>
-        <div class="nav-mega-panel">
-          <div class="mega-panel-inner">
-            <div class="mega-col">
-              <div class="mega-col-header"><i class="fa-solid fa-spa"></i> Spa Treatments</div>
-              <a href="services.html#spa-treatments" class="mega-item">Massages</a>
-              <a href="services.html#spa-treatments" class="mega-item">Facials</a>
-              <a href="services.html#spa-treatments" class="mega-item">Body Scrubs</a>
-              <a href="services.html#spa-treatments" class="mega-item">Moroccan Hammam</a>
-              <a href="services.html#spa-treatments" class="mega-item">Waxing &amp; Tinting</a>
-              <a href="services.html#spa-treatments" class="mega-item">Pedicures &amp; Manicures</a>
-            </div>
-            <div class="mega-col">
-              <div class="mega-col-header"><i class="fa-solid fa-user-doctor"></i> Medical Aesthetics</div>
-              <a href="services.html#medical-aesthetics" class="mega-item">Botox Injections</a>
-              <a href="services.html#medical-aesthetics" class="mega-item">Dermal Fillers</a>
-              <a href="services.html#medical-aesthetics" class="mega-item">PRP &amp; PRF</a>
-              <a href="services.html#medical-aesthetics" class="mega-item">Microneedling</a>
-              <a href="services.html#medical-aesthetics" class="mega-item">Chemical Peels</a>
-              <a href="services.html#medical-aesthetics" class="mega-item">Skin Boosters</a>
-              <a href="services.html#medical-aesthetics" class="mega-item">Mesotherapy</a>
-              <a href="services.html#medical-aesthetics" class="mega-item">IV Drip Therapies</a>
-            </div>
-            <div class="mega-col">
-              <div class="mega-col-header"><i class="fa-solid fa-gift"></i> Luxury Packages</div>
-              <a href="services.html#packages" class="mega-item">Bride-to-Be Package</a>
-              <a href="services.html#packages" class="mega-item">Couple's Sanctuary</a>
-              <div class="mega-col-cta">
-                <a href="index.html#booking-section" class="btn btn-primary" style="display:block;text-align:center;font-size:0.78rem;padding:10px 16px;">Book a Treatment</a>
+        <!-- Services Mega Dropdown -->
+        <div class="nav-item nav-has-mega">
+          <a href="services.html" class="nav-link nav-dropdown-toggle">Services <i
+              class="fa-solid fa-chevron-down nav-chevron"></i></a>
+          <div class="nav-mega-panel">
+            <div class="mega-panel-inner">
+              <div class="mega-col">
+                <div class="mega-col-header"><i class="fa-solid fa-spa"></i> Spa Treatments</div>
+                <a href="services.html#spa-treatments" class="mega-item">Massages</a>
+                <a href="services.html#spa-treatments" class="mega-item">Facials</a>
+                <a href="services.html#spa-treatments" class="mega-item">Body Scrubs</a>
+                <a href="services.html#spa-treatments" class="mega-item">Moroccan Hammam</a>
+                <a href="services.html#spa-treatments" class="mega-item">Waxing &amp; Tinting</a>
+                <a href="services.html#spa-treatments" class="mega-item">Pedicures &amp; Manicures</a>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-header"><i class="fa-solid fa-user-doctor"></i> Medical Aesthetics</div>
+                <a href="services.html#medical-aesthetics" class="mega-item">Botox Injections</a>
+                <a href="services.html#medical-aesthetics" class="mega-item">Dermal Fillers</a>
+                <a href="services.html#medical-aesthetics" class="mega-item">PRP &amp; PRF</a>
+                <a href="services.html#medical-aesthetics" class="mega-item">Microneedling</a>
+                <a href="services.html#medical-aesthetics" class="mega-item">Chemical Peels</a>
+                <a href="services.html#medical-aesthetics" class="mega-item">Skin Boosters</a>
+                <a href="services.html#medical-aesthetics" class="mega-item">Mesotherapy</a>
+                <a href="services.html#medical-aesthetics" class="mega-item">IV Drip Therapies</a>
+              </div>
+              <div class="mega-col">
+                <div class="mega-col-header"><i class="fa-solid fa-gift"></i> Luxury Packages</div>
+                <a href="services.html#packages" class="mega-item">Bride-to-Be Package</a>
+                <a href="services.html#packages" class="mega-item">Couple's Sanctuary</a>
+                <div class="mega-col-cta">
+                  <a href="index.html#booking-section" class="btn btn-primary"
+                    style="display:block;text-align:center;font-size:0.78rem;padding:10px 16px;">Book a Treatment</a>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
         <a href="products.html" class="nav-link">Skincare Boutique</a>
         <a href="academy.html" class="nav-link active">Academy</a>
-  <!-- Blog / Content Dropdown -->
-      <div class="nav-item nav-has-dropdown">
-        <a href="blog.html" class="nav-link nav-dropdown-toggle ">Blog <i class="fa-solid fa-chevron-down nav-chevron"></i></a>
-        <div class="nav-dropdown-panel">
-          <a href="blog.html" class="dropdown-item">
-            <span class="di-icon"><i class="fa-solid fa-newspaper"></i></span>
-            <div><strong>Articles</strong><span>Expert skincare &amp; wellness guides</span></div>
-          </a>
-          <a href="testimonials.html" class="dropdown-item">
-            <span class="di-icon"><i class="fa-solid fa-star"></i></span>
-            <div><strong>Testimonials</strong><span>Verified client success stories</span></div>
-          </a>
-          <a href="faq.html" class="dropdown-item">
-            <span class="di-icon"><i class="fa-solid fa-circle-question"></i></span>
-            <div><strong>FAQ</strong><span>Booking &amp; aftercare help</span></div>
-          </a>
+        <!-- Blog / Content Dropdown -->
+        <div class="nav-item nav-has-dropdown">
+          <a href="blog.html" class="nav-link nav-dropdown-toggle">Blog <i
+              class="fa-solid fa-chevron-down nav-chevron"></i></a>
+          <div class="nav-dropdown-panel">
+            <a href="blog.html" class="dropdown-item">
+              <span class="di-icon"><i class="fa-solid fa-newspaper"></i></span>
+              <div><strong>Articles</strong><span>Expert skincare &amp; wellness guides</span></div>
+            </a>
+            <a href="testimonials.html" class="dropdown-item">
+              <span class="di-icon"><i class="fa-solid fa-star"></i></span>
+              <div><strong>Testimonials</strong><span>Verified client success stories</span></div>
+            </a>
+            <a href="faq.html" class="dropdown-item">
+              <span class="di-icon"><i class="fa-solid fa-circle-question"></i></span>
+              <div><strong>FAQ</strong><span>Booking &amp; aftercare help</span></div>
+            </a>
+          </div>
         </div>
-      </div>
         <a href="index.html#booking-section" class="btn btn-primary nav-cta">Book Experience</a>
       </nav>
 
       <div style="display:flex;align-items:center;gap:12px;">
-        <button class="theme-toggle-btn" id="siteThemeToggle" title="Toggle Light / Dark Mode" aria-label="Toggle theme">
+        <button class="theme-toggle-btn" id="siteThemeToggle" title="Toggle Light / Dark Mode"
+          aria-label="Toggle theme">
           <i class="fa-solid fa-moon"></i>
         </button>
         <button class="mobile-menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
@@ -165,179 +775,800 @@
   <main>
     <!-- Subpage Hero -->
     <section class="shop-hero">
-      <div class="shop-hero-bg" style="background-image: linear-gradient(rgba(20, 15, 13, 0.72), rgba(20, 15, 13, 0.88)), url('assets/spa_training.png');"></div>
+      <div class="shop-hero-bg"
+        style="background-image: linear-gradient(rgba(20, 15, 13, 0.72), rgba(20, 15, 13, 0.88)), url('assets/spa_training.png');">
+      </div>
       <div class="shop-hero-container">
-        <span class="shop-subtitle">TVS Education</span>
-        <h1 class="shop-title">TVS Training Academy</h1>
-        <p class="shop-description">Launch your high-end esthetics career under Nigeria's elite practitioners. Certified, hands-on, and industry-ready.</p>
+        <span class="shop-subtitle">TVS Clinical Academy</span>
+        <h1 class="shop-title">Esthetics &amp; Medical Academy</h1>
+        <p class="shop-description">Certified hands-on training with licensed practitioners inside an active luxury
+          clinic. Step out of the classroom and into your elite career.</p>
       </div>
     </section>
 
-    <!-- Professional Training Details -->
-    <section style="padding: 80px 24px;">
-      <div class="section-container" style="max-width: 1000px; margin: 0 auto;">
-        
-        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; margin-bottom: 80px; align-items: center;">
-          <div>
-            <span class="section-subtitle">Career Path</span>
-            <h2 class="section-title" style="font-size: 2.2rem; margin-bottom: 16px;">Professional Spa Training</h2>
-            <p style="margin-bottom: 16px; color: var(--color-espresso-light);">Our **4-Week Intensive Spa &amp; Esthetics Bootcamp** is a rigorous program designed to turn passionate students into certified, independent wellness therapists. We combine high-yield dermal theories with extensive, daily hands-on practice in our fully simulated spa ward.</p>
-            <p style="color: var(--color-espresso-light);">Taught directly by CEO Stephanie Jefia and Guest Physicians, this curriculum covers both luxury spa treatments and complex medical esthetic processes. Graduating students acquire standard licensing support, access to starter supply packages, and placement recommendations.</p>
-          </div>
-          <div>
-            <img src="assets/spa_training.png" alt="Students training in esthetics class" style="width:100%; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-premium);">
-          </div>
-        </div>
+    <!-- Accreditation & Highlights -->
+    <section class="section-container" style="max-width: 1100px; padding-bottom: 20px;">
+      <div class="text-center-wrapper">
+        <div class="academy-badge"><i class="fa-solid fa-award"></i> Professional Development Standards</div>
+        <h2 class="section-title">A Different Class of Training</h2>
+        <p class="section-desc">We don't teach you to observe. We teach you to perform. Learn aesthetic medicine and
+          advanced skincare alongside Awka's leading clinical team.</p>
+      </div>
 
-        <!-- Curriculum -->
-        <div style="border-top: 1px solid var(--color-sand); padding-top: 80px; margin-bottom: 80px;">
-          <div style="text-align: center; margin-bottom: 48px;">
-            <span class="section-subtitle">High-Yield Program</span>
-            <h2 class="section-title">Course Curriculum</h2>
-          </div>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
-            <div class="curriculum-module-card">
-              <span style="font-weight:bold; color: var(--color-champagne-dark); font-size: 0.85rem; text-transform: uppercase;">Module 01</span>
-              <h3 style="font-family: var(--font-serif); font-size: 1.2rem; margin: 8px 0 12px; color: var(--color-espresso);">Dermal Science &amp; Analysis</h3>
-              <p style="font-size: 0.9rem; color: var(--color-espresso-light);">Melanin-rich skin histology, skin typing, diagnostic extractions, sanitation, and chemical formulation guidelines.</p>
-            </div>
-            <div class="curriculum-module-card">
-              <span style="font-weight:bold; color: var(--color-champagne-dark); font-size: 0.85rem; text-transform: uppercase;">Module 02</span>
-              <h3 style="font-family: var(--font-serif); font-size: 1.2rem; margin: 8px 0 12px; color: var(--color-espresso);">Spa Body Therapies</h3>
-              <p style="font-size: 0.9rem; color: var(--color-espresso-light);">Anatomy fundamentals, Swedish massage techniques, aromatherapy, body scrub compounding, and Hammam scrubbing procedures.</p>
-            </div>
-            <div class="curriculum-module-card">
-              <span style="font-weight:bold; color: var(--color-champagne-dark); font-size: 0.85rem; text-transform: uppercase;">Module 03</span>
-              <h3 style="font-family: var(--font-serif); font-size: 1.2rem; margin: 8px 0 12px; color: var(--color-espresso);">Clinical Esthetics</h3>
-              <p style="font-size: 0.9rem; color: var(--color-espresso-light);">Advanced chemical peels application, microneedling handling, hygiene control, and client preparation guidelines.</p>
-            </div>
-            <div class="curriculum-module-card">
-              <span style="font-weight:bold; color: var(--color-champagne-dark); font-size: 0.85rem; text-transform: uppercase;">Module 04</span>
-              <h3 style="font-family: var(--font-serif); font-size: 1.2rem; margin: 8px 0 12px; color: var(--color-espresso);">Spa Business Setup</h3>
-              <p style="font-size: 0.9rem; color: var(--color-espresso-light);">Client acquisition methods, service pricing strategies, social media branding, safety compliance, and business registration.</p>
-            </div>
-          </div>
+      <div class="diff-grid">
+        <div class="diff-card">
+          <h3 style="color: var(--color-error);"><i class="fa-regular fa-circle-xmark"></i> Standard Academies</h3>
+          <ul
+            style="list-style: none; display: flex; flex-direction: column; gap: 12px; margin-top: 15px; font-size: 0.95rem; color: var(--color-espresso-light);">
+            <li><i class="fa-solid fa-angle-right" style="color: var(--color-error); margin-right: 6px;"></i> Tutor
+              lecturing with a screen or slideshow</li>
+            <li><i class="fa-solid fa-angle-right" style="color: var(--color-error); margin-right: 6px;"></i> Practicing
+              on plastic mannequins or drawings</li>
+            <li><i class="fa-solid fa-angle-right" style="color: var(--color-error); margin-right: 6px;"></i> Strict,
+              rigid schedules with no room to adapt</li>
+            <li><i class="fa-solid fa-angle-right" style="color: var(--color-error); margin-right: 6px;"></i> Outdated
+              theoretical guides and no real patients</li>
+          </ul>
         </div>
+        <div class="diff-card tvs-diff">
+          <h3 style="color: var(--color-success);"><i class="fa-regular fa-circle-check"></i> TVS Clinical Academy</h3>
+          <ul
+            style="list-style: none; display: flex; flex-direction: column; gap: 12px; margin-top: 15px; font-size: 0.95rem; color: var(--color-espresso-light);">
+            <li><i class="fa-solid fa-check" style="color: var(--color-success); margin-right: 6px;"></i> Tutors who
+              actively treat clinic clients daily</li>
+            <li><i class="fa-solid fa-check" style="color: var(--color-success); margin-right: 6px;"></i> Extensive
+              hands-on clinical practice on real models</li>
+            <li><i class="fa-solid fa-check" style="color: var(--color-success); margin-right: 6px;"></i> Flexible,
+              capability-focused training timeline</li>
+            <li><i class="fa-solid fa-check" style="color: var(--color-success); margin-right: 6px;"></i> High-fidelity
+              clinical gear &amp; complication management</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-        <!-- Tuition & Certification -->
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; border-top: 1px solid var(--color-sand); padding-top: 80px; margin-bottom: 80px;">
+    <!-- Accommodation Promotion Banner -->
+    <section class="section-container" style="max-width: 1100px; padding-top: 0; padding-bottom: 40px;">
+      <div class="promo-banner">
+        <div class="promo-content">
+          <h3>Traveling From Outside Awka?</h3>
+          <p>TVS Academy provides fully serviced shared accommodation for the full duration of your training program
+            when you enroll in 2 or more courses concurrently. Subject to vacancy.</p>
+        </div>
+        <a href="#enroll-form" class="btn btn-primary"
+          style="background-color: var(--color-champagne); color: var(--color-espresso); border-color: var(--color-champagne);">Apply
+          Today <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </section>
+
+    <!-- Courses Catalog Section -->
+    <section class="section-container" style="max-width: 1200px; padding-top: 40px;" id="courses-section">
+      <div class="text-center-wrapper">
+        <span class="section-subtitle">TVS Curriculum</span>
+        <h2 class="section-title">Explore Our 11 Courses</h2>
+        <p class="section-desc">Select a category below to explore specific courses, detailed curriculums, and direct
+          pricing.</p>
+      </div>
+
+      <!-- Course Level Filters -->
+      <div class="filter-container">
+        <button class="filter-btn active" data-filter="all">All Programs</button>
+        <button class="filter-btn" data-filter="beginner">Beginner Friendly</button>
+        <button class="filter-btn" data-filter="advanced">Advanced Clinical</button>
+        <button class="filter-btn" data-filter="injectables">Injectables &amp; Threads</button>
+      </div>
+
+      <!-- Course Grid -->
+      <div class="courses-grid" id="coursesGrid">
+
+        <!-- Course 01 -->
+        <div class="course-card" data-category="beginner">
           <div>
-            <span class="section-subtitle">Transparent Terms</span>
-            <h2 class="section-title" style="font-size: 2.2rem; margin-bottom: 20px;">Tuition &amp; Fees</h2>
-            <div style="background: var(--color-cream); border: 1.5px solid var(--color-sand); padding: 32px; border-radius: var(--border-radius-md);">
-              <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-espresso); margin-bottom: 8px;">Intensive 4-Week Program</h3>
-              <span style="font-size: 1.85rem; font-weight: bold; color: var(--color-champagne-dark); display:block; margin-bottom: 16px;">₦350,000</span>
-              <ul style="list-style: none; display:flex; flex-direction:column; gap:10px; color: var(--color-espresso-light); font-size: 0.95rem; padding: 0;">
-                <li><i class="fa-solid fa-check" style="color: var(--color-success); margin-right: 8px;"></i> Complete hands-on training kit and textbooks</li>
-                <li><i class="fa-solid fa-check" style="color: var(--color-success); margin-right: 8px;"></i> Access to all clinical equipment and machines</li>
-                <li><i class="fa-solid fa-check" style="color: var(--color-success); margin-right: 8px;"></i> Professional branding photo session</li>
-                <li><i class="fa-solid fa-check" style="color: var(--color-success); margin-right: 8px;"></i> Post-graduation internship options</li>
+            <div class="course-header">
+              <span class="academy-badge">Facial Specialist</span>
+              <span class="course-num">01</span>
+            </div>
+            <h3 class="course-title">Facial Treatments</h3>
+            <p class="course-desc">From basic extractions to complex skin diagnostic modalities. A masterclass in facial
+              rejuvenation, analysis, and clinical products.</p>
+
+            <button class="curriculum-toggle-btn" onclick="toggleCurriculum(this)">
+              <span>View Curriculum</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="curriculum-details">
+              <ul class="curriculum-list">
+                <li><i class="fa-solid fa-circle-dot"></i> Classic &amp; Deep Pore Facials</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Anti-Acne Modalities</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Clinical Microneedling</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Hydrafacial &amp; Dermaplaning</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Chemical Peels &amp; Vampire Facials</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Skin Analysis &amp; Product Prescriptions</li>
               </ul>
             </div>
           </div>
-          <div>
-            <span class="section-subtitle">TVS Credential</span>
-            <h2 class="section-title" style="font-size: 2.2rem; margin-bottom: 20px;">Certification</h2>
-            <p style="margin-bottom: 16px; color: var(--color-espresso-light);">Upon graduation, students receive a formal **Certificate of Completion in Advanced Spa &amp; Esthetics** from The Villa Spa Academy. This certificate validates your practical expertise in chemical peels, dermal therapies, hygiene compliance, and body anatomy.</p>
-            <p style="color: var(--color-espresso-light);">Our certificate carries national prestige and is highly respected by luxury spas and beauty salons across Nigeria, giving you a competitive edge from day one.</p>
-          </div>
-        </div>
-
-        <!-- Student Gallery (Mock Cohorts representation) -->
-        <div style="border-top: 1px solid var(--color-sand); padding-top: 80px; margin-bottom: 80px;">
-          <div style="text-align: center; margin-bottom: 48px;">
-            <span class="section-subtitle">Cohort Memories</span>
-            <h2 class="section-title">Student Gallery</h2>
-          </div>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
-            <div style="background: var(--color-cream); border: 1px solid var(--color-sand); border-radius: var(--border-radius-md); padding: 20px;">
-              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--color-espresso); margin-bottom: 6px;">Practical Massage Session</h4>
-              <p style="font-size: 0.85rem; color: var(--color-espresso-light);">Students mastering muscle alignment and pressure adjustments in a live class environment.</p>
-            </div>
-            <div style="background: var(--color-cream); border: 1px solid var(--color-sand); border-radius: var(--border-radius-md); padding: 20px;">
-              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--color-espresso); margin-bottom: 6px;">Facial Extraction Training</h4>
-              <p style="font-size: 0.85rem; color: var(--color-espresso-light);">Hands-on laboratory training using sterilized extractor sets and skin steaming equipment.</p>
-            </div>
-            <div style="background: var(--color-cream); border: 1px solid var(--color-sand); border-radius: var(--border-radius-md); padding: 20px;">
-              <h4 style="font-family: var(--font-serif); font-size: 1.1rem; color: var(--color-espresso); margin-bottom: 6px;">Graduation Celebration</h4>
-              <p style="font-size: 0.85rem; color: var(--color-espresso-light);">Proud graduates holding their TVS Academy certificates and beauty starter tool kits.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Academy FAQ -->
-        <div style="border-top: 1px solid var(--color-sand); padding-top: 80px; margin-bottom: 80px;">
-          <div style="text-align: center; margin-bottom: 48px;">
-            <span class="section-subtitle">Got Questions?</span>
-            <h2 class="section-title">Academy FAQ</h2>
-          </div>
-          <div style="max-width: 800px; margin: 0 auto; display:flex; flex-direction:column; gap:20px;">
+          <div class="course-footer">
             <div>
-              <h4 style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--color-espresso); margin-bottom: 4px;">Do I need prior medical experience?</h4>
-              <p style="font-size: 0.9rem; color: var(--color-espresso-light);">No, our curriculum starts from the absolute basics of skin biology and progresses into advanced esthetics, making it suitable for beginners.</p>
+              <span class="course-price-label">Fee</span>
+              <div class="course-price-val">₦645,000</div>
             </div>
-            <div style="border-top: 1px solid var(--color-sand); padding-top: 16px;">
-              <h4 style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--color-espresso); margin-bottom: 4px;">Are installment payment plans available?</h4>
-              <p style="font-size: 0.9rem; color: var(--color-espresso-light);">Yes, we accept up to 2 installment payments. A 60% deposit is required to secure your seat, and the remaining 40% is due by the second week.</p>
-            </div>
-            <div style="border-top: 1px solid var(--color-sand); padding-top: 16px;">
-              <h4 style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--color-espresso); margin-bottom: 4px;">Do you provide placement support?</h4>
-              <p style="font-size: 0.9rem; color: var(--color-espresso-light);">We offer top-performing students immediate internships at The Villa Spa, as well as recommendations to partner salons across Anambra state.</p>
-            </div>
+            <a href="#enroll-form" class="btn btn-outline btn-sm">Select Course</a>
           </div>
         </div>
 
-        <!-- Enrol Now Interactive Form -->
-        <div class="enrol-form-container" id="enroll-form">
-          <div style="text-align:center; margin-bottom: 32px;">
-            <span class="section-subtitle" style="color: var(--color-champagne-dark);">Secure Your Spot</span>
-            <h2 class="section-title" style="font-size: 1.85rem; margin-bottom: 8px;">Academy Enrollment</h2>
-            <p style="font-size: 0.9rem; color: var(--color-espresso-light);">Fill out the form below, and our program coordinator will call you to schedule a consultation.</p>
+        <!-- Course 02 -->
+        <div class="course-card" data-category="beginner">
+          <div>
+            <div class="course-header">
+              <span class="academy-badge">Body Contouring</span>
+              <span class="course-num">02</span>
+            </div>
+            <h3 class="course-title">Body Sculpting</h3>
+            <p class="course-desc">Study non-invasive body sculpting, slimming and muscle building machines used in
+              top-tier medical spas globally.</p>
+
+            <button class="curriculum-toggle-btn" onclick="toggleCurriculum(this)">
+              <span>View Curriculum</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="curriculum-details">
+              <ul class="curriculum-list">
+                <li><i class="fa-solid fa-circle-dot"></i> Emsculpt Muscle Building</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Ultrasonic Cavitation</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Radiofrequency Skin Tightening</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Traditional Wood Therapy</li>
+              </ul>
+            </div>
           </div>
-          
-          <form id="academyEnrolForm" onsubmit="handleEnrolSubmit(event)">
-            <div class="enrol-input-group">
-              <label for="studentName">Full Name</label>
-              <input type="text" id="studentName" placeholder="Enter your full name" required>
+          <div class="course-footer">
+            <div>
+              <span class="course-price-label">Fee</span>
+              <div class="course-price-val">₦430,000</div>
             </div>
-            <div class="enrol-input-group">
-              <label for="studentPhone">Phone / WhatsApp Number</label>
-              <input type="tel" id="studentPhone" placeholder="e.g. +234..." required>
+            <a href="#enroll-form" class="btn btn-outline btn-sm">Select Course</a>
+          </div>
+        </div>
+
+        <!-- Course 03 -->
+        <div class="course-card" data-category="advanced">
+          <div>
+            <div class="course-header">
+              <span class="academy-badge">Clinical Infusions</span>
+              <span class="course-num">03</span>
             </div>
-            <div class="enrol-input-group">
-              <label for="studentEmail">Email Address</label>
-              <input type="email" id="studentEmail" placeholder="Enter your email" required>
+            <h3 class="course-title">IV Therapy</h3>
+            <p class="course-desc">Master clinical cannulation, infusion calculations, and patient setup for high-end
+              beauty and vitamin IV drips.</p>
+
+            <button class="curriculum-toggle-btn" onclick="toggleCurriculum(this)">
+              <span>View Curriculum</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="curriculum-details">
+              <ul class="curriculum-list">
+                <li><i class="fa-solid fa-circle-dot"></i> Intravenous Cannulation</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Glutathione Glow Infusions</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Detox, Slimming, &amp; Vitamin Drips</li>
+                <li><i class="fa-solid fa-circle-dot"></i> B12 Boosters &amp; NAD+ Infusion</li>
+              </ul>
             </div>
-            <div class="enrol-input-group">
-              <label for="cohortChoice">Select Cohort</label>
-              <select id="cohortChoice" required>
-                <option value="" disabled selected>Choose a starting month</option>
-                <option value="july2026">July 2026 Cohort</option>
-                <option value="august2026">August 2026 Cohort</option>
-                <option value="september2026">September 2026 Cohort</option>
-              </select>
+          </div>
+          <div class="course-footer">
+            <div>
+              <span class="course-price-label">Fee</span>
+              <div class="course-price-val">₦537,500</div>
             </div>
-            <div class="enrol-input-group">
-              <label for="studentNote">Why do you want to join our academy?</label>
-              <textarea id="studentNote" rows="4" placeholder="Briefly describe your interest or goals..."></textarea>
+            <a href="#enroll-form" class="btn btn-outline btn-sm">Select Course</a>
+          </div>
+        </div>
+
+        <!-- Course 04 -->
+        <div class="course-card" data-category="beginner">
+          <div>
+            <div class="course-header">
+              <span class="academy-badge">Laser Aesthetics</span>
+              <span class="course-num">04</span>
             </div>
-            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 14px; font-weight: bold;">Submit Application <i class="fa-solid fa-arrow-right"></i></button>
-          </form>
+            <h3 class="course-title">Laser Treatments</h3>
+            <p class="course-desc">Study safe laser utilization protocols, skin tag clearing, and Nd:YAG carbon facial
+              treatments.</p>
+
+            <button class="curriculum-toggle-btn" onclick="toggleCurriculum(this)">
+              <span>View Curriculum</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="curriculum-details">
+              <ul class="curriculum-list">
+                <li><i class="fa-solid fa-circle-dot"></i> Laser Hair Removal Mechanics</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Tattoo Removal Procedures</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Carbon Peel Facials</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Skin Tag &amp; Mole Removal</li>
+              </ul>
+            </div>
+          </div>
+          <div class="course-footer">
+            <div>
+              <span class="course-price-label">Fee</span>
+              <div class="course-price-val">₦430,000</div>
+            </div>
+            <a href="#enroll-form" class="btn btn-outline btn-sm">Select Course</a>
+          </div>
+        </div>
+
+        <!-- Course 05 -->
+        <div class="course-card" data-category="advanced">
+          <div>
+            <div class="course-header">
+              <span class="academy-badge">Blood Therapies</span>
+              <span class="course-num">05</span>
+            </div>
+            <h3 class="course-title">PRP Treatments</h3>
+            <p class="course-desc">Understand centrifugation, platelet separation, and blood-derived therapies for
+              advanced rejuvenation services.</p>
+
+            <button class="curriculum-toggle-btn" onclick="toggleCurriculum(this)">
+              <span>View Curriculum</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="curriculum-details">
+              <ul class="curriculum-list">
+                <li><i class="fa-solid fa-circle-dot"></i> PRP Centrifugation &amp; Yielding</li>
+                <li><i class="fa-solid fa-circle-dot"></i> PRP Hair Loss Solutions</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Vampire Facials (PRP+Microneedling)</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Clinical Stretch Marks Therapy</li>
+              </ul>
+            </div>
+          </div>
+          <div class="course-footer">
+            <div>
+              <span class="course-price-label">Fee</span>
+              <div class="course-price-val">₦537,500</div>
+            </div>
+            <a href="#enroll-form" class="btn btn-outline btn-sm">Select Course</a>
+          </div>
+        </div>
+
+        <!-- Course 06 -->
+        <div class="course-card" data-category="advanced">
+          <div>
+            <div class="course-header">
+              <span class="academy-badge">Fat Dissolving</span>
+              <span class="course-num">06</span>
+            </div>
+            <h3 class="course-title">Injection Lipolysis</h3>
+            <p class="course-desc">Master safe localized fat melting procedures using premium sub-dermal formulas and
+              safety protocols.</p>
+
+            <button class="curriculum-toggle-btn" onclick="toggleCurriculum(this)">
+              <span>View Curriculum</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="curriculum-details">
+              <ul class="curriculum-list">
+                <li><i class="fa-solid fa-circle-dot"></i> Fat Dissolve Injections Mechanics</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Double Chin, Belly, &amp; Arm Protocols</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Dosage Calibration &amp; Safe Injections</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Complication Management &amp; Aftercare</li>
+              </ul>
+            </div>
+          </div>
+          <div class="course-footer">
+            <div>
+              <span class="course-price-label">Fee</span>
+              <div class="course-price-val">₦430,000</div>
+            </div>
+            <a href="#enroll-form" class="btn btn-outline btn-sm">Select Course</a>
+          </div>
+        </div>
+
+        <!-- Course 07 -->
+        <div class="course-card" data-category="beginner">
+          <div>
+            <div class="course-header">
+              <span class="academy-badge">Dental Beauty</span>
+              <span class="course-num">07</span>
+            </div>
+            <h3 class="course-title">Dental Care</h3>
+            <p class="course-desc">Aesthetic dental procedures including clinical teeth whitening setups, scaling, and
+              polishing services.</p>
+
+            <button class="curriculum-toggle-btn" onclick="toggleCurriculum(this)">
+              <span>View Curriculum</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="curriculum-details">
+              <ul class="curriculum-list">
+                <li><i class="fa-solid fa-circle-dot"></i> Professional Laser Teeth Whitening</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Teeth Scaling &amp; Polishing</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Tooth Prep &amp; Enamel Protection</li>
+              </ul>
+            </div>
+          </div>
+          <div class="course-footer">
+            <div>
+              <span class="course-price-label">Fee</span>
+              <div class="course-price-val">₦537,500</div>
+            </div>
+            <a href="#enroll-form" class="btn btn-outline btn-sm">Select Course</a>
+          </div>
+        </div>
+
+        <!-- Course 08 -->
+        <div class="course-card" data-category="beginner">
+          <div>
+            <div class="course-header">
+              <span class="academy-badge">Spa &amp; Body</span>
+              <span class="course-num">08</span>
+            </div>
+            <h3 class="course-title">Spa &amp; Wellness</h3>
+            <p class="course-desc">Master Swedish massage, body scrubs, luxury Hammam therapies, waxing, and premium
+              vajacials.</p>
+
+            <button class="curriculum-toggle-btn" onclick="toggleCurriculum(this)">
+              <span>View Curriculum</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="curriculum-details">
+              <ul class="curriculum-list">
+                <li><i class="fa-solid fa-circle-dot"></i> Swedish Massage &amp; Pressure Adjustment</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Body Polishing &amp; Sauna Setup</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Waxing, Tinting, &amp; Vajacials</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Moroccan Hammam Body Scrubbing</li>
+              </ul>
+            </div>
+          </div>
+          <div class="course-footer">
+            <div>
+              <span class="course-price-label">Fee</span>
+              <div class="course-price-val">₦537,500</div>
+            </div>
+            <a href="#enroll-form" class="btn btn-outline btn-sm">Select Course</a>
+          </div>
+        </div>
+
+        <!-- Course 09 -->
+        <div class="course-card" data-category="advanced">
+          <div>
+            <div class="course-header">
+              <span class="academy-badge">Post-Surgical Care</span>
+              <span class="course-num">09</span>
+            </div>
+            <h3 class="course-title">Lymphatic Drainage Massage</h3>
+            <p class="course-desc">Highly specialized training in post-liposuction and post-BBL body drainage therapies
+              to prevent fluid buildup.</p>
+
+            <button class="curriculum-toggle-btn" onclick="toggleCurriculum(this)">
+              <span>View Curriculum</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="curriculum-details">
+              <ul class="curriculum-list">
+                <li><i class="fa-solid fa-circle-dot"></i> Post-Liposuction Drainage Massages</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Post-BBL Recovery Massages</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Fluid Build-up &amp; Swelling Management</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Seroma Detection &amp; Prevention</li>
+              </ul>
+            </div>
+          </div>
+          <div class="course-footer">
+            <div>
+              <span class="course-price-label">Fee</span>
+              <div class="course-price-val">₦550,000</div>
+            </div>
+            <a href="#enroll-form" class="btn btn-outline btn-sm">Select Course</a>
+          </div>
+        </div>
+
+        <!-- Course 10 -->
+        <div class="course-card" data-category="advanced">
+          <div>
+            <div class="course-header">
+              <span class="academy-badge">Clinical Weight Loss</span>
+              <span class="course-num">10</span>
+            </div>
+            <h3 class="course-title">Medical Weight Loss</h3>
+            <p class="course-desc">Doctor-led weight management training covering modern GLP-1/GIP receptor agonist
+              therapeutics.</p>
+
+            <button class="curriculum-toggle-btn" onclick="toggleCurriculum(this)">
+              <span>View Curriculum</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="curriculum-details">
+              <ul class="curriculum-list">
+                <li><i class="fa-solid fa-circle-dot"></i> Hormonal Appetite Regulation</li>
+                <li><i class="fa-solid fa-circle-dot"></i> GLP-1 &amp; GIP drugs (Ozempic/Mounjaro/Wegovy)</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Dosage Titration &amp; Patient Monitoring</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Contraindications, Risks &amp; Safety Protocols</li>
+              </ul>
+            </div>
+          </div>
+          <div class="course-footer">
+            <div>
+              <span class="course-price-label">Fee</span>
+              <div class="course-price-val">₦1,120,000</div>
+            </div>
+            <a href="#enroll-form" class="btn btn-outline btn-sm">Select Course</a>
+          </div>
+        </div>
+
+        <!-- Course 11 -->
+        <div class="course-card" data-category="injectables">
+          <div>
+            <div class="course-header">
+              <span class="academy-badge">Injectable Artistry</span>
+              <span class="course-num">11</span>
+            </div>
+            <h3 class="course-title">Botox, Fillers &amp; PDO Threads</h3>
+            <p class="course-desc">Our flagship medical-grade injectables training program, led by licensed physicians
+              on actual patients.</p>
+
+            <button class="curriculum-toggle-btn" onclick="toggleCurriculum(this)">
+              <span>View Curriculum</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="curriculum-details">
+              <ul class="curriculum-list">
+                <li><i class="fa-solid fa-circle-dot"></i> Lip Filler &amp; Russian Lips Techniques</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Cheek, Chin, Jawline, &amp; Nasolabial Fillers</li>
+                <li><i class="fa-solid fa-circle-dot"></i> PDO Nose Thread Lifts</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Anti-Wrinkle Botox (Forehead, Crow's Feet)</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Masseter, Excessive Sweating, &amp; Gummy Smile Botox</li>
+                <li><i class="fa-solid fa-circle-dot"></i> Complication Management &amp; Dissolving</li>
+              </ul>
+            </div>
+          </div>
+          <div class="course-footer">
+            <div>
+              <span class="course-price-label">Fee</span>
+              <div class="course-price-val">₦2,365,000</div>
+            </div>
+            <a href="#enroll-form" class="btn btn-outline btn-sm">Select Course</a>
+          </div>
         </div>
 
       </div>
     </section>
+
+    <!-- Pricing Summary Section -->
+    <section class="section-container"
+      style="max-width: 1000px; border-top: 1px solid var(--color-sand); padding-top: 60px; padding-bottom: 60px;">
+      <div style="text-align: center; margin-bottom: 40px;">
+        <span class="section-subtitle">Fees &amp; Tuition</span>
+        <h2 class="section-title">Transparent Price List</h2>
+        <p class="section-desc">Course registration fees include all training supplies, clinical models, and
+          certification materials.</p>
+      </div>
+
+      <div
+        style="background-color: var(--color-white); border: 1.5px solid var(--color-sand); border-radius: var(--border-radius-lg); padding: 30px; box-shadow: var(--shadow-subtle);">
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div
+            style="display: flex; justify-content: space-between; border-bottom: 1.5px solid var(--color-sand); padding-bottom: 10px; font-weight: bold; font-size: 0.95rem; text-transform: uppercase; color: var(--color-espresso);">
+            <span>Program Name</span>
+            <span>Fee (₦)</span>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; font-size: 0.95rem; border-bottom: 1px solid var(--color-sand-light); padding-bottom: 10px;">
+            <span>01. Facial Treatments</span>
+            <span style="font-weight: 600;">₦645,000</span>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; font-size: 0.95rem; border-bottom: 1px solid var(--color-sand-light); padding-bottom: 10px;">
+            <span>02. Body Sculpting</span>
+            <span style="font-weight: 600;">₦430,000</span>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; font-size: 0.95rem; border-bottom: 1px solid var(--color-sand-light); padding-bottom: 10px;">
+            <span>03. IV Therapy</span>
+            <span style="font-weight: 600;">₦537,500</span>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; font-size: 0.95rem; border-bottom: 1px solid var(--color-sand-light); padding-bottom: 10px;">
+            <span>04. Laser Treatments</span>
+            <span style="font-weight: 600;">₦430,000</span>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; font-size: 0.95rem; border-bottom: 1px solid var(--color-sand-light); padding-bottom: 10px;">
+            <span>05. PRP Treatments</span>
+            <span style="font-weight: 600;">₦537,500</span>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; font-size: 0.95rem; border-bottom: 1px solid var(--color-sand-light); padding-bottom: 10px;">
+            <span>06. Injection Lipolysis (Fat Dissolve)</span>
+            <span style="font-weight: 600;">₦430,000</span>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; font-size: 0.95rem; border-bottom: 1px solid var(--color-sand-light); padding-bottom: 10px;">
+            <span>07. Dental Care</span>
+            <span style="font-weight: 600;">₦537,500</span>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; font-size: 0.95rem; border-bottom: 1px solid var(--color-sand-light); padding-bottom: 10px;">
+            <span>08. Spa &amp; Wellness (Massage, Hammam, Vajacials)</span>
+            <span style="font-weight: 600;">₦537,500</span>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; font-size: 0.95rem; border-bottom: 1px solid var(--color-sand-light); padding-bottom: 10px;">
+            <span>09. Lymphatic Drainage Massage</span>
+            <span style="font-weight: 600;">₦550,000</span>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; font-size: 0.95rem; border-bottom: 1px solid var(--color-sand-light); padding-bottom: 10px;">
+            <span>10. Medical Weight Loss</span>
+            <span style="font-weight: 600;">₦1,120,000</span>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; font-size: 0.95rem; border-bottom: 1.5px solid var(--color-sand); padding-bottom: 10px; font-weight: bold;">
+            <span>11. Botox, Fillers &amp; PDO Threads (Premium Clinical)</span>
+            <span style="color: var(--color-champagne-dark);">₦2,365,000</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Clinic vs Classroom Pillars -->
+    <section class="section-container"
+      style="max-width: 1000px; border-top: 1px solid var(--color-sand); padding-top: 60px; padding-bottom: 60px;">
+      <div style="text-align: center; margin-bottom: 40px;">
+        <span class="section-subtitle">Real Clinical Practice</span>
+        <h2 class="section-title">What It Feels Like to Train Here</h2>
+        <p class="section-desc">There is a version of esthetics training common in Nigeria—a projector, a binder, and a
+          mannequin. At TVS, you train inside a live, fully-functioning clinical spa under professional standards.</p>
+      </div>
+
+      <div class="pillar-grid">
+        <div class="pillar-card">
+          <div class="pillar-num">01</div>
+          <h4>Theory First</h4>
+          <p>You study the anatomy, melanocyte histology, and deep chemistry. Knowing *why* separates an elite
+            practitioner from a basic technician.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-num">02</div>
+          <h4>Hands-On Models</h4>
+          <p>The clinical tools you use are the same ones used on patients. Work on real models under close instruction,
+            not plastic simulators.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-num">03</div>
+          <h4>Active Practitioners</h4>
+          <p>Your instructors perform these treatments daily on high-end clients. They teach from live clinical updates,
+            not static books.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-num">04</div>
+          <h4>Self-Paced Competency</h4>
+          <p>If you need extra sessions on cannulation or lip mapping, you get them. You graduate when you are fully
+            competent, not when a calendar expires.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Detailed Lodging Accommodation Section -->
+    <section class="section-container"
+      style="max-width: 1000px; border-top: 1px solid var(--color-sand); padding-top: 60px; padding-bottom: 60px;">
+      <div class="outside-accommodation-box">
+        <h3>We Removed the Biggest Hurdle for Distance Students</h3>
+        <p>The cost of tuition is one investment. Finding, securing, and paying for short-term lodging in Awka or
+          surrounding cities is another major friction point. For students traveling from Enugu, Port Harcourt, Delta,
+          Lagos, or Abuja, this expense is often the deciding factor against launching their careers. <strong>We solved
+            this issue.</strong></p>
+
+        <p>When you enroll in two or more courses simultaneously, TVS Academy secures clean, fully-serviced shared
+          accommodation for the complete duration of your program at no additional fee. You focus on mastering your
+          skills; we handle your stay.</p>
+
+        <div
+          style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 20px;">
+          <div style="font-size: 0.9rem; color: var(--color-espresso-light);"><i class="fa-solid fa-circle-check"
+              style="color: var(--color-success); margin-right: 8px;"></i> Applies to any 2+ concurrent courses</div>
+          <div style="font-size: 0.9rem; color: var(--color-espresso-light);"><i class="fa-solid fa-circle-check"
+              style="color: var(--color-success); margin-right: 8px;"></i> Covers full program duration</div>
+          <div style="font-size: 0.9rem; color: var(--color-espresso-light);"><i class="fa-solid fa-circle-check"
+              style="color: var(--color-success); margin-right: 8px;"></i> Confirmed immediately upon booking</div>
+          <div style="font-size: 0.9rem; color: var(--color-espresso-light);"><i class="fa-solid fa-circle-check"
+              style="color: var(--color-success); margin-right: 8px;"></i> Serviced lodging with electricity &amp;
+            security</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- UK CPD Accreditation Section -->
+    <section class="section-container" style="max-width: 1000px; padding-top: 0; padding-bottom: 60px;">
+      <div class="cpd-section">
+        <div class="cpd-logo-area">
+          UK CPD
+          <span class="cpd-logo-sub">Approved</span>
+        </div>
+        <div class="cpd-content">
+          <h3>CPD-Approved International Standards</h3>
+          <p>Continuing Professional Development (CPD) standards are the international benchmark for clinical aesthetics
+            education. Our curriculum structure aligns with global medical and skincare practices, ensuring your
+            Certificate of Attendance holds weight in Nigeria and is recognized internationally when advancing your
+            qualifications or catering to elite clients.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- WhatsApp Support CTAs -->
+    <section class="section-container" style="max-width: 1000px; padding-top: 0; padding-bottom: 60px;">
+      <div class="whatsapp-enroll-section">
+        <h3 style="font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: 12px;">Need Instant Help?</h3>
+        <p style="font-size: 0.9rem; color: var(--color-espresso-light); margin-bottom: 24px;">Chat directly with CEO
+          Stephanie Jefia or our program coordinator to plan your studies and lock down lodging slots.</p>
+        <a href="https://wa.me/2348147409153?text=Hello%2C%20I%20want%20to%20apply%20for%20TVS%20Academy%20courses%20and%20verify%20lodging%20availability."
+          target="_blank" class="whatsapp-btn">
+          <i class="fa-brands fa-whatsapp" style="font-size: 1.3rem;"></i> Contact Admissions on WhatsApp
+        </a>
+      </div>
+    </section>
+
+    <!-- FAQ Accordion Section -->
+    <section class="section-container"
+      style="max-width: 1000px; border-top: 1px solid var(--color-sand); padding-top: 60px; padding-bottom: 60px;">
+      <div style="text-align: center; margin-bottom: 40px;">
+        <span class="section-subtitle">FAQ</span>
+        <h2 class="section-title">Common Questions</h2>
+        <p class="section-desc">Find answers to quick questions regarding enrollment, timelines, and credentials.</p>
+      </div>
+
+      <div class="faq-wrapper">
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span>Do I need prior medical experience to enroll?</span>
+            <i class="fa-solid fa-chevron-down faq-icon-arrow"></i>
+          </div>
+          <div class="faq-answer">
+            <p style="padding-top: 10px;">No. Our beginner-friendly programs (Module 01, Facials, Spa &amp; Wellness)
+              are crafted for students starting from scratch. For advanced medical injectables (Botox, Fillers, and PDO
+              Threads), a medical background (Doctor, Nurse, or related) is highly recommended for safety compliance.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span>Are installment payment plans available?</span>
+            <i class="fa-solid fa-chevron-down faq-icon-arrow"></i>
+          </div>
+          <div class="faq-answer">
+            <p style="padding-top: 10px;">Yes. To secure your enrollment slot, a 60% deposit is required. The remaining
+              40% balance can be split and paid before the completion of your second week of classes.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span>Do you provide models and startup kits?</span>
+            <i class="fa-solid fa-chevron-down faq-icon-arrow"></i>
+          </div>
+          <div class="faq-answer">
+            <p style="padding-top: 10px;">Yes. TVS Academy arranges real models for practical clinical days so you gain
+              live experience. You will also receive a custom starter toolkit with sanitation gear, basic extractors,
+              and study guides.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span>Is the certificate recognized?</span>
+            <i class="fa-solid fa-chevron-down faq-icon-arrow"></i>
+          </div>
+          <div class="faq-answer">
+            <p style="padding-top: 10px;">Yes. TVS Clinical Academy graduates receive a Certificate of Attendance
+              aligned with professional aesthetics development standards. This carries great weight inside major luxury
+              spa networks across Nigeria.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Professional Stats Counter Section -->
+    <section class="section-container" style="max-width: 1000px; padding-top: 0; padding-bottom: 60px;">
+      <div class="stats-wrapper">
+        <div class="stat-box">
+          <h3>5,000+</h3>
+          <p>Consultations Completed</p>
+        </div>
+        <div class="stat-box">
+          <h3>14+</h3>
+          <p>Years of Clinical Excellence</p>
+        </div>
+        <div class="stat-box">
+          <h3>100%</h3>
+          <p>Doctor-Led Every Time</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Detailed Academy Disclaimer -->
+    <section class="section-container" style="max-width: 1000px; padding-top: 0; padding-bottom: 60px;">
+      <div class="disclaimer-box">
+        <div class="disclaimer-title">
+          <i class="fa-solid fa-triangle-exclamation" style="color: var(--color-champagne-dark);"></i>
+          <span>TVS Clinical Academy — Enrollment Disclaimer</span>
+        </div>
+        <div class="disclaimer-content">
+          <p>Please read carefully: TVS Clinical Academy provides educational training in medical aesthetics,
+            dermatology science, and body therapies. Our programs are designed to equip learners with practical skills,
+            theoretical knowledge, and industry-best guidelines.</p>
+          <p>Completion of any course with TVS Clinical Academy does not grant a professional license, certification, or
+            legal authorization to practice. Participants receive a <strong>Certificate of Attendance</strong> — proof
+            of participation in the training program, not a license to practice.</p>
+          <p>All learners are solely responsible for verifying and complying with the laws, regulations, and guidelines
+            governing aesthetic practice in their state, region, or country. You are responsible for obtaining any
+            required licenses, certifications, or permits from the appropriate government or regulatory authorities
+            before practicing.</p>
+          <p>TVS Clinical Academy shall not be held liable for any misuse of the knowledge provided or for practicing
+            without proper authorization. By enrolling, you acknowledge and agree to take full responsibility for
+            adhering to all legal requirements in your jurisdiction.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- The Decision Call to Action Block -->
+    <section class="section-container" style="max-width: 1000px; padding-top: 0; padding-bottom: 60px;">
+      <div class="decision-box">
+        <h2>Someone in Your City Is Building the Practice <br>You Are Thinking About. <em>The Difference Is They
+            Started.</em></h2>
+        <p>Every month without proper training is revenue not earned, clients not retained, and a practice not built.
+          You do not need to know everything before you start. You need to know where to start. This is it.</p>
+        <a href="#enroll-form" class="btn btn-primary"
+          style="background-color: var(--color-champagne); color: var(--color-espresso); border-color: var(--color-champagne); font-weight: bold; padding: 16px 36px;">Begin
+          My Enrollment <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </section>
+
+    <!-- Enrol Now Interactive Form -->
+    <div class="enrol-form-container" id="enroll-form" style="margin-bottom: 80px;">
+      <div style="text-align:center; margin-bottom: 32px;">
+        <span class="section-subtitle" style="color: var(--color-champagne-dark);">Secure Your Seat</span>
+        <h2 class="section-title" style="font-size: 1.85rem; margin-bottom: 8px;">Academy Application</h2>
+        <p style="font-size: 0.9rem; color: var(--color-espresso-light);">Fill out the request details below and our
+          coordinator will follow up with you shortly.</p>
+      </div>
+
+      <form id="academyEnrolForm" onsubmit="handleEnrolSubmit(event)">
+        <div class="enrol-input-group">
+          <label for="studentName">Full Name</label>
+          <input type="text" id="studentName" placeholder="Enter your full name" required>
+        </div>
+        <div class="enrol-input-group">
+          <label for="studentPhone">Phone / WhatsApp Number</label>
+          <input type="tel" id="studentPhone" placeholder="e.g. +234..." required>
+        </div>
+        <div class="enrol-input-group">
+          <label for="studentEmail">Email Address</label>
+          <input type="email" id="studentEmail" placeholder="Enter your email" required>
+        </div>
+        <div class="enrol-input-group">
+          <label for="cohortChoice">Select Program / Course</label>
+          <select id="cohortChoice" required>
+            <option value="" disabled selected>Select a primary program</option>
+            <option value="facials">01. Facial Treatments (₦645k)</option>
+            <option value="bodysculpting">02. Body Sculpting (₦430k)</option>
+            <option value="ivtherapy">03. IV Therapy (₦537.5k)</option>
+            <option value="laser">04. Laser Treatments (₦430k)</option>
+            <option value="prp">05. PRP Treatments (₦537.5k)</option>
+            <option value="lipolysis">06. Injection Lipolysis (₦430k)</option>
+            <option value="dental">07. Dental Care (₦537.5k)</option>
+            <option value="spa">08. Spa &amp; Wellness (₦537.5k)</option>
+            <option value="lymphatic">09. Lymphatic Drainage Massage (₦550k)</option>
+            <option value="weightloss">10. Medical Weight Loss (₦1,120k)</option>
+            <option value="botox">11. Botox, Fillers &amp; PDO Threads (₦2,365k)</option>
+            <!-- <option value="multiple">Multiple Programs (Qualifies for Accommodation)</option> -->
+          </select>
+        </div>
+        <div class="enrol-input-group">
+          <label for="studentNote">Why do you want to join our academy?</label>
+          <textarea id="studentNote" rows="4" placeholder="Describe your interest or career background..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 14px; font-weight: bold;">Submit
+          Application <i class="fa-solid fa-arrow-right"></i></button>
+      </form>
+    </div>
   </main>
 
   <!-- Footer -->
   <footer class="main-footer">
     <div class="footer-container">
       <div class="footer-brand-column">
-        <a href="index.html" class="footer-logo">
-          <span class="logo-initials">TVS</span>
-          <span class="logo-title">THE VILLA SPA</span>
+        <a href="index.html" class="footer-logo" style="display: inline-block;">
+          <img src="assets/logo.png" alt="The Villa Spa Logo" class="footer-logo-img" style="height: 52px; width: auto; object-fit: contain; filter: brightness(0) invert(1);">
         </a>
-        <p class="footer-about">Awka's Premier Salon and Wellness Lounge. Dedicated to luxury treatments, holistic rejuvenation, and premium industry training.</p>
+        <p class="footer-about">Awka's Premier Salon and Wellness Lounge. Dedicated to luxury treatments, holistic
+          rejuvenation, and premium industry training.</p>
         <div class="footer-socials">
           <a href="https://instagram.com/thevillaspa_" target="_blank"><i class="fab fa-instagram"></i></a>
           <a href="https://wa.me/2348147409153" target="_blank"><i class="fab fa-whatsapp"></i></a>
@@ -367,15 +1598,72 @@
 
   <script type="module" src="app.js?v=2026.07.08.99"></script>
   <script src="https://www.youtube.com/iframe_api"></script>
-  
+
   <script>
+    // Hide Preloader on load
+    window.addEventListener('load', () => {
+      const preloader = document.getElementById('tvs-preloader');
+      if (preloader) {
+        setTimeout(() => {
+          preloader.classList.add('fade-out');
+        }, 1000);
+      }
+    });
+
+    // Toggle Curriculum list accordion style
+    function toggleCurriculum(btn) {
+      btn.classList.toggle('active');
+      const details = btn.nextElementSibling;
+      if (details.style.maxHeight) {
+        details.style.maxHeight = null;
+      } else {
+        details.style.maxHeight = details.scrollHeight + "px";
+      }
+    }
+
+    // Toggle FAQ answers accordion style
+    function toggleFaq(header) {
+      const item = header.parentElement;
+      const answer = header.nextElementSibling;
+      item.classList.toggle('active');
+      if (item.classList.contains('active')) {
+        answer.style.maxHeight = answer.scrollHeight + "px";
+      } else {
+        answer.style.maxHeight = null;
+      }
+    }
+
+    // Filters logic
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const courseCards = document.querySelectorAll('.course-card');
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Remove active class
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filterValue = btn.getAttribute('data-filter');
+
+        courseCards.forEach(card => {
+          const category = card.getAttribute('data-category');
+          if (filterValue === 'all' || category === filterValue) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
     function handleEnrolSubmit(event) {
       event.preventDefault();
       const name = document.getElementById("studentName").value;
-      const cohort = document.getElementById("cohortChoice").value;
-      alert("Congratulations, " + name + "! Your enrollment interest for the " + cohort.toUpperCase() + " has been recorded. Our coordinator will contact you shortly.");
+      const course = document.getElementById("cohortChoice").value;
+      alert("Congratulations, " + name + "! Your interest for the " + course.toUpperCase() + " program has been logged successfully. Our team will contact you soon.");
       document.getElementById("academyEnrolForm").reset();
     }
   </script>
 </body>
+
 </html>
