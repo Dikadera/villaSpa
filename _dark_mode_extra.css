@@ -125,3 +125,26 @@ body.dark-mode .syllabus-timeline .week-details p { color: #D5BD9C; }
 body.dark-mode .footer-links-column h4, body.dark-mode .footer-hours-column h4 { color: #EBE5DF; }
 body.dark-mode .footer-copyright p { color: rgba(213,189,156,0.5); }
 body.dark-mode .urgent-hours-note { color: #C5A880; }
+
+/* Category Cards Dark Mode Styles */
+body.dark-mode .category-card {
+  background-color: #221C1A;
+  border-color: rgba(197, 168, 128, 0.15);
+}
+body.dark-mode .category-icon-wrapper {
+  background-color: #2E2725;
+  color: #C5A880;
+}
+body.dark-mode .category-card:hover .category-icon-wrapper {
+  background-color: #C5A880;
+  color: #171211;
+}
+body.dark-mode .category-card-title {
+  color: #EBE5DF;
+}
+body.dark-mode .category-card-description {
+  color: #D5BD9C;
+}
+body.dark-mode .category-starting-price {
+  color: #C5A880;
+}

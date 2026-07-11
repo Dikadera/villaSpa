@@ -2,15 +2,14 @@
    THE VILLA SPA - SKINCARE BOUTIQUE CONTROLLER
    ========================================================================== */
 
-// Import Firebase SDKs from CDN
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { 
-  getFirestore, collection, doc, getDocs, setDoc, addDoc, query, orderBy, writeBatch 
-} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+// Import declarations mapped to variables in outer scope
+let initializeApp, getFirestore, collection, doc, getDocs, setDoc, addDoc, query, orderBy, writeBatch;
+
+let app = null, db = null;
 // Import configuration settings with fallback for Git deployments
 let config;
 try {
-  const configModule = await import("./config.js?v=2026.07.08.51");
+  const configModule = await import("./config.js?v=2026.07.11.23");
   config = configModule.config;
 } catch (e) {
   console.warn("config.js not found, using embedded public keys:", e);
@@ -24,7 +23,7 @@ try {
       appId: "1:266753549058:web:d12b9717c4946957f5581b",
       measurementId: "G-6XN6XK5RB2"
     },
-    paystackPublicKey: "pk_test_658c0c1b0162548ad78df88ce61d2d0cb537a7cd"
+    paystackPublicKey: "pk_test_8260c4b0e89d47b9bf387fe7a15fe802d95b15db"
   };
 }
 
@@ -42,14 +41,36 @@ if (!config || !config.firebase) {
       appId: "1:266753549058:web:d12b9717c4946957f5581b",
       measurementId: "G-6XN6XK5RB2"
     },
-    paystackPublicKey: "pk_test_658c0c1b0162548ad78df88ce61d2d0cb537a7cd"
+    paystackPublicKey: "pk_test_8260c4b0e89d47b9bf387fe7a15fe802d95b15db"
   };
 }
 const firebaseConfig = config.firebase;
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+// Initialize Firebase dynamically to prevent blocking when offline or network restricted
+async function tryInitFirebase() {
+  try {
+    const firebaseAppModule = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js");
+    const firebaseFirestoreModule = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js");
+    
+    initializeApp = firebaseAppModule.initializeApp;
+    getFirestore = firebaseFirestoreModule.getFirestore;
+    collection = firebaseFirestoreModule.collection;
+    doc = firebaseFirestoreModule.doc;
+    getDocs = firebaseFirestoreModule.getDocs;
+    setDoc = firebaseFirestoreModule.setDoc;
+    addDoc = firebaseFirestoreModule.addDoc;
+    query = firebaseFirestoreModule.query;
+    orderBy = firebaseFirestoreModule.orderBy;
+    writeBatch = firebaseFirestoreModule.writeBatch;
+
+    app = initializeApp(firebaseConfig);
+    db = getFirestore(app);
+    console.log("[TVS Products] Firebase initialized dynamically successfully.");
+  } catch (fbErr) {
+    console.warn("[TVS Products] Dynamic Firebase SDK load failed — offline/local fallback enabled:", fbErr);
+    db = null;
+  }
+}
 
 // Default skincare products for database seeding
 const defaultSkincare = [
@@ -116,7 +137,7 @@ function initSiteTheme() {
 }
 
 // ROBUST INITIALIZER
-function runProductsInitialization() {
+async function runProductsInitialization() {
   initSiteTheme();
   initHeaderNavigation();
   initCartListeners();
@@ -127,7 +148,10 @@ function runProductsInitialization() {
   initFloatingButtons();
   initMagneticButtons();
   initAmbientMusic();
-  initGlobalSnow();
+  // initGlobalSnow();
+  
+  // Try to load Firebase dynamically first
+  await tryInitFirebase();
   
   // Seed database then load products asynchronously (Non-blocking)
   (async () => {
@@ -228,7 +252,7 @@ function renderCatalogProducts() {
   
   filtered.forEach(product => {
     const isOutOfStock = product.stock === "out-of-stock";
-    const btnText = isOutOfStock ? "Out of Stock" : "Add to Order";
+    const btnText = isOutOfStock ? "Out of Stock" : "Add to Cart";
     const btnDisabled = isOutOfStock ? "disabled" : "";
     const badgeHTML = isOutOfStock ? `<span class="stock-tag out-of-stock">Out of Stock</span>` : `<span class="stock-tag">In Stock</span>`;
     
@@ -455,7 +479,7 @@ function triggerPaystackPayment() {
           { display_name: "Delivery Address", variable_name: "delivery_address", value: addressVal }
         ]
       },
-      callback: async function(response) {
+      callback: function(response) {
         // Payment success callback:
         const orderRecord = {
           reference: response.reference,
@@ -474,25 +498,27 @@ function triggerPaystackPayment() {
         payBtn.disabled = false;
         payBtn.innerHTML = `Pay with Paystack <i class="fa-solid fa-credit-card"></i>`;
         
-        // Save order to Firestore
-        try {
-          await setDoc(doc(db, "orders", response.reference), orderRecord);
-          console.log("ORDER RECORDED IN FIRESTORE SUCCESSFULLY:", orderRecord);
-        } catch (dbErr) {
-          console.error("Firestore Order Save Failed, falling back to LocalStorage:", dbErr);
-          // Fallback save locally
-          let localOrders = JSON.parse(safeGetItem("tvs_orders") || "[]");
-          localOrders.push(orderRecord);
-          safeSetItem("tvs_orders", JSON.stringify(localOrders));
-        }
-        
-        // Wipe cart state
-        cart = [];
-        updateCartUI();
-        
-        // Show success screen
-        closeCheckoutModal();
-        showSuccessScreen(response.reference, cartTotal, addressVal);
+        // Save order to Firestore asynchronously
+        (async () => {
+          try {
+            await setDoc(doc(db, "orders", response.reference), orderRecord);
+            console.log("ORDER RECORDED IN FIRESTORE SUCCESSFULLY:", orderRecord);
+          } catch (dbErr) {
+            console.error("Firestore Order Save Failed, falling back to LocalStorage:", dbErr);
+            // Fallback save locally
+            let localOrders = JSON.parse(safeGetItem("tvs_orders") || "[]");
+            localOrders.push(orderRecord);
+            safeSetItem("tvs_orders", JSON.stringify(localOrders));
+          }
+          
+          // Wipe cart state
+          cart = [];
+          updateCartUI();
+          
+          // Show success screen
+          closeCheckoutModal();
+          showSuccessScreen(response.reference, cartTotal, addressVal);
+        })();
       },
       onClose: function() {
         payBtn.disabled = false;

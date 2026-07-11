@@ -112,7 +112,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- Paystack Inline SDK -->
   <script src="https://js.paystack.co/v1/inline.js"></script>
-  <link rel="stylesheet" href="style.css?v=2026.07.09.13">
+  <link rel="stylesheet" href="style.css?v=2026.07.11.23">
+  <link rel="stylesheet" href="_dark_mode_extra.css?v=2026.07.11.23">
 </head>
 
 <body>
@@ -144,10 +145,12 @@
   <header class="main-header">
     <div class="header-container">
       <a href="#" class="logo-area" style="display: flex; align-items: center;">
-        <img src="assets/logo.png" alt="The Villa Spa Logo" class="main-logo-img" style="height: 52px; width: auto; object-fit: contain;">
+        <img src="assets/logo.png" alt="The Villa Spa Logo" class="main-logo-img"
+          style="height: 52px; width: auto; object-fit: contain;">
       </a>
 
       <nav class="nav-menu" id="navMenu">
+        <a href="index.html" class="nav-link mobile-only-home">Home</a>
         <a href="about.html" class="nav-link">About Us</a>
         <!-- Services Mega Dropdown -->
         <div class="nav-item nav-has-mega">
@@ -231,19 +234,29 @@
     <section class="hero-section" id="hero">
       <!-- Background slides -->
       <div class="hero-bg-slides" id="heroBgSlides">
-        <div class="hero-bg-slide active" style="background-image: linear-gradient(rgba(30, 26, 25, 0.55), rgba(30, 26, 25, 0.75)), url('assets/hero_spa_candles.png');"></div>
-        <div class="hero-bg-slide" style="background-image: linear-gradient(rgba(30, 26, 25, 0.55), rgba(30, 26, 25, 0.75)), url('assets/hero_skincare_serums.png');"></div>
-        <div class="hero-bg-slide" style="background-image: linear-gradient(rgba(30, 26, 25, 0.55), rgba(30, 26, 25, 0.75)), url('assets/hero_aesthetics_clinical.png');"></div>
-        <div class="hero-bg-slide" style="background-image: linear-gradient(rgba(30, 26, 25, 0.55), rgba(30, 26, 25, 0.75)), url('assets/hero_academy_towels.png');"></div>
+        <div class="hero-bg-slide active"
+          style="background-image: linear-gradient(rgba(30, 26, 25, 0.55), rgba(30, 26, 25, 0.75)), url('assets/hero_spa_candles.png');">
+        </div>
+        <div class="hero-bg-slide"
+          style="background-image: linear-gradient(rgba(30, 26, 25, 0.55), rgba(30, 26, 25, 0.75)), url('assets/hero_skincare_serums.png');">
+        </div>
+        <div class="hero-bg-slide"
+          style="background-image: linear-gradient(rgba(30, 26, 25, 0.55), rgba(30, 26, 25, 0.75)), url('assets/hero_aesthetics_clinical.png');">
+        </div>
+        <div class="hero-bg-slide"
+          style="background-image: linear-gradient(rgba(30, 26, 25, 0.55), rgba(30, 26, 25, 0.75)), url('assets/hero_academy_towels.png');">
+        </div>
       </div>
 
       <div class="hero-particles"></div>
 
       <!-- Slider Navigation Controls -->
       <div class="slider-controls">
-        <button type="button" class="slider-nav-btn prev-slide" id="heroPrevSlide" aria-label="Previous slide"><i class="fa-solid fa-chevron-left"></i></button>
+        <button type="button" class="slider-nav-btn prev-slide" id="heroPrevSlide" aria-label="Previous slide"><i
+            class="fa-solid fa-chevron-left"></i></button>
         <div class="slider-dots" id="heroSliderDots"></div>
-        <button type="button" class="slider-nav-btn next-slide" id="heroNextSlide" aria-label="Next slide"><i class="fa-solid fa-chevron-right"></i></button>
+        <button type="button" class="slider-nav-btn next-slide" id="heroNextSlide" aria-label="Next slide"><i
+            class="fa-solid fa-chevron-right"></i></button>
       </div>
 
       <div class="hero-container hero-grid-layout">
@@ -251,10 +264,13 @@
         <div class="hero-content-column">
           <div class="hero-content">
             <span class="hero-subtitle" id="dynamicHeroSubtitle">Awka's Premier Spa &amp; Wellness Destination</span>
-            <h1 class="hero-title" id="dynamicHeroTitle">Reclaim Your Balance, <br><span id="heroTypingText" class="hero-typing-accent">Restore Your Glow</span><span class="typing-cursor">|</span></h1>
-            <p class="hero-description" id="dynamicHeroDesc">Experience award-winning hot stone therapies, Moroccan Hammam baths, and custom organic facials in a serene, luxurious sanctuary.</p>
+            <h1 class="hero-title" id="dynamicHeroTitle">Reclaim Your Balance, <br><span id="heroTypingText"
+                class="hero-typing-accent">Restore Your Glow</span><span class="typing-cursor">|</span></h1>
+            <p class="hero-description" id="dynamicHeroDesc">Experience award-winning hot stone therapies, Moroccan
+              Hammam baths, and custom organic facials in a serene, luxurious sanctuary.</p>
             <div class="hero-actions">
-              <a href="booking.html" class="btn btn-primary btn-lg hero-btn-standout" id="dynamicHeroCta">Book Appointment</a>
+              <a href="booking.html" class="btn btn-primary btn-lg hero-btn-standout" id="dynamicHeroCta">Book
+                Appointment</a>
             </div>
           </div>
         </div>
@@ -269,7 +285,8 @@
                   <span class="promo-badge">Bootcamp</span>
                   <h3>Esthetics Bootcamp</h3>
                   <p>Next cohort begins June 22. Secure your seat & professional kit today!</p>
-                  <a href="academy.html" class="promo-card-link">Register Now <i class="fa-solid fa-arrow-right"></i></a>
+                  <a href="academy.html" class="promo-card-link">Register Now <i
+                      class="fa-solid fa-arrow-right"></i></a>
                 </div>
                 <!-- Slide 2: Promo Discount -->
                 <div class="promo-slide-card-item">
@@ -283,7 +300,8 @@
                   <span class="promo-badge-info">Hours</span>
                   <h3>Sunday Spa Sessions</h3>
                   <p>1:00 PM – 7:00 PM. Reservations required. Book your weekend escape!</p>
-                  <a href="booking.html" class="promo-card-link">Schedule Sunday <i class="fa-solid fa-arrow-right"></i></a>
+                  <a href="booking.html" class="promo-card-link">Schedule Sunday <i
+                      class="fa-solid fa-arrow-right"></i></a>
                 </div>
               </div>
             </div>
@@ -447,58 +465,87 @@
       </div>
     </section>
 
-    <!-- Services / Price List Section (Tabbed & Dynamic) -->
+    <!-- Services / Price List Section (Categories Only) -->
     <section class="services-section" id="services">
       <div class="section-container">
         <div class="text-center-wrapper">
           <span class="section-subtitle">Luxury Service Menu</span>
           <h2 class="section-title">Indulge in Our Curated Experiences</h2>
-          <p class="section-desc">Choose a category to explore our treatments. Click any service to add it to your booking cart.</p>
+          <p class="section-desc">Explore our categories of premium beauty and wellness treatments.</p>
         </div>
 
-        <!-- Service Category Selector -->
-        <div class="services-tabs" id="serviceCategoryBar">
-          <button class="tab-btn active" data-category="spa-treatments">
-            <i class="fa-solid fa-spa"></i>
-            <span>Spa Treatments</span>
-            <span class="tab-tagline">Massages · Facials · Body · Nails</span>
-          </button>
-          <button class="tab-btn" data-category="medical-aesthetics">
-            <i class="fa-solid fa-user-doctor"></i>
-            <span>Medical Aesthetics</span>
-            <span class="tab-tagline">Clinical precision · Natural results</span>
-          </button>
-          <button class="tab-btn" data-category="luxury-packages">
-            <i class="fa-solid fa-gift"></i>
-            <span>Luxury Packages</span>
-            <span class="tab-tagline">Curated bundles · Total indulgence</span>
-          </button>
-        </div>
-
-        <!-- Service Grid Container -->
-        <div class="services-grid" id="servicesGrid">
-          <!-- Massages (Active by default) -->
-          <!-- Generated dynamically via JS, but hardcoded fallback for SEO -->
-          <div class="service-card" data-cat="massages">
-            <div class="service-header">
-              <h3 class="service-name">Swedish Massage</h3>
-              <span class="service-price">₦15,000</span>
+        <!-- Categories Grid -->
+        <div class="categories-grid">
+          <!-- Spa Treatments -->
+          <div class="category-card animate-on-scroll">
+            <div class="category-image-wrapper">
+              <img src="assets/hero_spa_candles.png" alt="Spa Treatments candles and towels">
             </div>
-            <p class="service-detail">A gentle, full-body massage using long strokes, kneading, and circular movements
-              to ease tension and improve circulation.</p>
-            <div class="service-footer">
-              <span class="service-duration"><i class="fa-regular fa-clock"></i> 60 Mins</span>
-              <button class="btn btn-sm btn-outline select-service-btn" data-id="massage-swedish"
-                data-name="Swedish Massage" data-price="15000">Add to booking</button>
+            <div class="category-icon-wrapper">
+              <i class="fa-solid fa-spa"></i>
+            </div>
+            <h3 class="category-card-title">Spa Treatments</h3>
+            <p class="category-card-description">
+              Indulge in our collection of holistic massages, facial care, body polishing, and professional
+              manicures/pedicures designed to restore your natural glow. Experience award-winning hot stone therapies,
+              Moroccan Hammam baths, and custom organic facials in a serene, luxurious sanctuary. Settle in for deep
+              tissue massages to relieve persistent muscle tension, professional hydrating or gold-leaf facials for skin
+              revitalization, exfoliating organic scrubs, traditional Moroccan Hammam steam baths, and signature
+              manicures/pedicures. Each treatment is tailored to promote relaxation, enhance blood circulation, and
+              nourish your body using premium oils and botanical serums.
+            </p>
+            <div class="category-card-footer">
+              <span class="category-starting-price">Starting from ₦5,000</span>
+              <a href="services.html#spa-treatments" class="btn btn-sm btn-outline">Explore Heaven</a>
             </div>
           </div>
-          <!-- More items rendered by JS -->
-        </div>
 
-        <div class="booking-summary-banner" id="bookingSummaryBanner">
-          <div class="summary-details">
-            <span class="summary-count"><span id="selectedCount">0</span> Service(s) Selected</span>
-            <span class="summary-total">Total: <strong id="selectedTotal">₦0</strong></span>
+          <!-- Medical Aesthetics -->
+          <div class="category-card animate-on-scroll">
+            <div class="category-image-wrapper">
+              <img src="assets/hero_aesthetics_clinical.png" alt="Medical Aesthetics clinical products">
+            </div>
+            <div class="category-icon-wrapper">
+              <i class="fa-solid fa-user-doctor"></i>
+            </div>
+            <h3 class="category-card-title">Medical Aesthetics</h3>
+            <p class="category-card-description">
+              Experience clinical precision and non-surgical transformations with Botox, dermal fillers, microneedling,
+              skin boosters, and chemical peels. Our advanced aesthetic procedures are performed by certified experts to
+              restore volume, reduce aging lines, and enhance your natural beauty safely. Explore advanced, non-surgical
+              clinical solutions to restore skin vitality, smooth dynamic wrinkles, and sculpt facial features. We offer
+              expert Botox injections, dermal fillers, microneedling (collagen induction therapy), skin boosters
+              (hyaluronic acid Profhilo injections), medical-grade chemical peels for hyperpigmentation, mesotherapy,
+              and revitalizing IV drip therapies—all carried out in a sterile environment.
+            </p>
+            <div class="category-card-footer">
+              <span class="category-starting-price">Starting from ₦30,000</span>
+              <a href="services.html#medical-aesthetics" class="btn btn-sm btn-outline">Explore Heaven</a>
+            </div>
+          </div>
+
+          <!-- Luxury Packages -->
+          <div class="category-card animate-on-scroll">
+            <div class="category-image-wrapper">
+              <img src="assets/spa_room.jpg" alt="Luxury treatment room">
+            </div>
+            <div class="category-icon-wrapper">
+              <i class="fa-solid fa-gift"></i>
+            </div>
+            <h3 class="category-card-title">Luxury Packages</h3>
+            <p class="category-card-description">
+              Reclaim complete peace with our curated premium packages, combining Moroccan Hammam steam baths, deep
+              relaxation massages, and bridal rituals. Perfect for couples seeking a shared wellness escape or brides
+              preparing for their special day with total head-to-toe beauty care. Indulge in our curated all-in-one
+              luxury packages designed for ultimate self-care or special occasions. From our comprehensive 'Bride-to-Be'
+              package (featuring Hammam baths, facials, and full body waxing) to our 'Couple's Sanctuary' side-by-side
+              massage sessions, these packages combine our most popular treatments to provide hours of continuous bliss
+              and maximum cost value.
+            </p>
+            <div class="category-card-footer">
+              <span class="category-starting-price">Starting from ₦45,000</span>
+              <a href="services.html#packages" class="btn btn-sm btn-outline">Explore Heaven</a>
+            </div>
           </div>
         </div>
       </div>
@@ -799,7 +846,8 @@
     <div class="footer-container">
       <div class="footer-brand-column">
         <a href="#" class="footer-logo" style="display: inline-block;">
-          <img src="assets/logo.png" alt="The Villa Spa Logo" class="footer-logo-img" style="height: 52px; width: auto; object-fit: contain; filter: brightness(0) invert(1);">
+          <img src="assets/logo.png" alt="The Villa Spa Logo" class="footer-logo-img"
+            style="height: 52px; width: auto; object-fit: contain; filter: brightness(0) invert(1);">
         </a>
         <p class="footer-about">Awka's Premier Salon and Wellness Lounge. Dedicated to luxury treatments, holistic
           rejuvenation, and premium industry training.</p>
@@ -1042,7 +1090,7 @@
   </script>
 
   <!-- Script loading -->
-  <script type="module" src="app.js?v=2026.07.10.06"></script>
+  <script type="module" src="app.js?v=2026.07.11.26"></script>
   <script src="https://www.youtube.com/iframe_api"></script>
 
   <script type="application/ld+json">

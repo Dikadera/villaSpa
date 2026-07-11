@@ -9,7 +9,7 @@ let getFirestore, collection, addDoc, setDoc, getDocs, deleteDoc, doc, query, or
 // All API keys are managed in config.js (see .env for the master reference)
 let config;
 try {
-  const configModule = await import("./config.js?v=2026.07.08.51");
+  const configModule = await import("./config.js?v=2026.07.11.23");
   config = configModule.config;
 } catch (e) {
   console.warn("config.js not found, using embedded public keys:", e);
@@ -27,7 +27,7 @@ if (!config || !config.firebase) {
       appId: "1:266753549058:web:d12b9717c4946957f5581b",
       measurementId: "G-6XN6XK5RB2"
     },
-    paystackPublicKey: "pk_test_658c0c1b0162548ad78df88ce61d2d0cb537a7cd"
+    paystackPublicKey: "pk_test_8260c4b0e89d47b9bf387fe7a15fe802d95b15db"
   };
 }
 const firebaseConfig = config.firebase;
@@ -538,9 +538,9 @@ async function runMainInitialization() {
   safeRun(initFloatingButtons, "initFloatingButtons");
   safeRun(initPromoToast, "initPromoToast");
   safeRun(initMagneticButtons, "initMagneticButtons");
-  safeRun(initParticles, "initParticles");
+  // safeRun(initParticles, "initParticles");
   safeRun(initAmbientMusic, "initAmbientMusic");
-  safeRun(initGlobalSnow, "initGlobalSnow");
+  // safeRun(initGlobalSnow, "initGlobalSnow");
 
   // Initialize service menu and booking wizard IMMEDIATELY with fallback data
   categoriesDatabase = [...defaultCategories];
@@ -1684,17 +1684,19 @@ async function saveBooking() {
             { display_name: "Appointment Time", variable_name: "appt_time", value: selectedTimeSlot }
           ]
         },
-        callback: async function(response) {
+        callback: function(response) {
           const paidRecord = {
             ...bookingRecord,
             paymentStatus: "Paid",
             paystackRef: response.reference,
             status: "Confirmed"
           };
-          await performSave(paidRecord);
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = originalBtnText;
-          completeBookingUI(paidRecord);
+          (async () => {
+            await performSave(paidRecord);
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnText;
+            completeBookingUI(paidRecord);
+          })();
         },
         onClose: function() {
           submitBtn.disabled = false;
